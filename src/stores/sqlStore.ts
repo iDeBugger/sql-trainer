@@ -1,6 +1,7 @@
 import create from "zustand";
-import initSqlJs, { Database, QueryExecResult, SqlJsStatic } from "sql.js";
+import initSqlJs, { Database, QueryExecResult } from "sql.js";
 import sqliteURL from "sql.js/dist/sql-wasm.wasm?url";
+import sqlSeed from "../data/seed.sql?raw";
 
 export interface QueryResult {
   status: "SUCCESS" | "FAILURE";
@@ -26,8 +27,7 @@ export const useSQLStore = create<SQLStore>((set, get) => ({
     });
     const db = new SQL.Database();
 
-    await db.run("CREATE TABLE test (id int, test text, test2 varchar(255))");
-    await db.run('INSERT INTO test(test) VALUES ("test")');
+    db.run(sqlSeed);
 
     set({ db, initStatus: "READY" });
   },

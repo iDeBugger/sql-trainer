@@ -1,4 +1,4 @@
-import { Grid, Paper, Table, Title } from "@mantine/core";
+import { Grid, Paper, ScrollArea, Table, Title } from "@mantine/core";
 import { useExcerciseStore } from "../../stores/excercisesStore";
 import { useSQLStore } from "../../stores/sqlStore";
 
@@ -24,29 +24,31 @@ export function ExcerciseTables() {
   return (
     <Grid>
       {tablesDescription.map(
-        (table) =>
+        (table, i) =>
           table.description.result && (
-            <Grid.Col span={4}>
+            <Grid.Col key={i} span={4}>
               <Title order={4} mb={8}>
                 Таблица {table.name}
               </Title>
               <Paper shadow="sm" withBorder>
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Имя</th>
-                      <th>Тип</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {table.description.result[0].values.map((row, id) => (
-                      <tr key={id}>
-                        <td>{row[1]}</td>
-                        <td>{row[2]}</td>
+                <ScrollArea>
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>Имя</th>
+                        <th>Тип</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                    </thead>
+                    <tbody>
+                      {table.description.result[0].values.map((row, id) => (
+                        <tr key={id}>
+                          <td>{row[1]}</td>
+                          <td>{row[2]}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </ScrollArea>
               </Paper>
             </Grid.Col>
           )

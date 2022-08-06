@@ -1,4 +1,4 @@
-import { Paper, Table } from "@mantine/core";
+import { Paper, ScrollArea, Table } from "@mantine/core";
 import { QueryResult } from "../../stores/sqlStore";
 
 export interface QueryResultTableProps {
@@ -15,24 +15,26 @@ export function QueryResultTable({ queryResult }: QueryResultTableProps) {
       )}
       {queryResult.status === "SUCCESS" && queryResult.result && (
         <Paper shadow="sm" withBorder>
-          <Table highlightOnHover>
-            <thead>
-              <tr>
-                {queryResult.result[0].columns.map((headerName) => (
-                  <th key={headerName}>{headerName}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {queryResult.result[0].values.map((row, i) => (
-                <tr key={i}>
-                  {row.map((value, i) => (
-                    <td key={i}>{value?.toString() || "null"}</td>
+          <ScrollArea style={{ height: 500 }}>
+            <Table highlightOnHover>
+              <thead>
+                <tr>
+                  {queryResult.result[0].columns.map((headerName) => (
+                    <th key={headerName}>{headerName}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {queryResult.result[0].values.map((row, i) => (
+                  <tr key={i}>
+                    {row.map((value, i) => (
+                      <td key={i}>{value?.toString() || "null"}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </ScrollArea>
         </Paper>
       )}
     </>

@@ -11,8 +11,9 @@ export function AppContent() {
   const { runQuery } = useSQLStore(({ runQuery }) => ({
     runQuery,
   }));
-  const { excercises, selectedExcercise } = useExcerciseStore(
-    ({ excercises, selectedExcercise }) => ({
+  const { setExcercise, excercises, selectedExcercise } = useExcerciseStore(
+    ({ setExcercise, excercises, selectedExcercise }) => ({
+      setExcercise,
       excercises,
       selectedExcercise,
     })
@@ -38,7 +39,12 @@ export function AppContent() {
         <Stack>
           <QueryEditor onQuerySubmit={checkQuery} />
           <Center>
-            <Pagination total={excercises.length} withEdges />
+            <Pagination
+              page={selectedExcercise + 1}
+              onChange={setExcercise}
+              total={excercises.length}
+              withEdges
+            />
           </Center>
         </Stack>
       </Grid.Col>

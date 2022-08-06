@@ -1,0 +1,282 @@
+[
+  {
+    "description": "Выведите список всех счетов (invoices)",
+    "referenceQuery": "SELECT * FROM invoices;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Выведите список всех артистов (artists)",
+    "referenceQuery": "SELECT * FROM artists;",
+    "tablesOfInterest": ["artists"]
+  },
+  {
+    "description": "Выведите имена всех исполнителей (artists)",
+    "referenceQuery": "SELECT name FROM artists;",
+    "tablesOfInterest": ["artists"]
+  },
+  {
+    "description": "Выведите имя и фамилию сотрудников (employees)",
+    "referenceQuery": "SELECT first_name, last_name FROM employees;",
+    "tablesOfInterest": ["employees"]
+  },
+  {
+    "description": "Покажите все название аудиотипов звука (media type)",
+    "referenceQuery": "SELECT name FROM media_types;",
+    "tablesOfInterest": ["media_types"]
+  },
+  {
+    "description": "Покажите список сотрудников (employees) по дате найма в порядке убывания",
+    "referenceQuery": "SELECT * FROM employees ORDER BY hire_date DESC;",
+    "tablesOfInterest": ["employees"]
+  },
+  {
+    "description": "«Выведите дату найма, имя и фамилию всех сотрудников, принятых на работу до 15 февраля 2011 года",
+    "referenceQuery": "SELECT hire_date, first_name, last_name FROM employees WHERE hire_date < '2011-02-15';",
+    "tablesOfInterest": ["employees"]
+  },
+  {
+    "description": "Покажите список сотрудников (employees), чье имя начинается с \"A\"",
+    "referenceQuery": "SELECT * FROM employees WHERE last_name LIKE 'A%';",
+    "tablesOfInterest": ["employees"]
+  },
+  {
+    "description": "Покажите список всех счетов из Редмонда (Redmond), штат Вашингтон (WA)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_state = 'WA' AND billing_city = 'Redmond';",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите список всех счетов из Берлина (Berlin), Германия (Germany)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_country = 'Germany' AND billing_city = 'Berlin';",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите список всех счетов (invoices) из Канады (Canada)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_country = 'Canada';",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите список всех счетов из Альберты (AB), Канада (Canada)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_country = 'Canada' AND billing_state = 'AB';",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите список всех счетов из г. Эдмонтона (Edmonton), шт. Альберта (AB), Канада (Canada)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_country = 'Canada' AND billing_state = 'AB' AND billing_city = 'Edmonton';",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите адреса для выставления (billing addresses) счетов из каждого счета в г.Редмонде (Redmond), шт. Вашингтон (WA)",
+    "referenceQuery": "SELECT billing_address FROM invoices WHERE billing_state = 'WA' AND billing_city = 'Redmond';",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите список всех счетов на сумму более $5,00 из г. Reno, шт. NV",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_state = 'NV' AND billing_city = 'Reno' AND total > 5;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите список каждого трека без композитора (composer)",
+    "referenceQuery": "SELECT * FROM tracks WHERE composer IS NULL;",
+    "tablesOfInterest": ["tracks"]
+  },
+  {
+    "description": "Выведите список каждого клиента (customer), не связанного с компанией (company)",
+    "referenceQuery": "SELECT * FROM customers WHERE company IS NULL;",
+    "tablesOfInterest": ["customers"]
+  },
+  {
+    "description": "Дайте мне список всех счетов из г. Редмонда, шт. Вашингтон, отсортированных по возрастанию их общего колличества (total)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_state = 'WA' AND billing_city = 'Redmond' ORDER BY total ASC;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите список всех счетов из г. Редмонда, шт. Вашингтон, отсортированных по убыванию их общего колличества (total)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_state = 'WA' AND billing_city = 'Redmond' ORDER BY total DESC;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Выведите список всех счетов (invoices) из Германии (Germany), отсортированных по убыванию",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_country = 'Germany' ORDER BY total DESC;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Выведите список список 10 самых дорогих счетов (invoices) из Германии (Germany)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_country = 'Germany' ORDER BY total DESC LIMIT 10;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Выведите список 10 самых дорогих счетов из Бостона (Boston), шт. Массачусетс (MA)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_state = 'MA' AND billing_city = 'Boston' ORDER BY total DESC LIMIT 10;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите список 10 наименее дорогих счетов из Бостона (Boston), Массачусетс (MA)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_state = 'MA' AND billing_city = 'Boston' ORDER BY total ASC LIMIT 10;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Выведите адреса улиц 3 самых дорогих счетов (invoices) из г. Купертино (Cupertino), Калифорния (CA)",
+    "referenceQuery": "SELECT billing_address FROM invoices WHERE billing_state = 'CA' AND billing_city = 'Cupertino' ORDER BY total DESC LIMIT 3;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите список всех счетов из г. Купертино (Cupertino), шт. Калифорния или Маунтин-Вью (Mountain View), шт. Калифорния (CA)",
+    "referenceQuery": "SELECT * FROM invoices WHERE billing_state = 'CA' AND (billing_city = 'Mountain View' OR billing_city = 'Cupertino');",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Найти количество счетов, отправленных в г. Сантьяго (Santiago)",
+    "referenceQuery": "SELECT count(*) FROM invoices WHERE billing_city = 'Santiago';",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Покажите количество клиентов (customers) по странам (country)",
+    "referenceQuery": "SELECT country, COUNT(*) FROM customers GROUP BY country;",
+    "tablesOfInterest": ["customers"]
+  },
+  {
+    "description": "Подсчитайте количество треков по схожей цене за один трек (unit price)",
+    "referenceQuery": "SELECT unit_price, COUNT(*) FROM tracks GROUP BY unit_price;",
+    "tablesOfInterest": ["tracks"]
+  },
+  {
+    "description": "Покажите список всех имен артистов, имя которых содержит «smith».",
+    "referenceQuery": "SELECT name FROM artists WHERE name LIKE '%smith%';",
+    "tablesOfInterest": ["artists"]
+  },
+  {
+    "description": "Покажите список имен артистов, чье имя оканчивается на «smith».",
+    "referenceQuery": "SELECT name FROM artists WHERE name LIKE '%smith';",
+    "tablesOfInterest": ["artists"]
+  },
+  {
+    "description": "Подскажите количество работников (employees) по городам",
+    "referenceQuery": "SELECT city, COUNT(*) FROM employees GROUP BY city;",
+    "tablesOfInterest": ["employees"]
+  },
+  {
+    "description": "Покажите топ 3-х стран по количеству клиентов (customers) в порядке убывания",
+    "referenceQuery": "SELECT country, COUNT(*) FROM customers GROUP BY country ORDER BY COUNT(*) DESC LIMIT 3",
+    "tablesOfInterest": ["customers"]
+  },
+  {
+    "description": "Покажите топ 5 городов по количеству счетов (billing_city) в порядке убывания",
+    "referenceQuery": "SELECT billing_city, COUNT(*) FROM invoices GROUP BY billing_city ORDER BY COUNT(*) DESC LIMIT 5",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Перечислите все имена артистов вместе с названиями их альбомов",
+    "referenceQuery": "SELECT ar.name, al.title FROM artists AS ar JOIN albums AS al ON al.artist_id = ar.id;",
+    "tablesOfInterest": ["artists", "albums"]
+  },
+  {
+    "description": "Перечислите все названия альбомов вместе с названиями треков",
+    "referenceQuery": "SELECT tr.name, al.title FROM albums AS al JOIN tracks AS tr ON tr.album_id = al.id;",
+    "tablesOfInterest": ["albums", "tracks"]
+  },
+  {
+    "description": "Перечислите все имена исполнителей (artists) вместе с названиями их альбомов в алфавитном порядке по имени исполнителя",
+    "referenceQuery": "SELECT ar.name, al.title FROM artists AS ar JOIN albums AS al ON al.artist_id = ar.id ORDER BY ar.name;",
+    "tablesOfInterest": ["albums", "artists"]
+  },
+  {
+    "description": "Перечислите имена и фамилии всех клиентов рядом с итогами в их счетах, упорядоченные по итоговым значениям, в порядке убывания",
+    "referenceQuery": "SELECT cs.first_name, cs.last_name, inv.total FROM customers AS cs JOIN invoices AS inv ON cs.id = inv.customer_id ORDER BY inv.total DESC;",
+    "tablesOfInterest": ["customers", "invoices"]
+  },
+  {
+    "description": "Дайте мне клиента (и его счет (invoice) с самой высокой суммой счета",
+    "referenceQuery": "SELECT * FROM customers AS cs JOIN invoices AS inv ON cs.id = inv.customer_id ORDER BY inv.total DESC LIMIT 1;",
+    "tablesOfInterest": ["customers", "invoices"]
+  },
+  {
+    "description": "Покажите список альбомов Aerosmith",
+    "referenceQuery": "SELECT * FROM albums AS al JOIN artists AS ar ON ar.id = al.artist_id WHERE ar.name = 'Aerosmith';",
+    "tablesOfInterest": ["albums", "artists"]
+  },
+  {
+    "description": "Покажите список альбомов Iron Maiden",
+    "referenceQuery": "SELECT * FROM albums AS al JOIN artists AS ar ON ar.id = al.artist_id WHERE ar.name = 'Iron Maiden';",
+    "tablesOfInterest": ["albums", "artists"]
+  },
+  {
+    "description": "Покажите список альбомов, которые содержат песню \"Midnight\"",
+    "referenceQuery": "SELECT * FROM albums AS al JOIN tracks AS tr ON tr.album_id = al.id WHERE tr.name = 'Midnight';",
+    "tablesOfInterest": ["albums", "tracks"]
+  },
+  {
+    "description": "Покажите список всех артистов, которые исполнили песню \"Midnight\"",
+    "referenceQuery": "SELECT * FROM artists AS ar JOIN albums AS al ON ar.id = al.artist_id JOIN tracks AS tr ON tr.album_id = al.id WHERE tr.name = 'Midnight';",
+    "tablesOfInterest": ["artists", "albums", "tracks"]
+  },
+  {
+    "description": "Посчитайте количество альбомов Iron Maiden",
+    "referenceQuery": "SELECT COUNT(*) FROM albums AS al JOIN artists AS ar ON ar.id = al.artist_id WHERE ar.name = 'Iron Maiden';",
+    "tablesOfInterest": ["albums", "artists"]
+  },
+  {
+    "description": "Перечислите всех исполнителей количество альбомов у каждого",
+    "referenceQuery": "SELECT ar.name, COUNT(*) FROM artists AS ar JOIN albums AS al ON ar.id = al.artist_id GROUP BY ar.id",
+    "tablesOfInterest": ["artists", "albums"]
+  },
+  {
+    "description": "Перечислите все альбомы и количество треков в каждом альбоме",
+    "referenceQuery": "SELECT a.title, COUNT(*) FROM albums AS a JOIN tracks AS t ON (t.album_id = a.id) GROUP BY a.id",
+    "tablesOfInterest": ["albums", "tracks"]
+  },
+  {
+    "description": "Найти исполнителя с наибольшим количеством альбомов",
+    "referenceQuery": "SELECT ar.*, COUNT(*) AS count FROM artists AS ar JOIN albums AS al ON ar.id = al.artist_id GROUP BY ar.id ORDER BY count DESC LIMIT 1;",
+    "tablesOfInterest": ["artists", "albums"]
+  },
+  {
+    "description": "Найти альбом с наибольшим количеством треков",
+    "referenceQuery": "SELECT al.*, COUNT(*) AS count FROM tracks AS tr JOIN albums AS al ON tr.album_id = al.id GROUP BY al.id ORDER BY count DESC LIMIT 1;",
+    "tablesOfInterest": ["tracks", "albums"]
+  },
+  {
+    "description": "Перечислите имена пяти крупнейших клиентов на основе сумм их счетов",
+    "referenceQuery": "SELECT cs.first_name, cs.last_name, SUM(inv.total) AS sum FROM customers AS cs JOIN invoices AS inv ON cs.id = inv.customer_id GROUP BY cs.id ORDER BY sum DESC LIMIT 5;",
+    "tablesOfInterest": ["customers", "invoices"]
+  },
+  {
+    "description": "Покажите список всех исполнителей (artists), отсортированных в алфавитном порядке по имени",
+    "referenceQuery": "SELECT * FROM artists ORDER BY name ASC;",
+    "tablesOfInterest": ["artists"]
+  },
+  {
+    "description": "Перечислите все альбомы имеющие колличество дорожек, в порядке убывания",
+    "referenceQuery": "SELECT al.*, COUNT(*) count FROM albums al JOIN tracks t ON (t.album_id = al.id) GROUP BY al.id ORDER BY count DESC",
+    "tablesOfInterest": ["albums", "tracks"]
+  },
+  {
+    "description": "Перечислите всех исполнителей и количество альбомов в каждом из них в порядке убывания, а затем, в алфавитном порядке, по имени исполнителя",
+    "referenceQuery": "SELECT ar.*, COUNT(*) AS count FROM artists AS ar JOIN albums AS al ON ar.id = al.artist_id GROUP BY ar.id ORDER BY count DESC, ar.name;",
+    "tablesOfInterest": ["artists", "albums"]
+  },
+  {
+    "description": "Выведите имена, фамилии и даты найма всех сотрудников в порядке их найма (hire_date), а также колонку hire_num, которая показывает, каким по порядку был нанят сотрудник",
+    "referenceQuery": "SELECT first_name, last_name, hire_date, RANK() OVER (ORDER BY hire_date) as hire_num FROM employees ORDER BY hire_date;",
+    "tablesOfInterest": ["employees"]
+  },
+  {
+    "description": "Выведите имена, фамилии, и даты найма всех сотрудников в порядке их найма (hire_date), а также колонку next_hire_date, которая показывает, когда был нанят следующий (по времени найма) сотрудник",
+    "referenceQuery": "SELECT first_name, last_name, hire_date, LEAD(hire_date, 1) OVER (ORDER BY hire_date) AS next_hire_date FROM employees;",
+    "tablesOfInterest": ["employees"]
+  },
+  {
+    "description": "Выведите топ-20 счетов в порядке убывания размера счета (total), добавив колонку rank_in_city, в которой укажите на каком месте по \"total\" каждый счет находится среди всех счетов из того же города",
+    "referenceQuery": "SELECT *, DENSE_RANK() OVER (PARTITION BY billing_city ORDER BY total DESC) as rank_in_city FROM invoices ORDER BY total DESC LIMIT 20;",
+    "tablesOfInterest": ["invoices"]
+  },
+  {
+    "description": "Сгруппируйте артистов по количеству альбомов: выведите колонки num_albums (количество альбомов) и num_artists (сколько артистов написали именно столько альбомов)",
+    "referenceQuery": "SELECT num_albums, COUNT(*) AS num_artists FROM (SELECT COUNT(*) AS num_albums FROM albums GROUP BY artist_id) GROUP BY num_albums;",
+    "tablesOfInterest": ["artists", "albums"]
+  },
+  {
+    "description": "Для треков жанра Bossa Nova, выведите название жанра как genre, название трека как track, название альбома как album, и общее количество треков в альбоме, в который входит трек, как tracks_in_album. Отсортируйте по названию альбома, затем по названию трека",
+    "referenceQuery": "SELECT genres.name AS genre, tracks.name AS track, albums.title AS album, COUNT() OVER (PARTITION BY tracks.album_id) AS tracks_in_album FROM tracks JOIN (SELECT * FROM genres WHERE name = 'Bossa Nova') AS genres ON tracks.genre_id = genres.id JOIN albums ON tracks.album_id = albums.id ORDER BY album, track;",
+    "tablesOfInterest": ["tracks", "albums", "genres"]
+  }
+]
