@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { Button } from "./components/Button/Button";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <div className="App">
+      <Button>Привет как дела</Button>
       <h1 className="bg-orange-200 font-bold p-4">Vite + React + Tailwind</h1>
       <div>
         <a href="https://vitejs.dev" target="_blank">

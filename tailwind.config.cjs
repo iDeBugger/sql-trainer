@@ -22,6 +22,7 @@ module.exports = {
       h3: ["1.5rem", "2.25rem"],
     },
     colors: {
+      transparent: "transparent",
       gray: {
         0: "rgba(255, 255, 255, 1)",
         50: "rgba(247, 247, 248, 1)",
