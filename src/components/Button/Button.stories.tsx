@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ChevronDown } from "../../assets/icons/ChevronDown";
 import { Button } from "./Button";
-import { ReactComponent as ChevronDown } from "../../assets/icons/chevron_down.svg";
 
 export default {
   title: "Basic/Button",

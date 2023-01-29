@@ -6,7 +6,7 @@ type ButtonSize = "big" | "medium" | "small";
 type ButtonFill = "fixedWidth" | "hugContent" | "fillContainer";
 
 type ButtonProps = {
-  children: ReactNode;
+  children?: ReactNode;
   /**
    * Element placed before the children.
    */
@@ -81,10 +81,43 @@ const variantClassMap: { [_ in ButtonVariant]: string } = {
     dark:text-blue-400 dark:hover:text-blue-500 dark:active:text-blue-600",
 };
 
-const sizeClassMap: { [_ in ButtonSize]: string } = {
-  big: "px-6 py-3 text-p-lg font-medium",
-  medium: "px-5 py-2.5 text-p-md font-medium",
-  small: "px-4 py-1.5 text-p-md font-medium",
+const iconVariantClassMap: { [_ in ButtonVariant]: string } = {
+  primary: "text-gray-0 dark:text-gray-0",
+  secondary: "text-gray-400 dark:text-gray-200",
+  tertiary: "text-bluealpha-100 dark:text-blue-500",
+  text: "text-gray-400 dark:text-gray-200",
+  link: "text-bluealpha-100 active:text-bluealpha-900 dark:text-blue-500 dark:active:text-blue-600",
+};
+
+const sizeClassMap: (size: ButtonSize, variant: ButtonVariant) => string = (
+  size,
+  variant
+) => {
+  switch (size) {
+    case "big":
+      switch (variant) {
+        case "secondary":
+          return "px-[calc(theme(spacing(6))-1px)] py-[calc(theme(spacing(3))-1px)] text-p-lg font-medium";
+        default:
+          return "px-6 py-3 text-p-lg font-medium";
+      }
+    case "medium":
+      switch (variant) {
+        case "secondary":
+          return "px-[calc(theme(spacing[5])-1px)] py-[calc(theme(spacing[2.5])-1px)] text-p-md font-medium";
+        default:
+          return "px-5 py-2.5 text-p-md font-medium";
+      }
+    case "small":
+      switch (variant) {
+        case "secondary":
+          return "px-[calc(theme(spacing(4))-1px)] py-[calc(theme(spacing[1.5])-1px)] text-p-md font-medium";
+        default:
+          return "px-4 py-1.5 text-p-md font-medium";
+      }
+    default:
+      return "";
+  }
 };
 
 const iconSizeClassMap: { [_ in ButtonSize]: string } = {
@@ -114,7 +147,8 @@ export function Button({
   const { buttonProps } = useButton(props, buttonRef);
 
   const variantClass = variantClassMap[variant];
-  const sizeClass = sizeClassMap[size];
+  const iconVariantClass = iconVariantClassMap[variant];
+  const sizeClass = sizeClassMap(size, variant);
   const iconSizeClass = iconSizeClassMap[size];
   const fillClass = fillClassMap[fill];
 
@@ -124,9 +158,15 @@ export function Button({
       ref={buttonRef}
       className={`rounded-lg gap-2 flex flex-row ${variantClass} ${sizeClass} ${fillClass} ${className}`}
     >
-      {leftIcon && <div className={iconSizeClass}>{leftIcon}</div>}
-      {children}
-      {rightIcon && <div className={iconSizeClass}>{rightIcon}</div>}
+      {leftIcon && (
+        <div className={`${iconSizeClass} ${iconVariantClass}`}>{leftIcon}</div>
+      )}
+      {children && children}
+      {rightIcon && (
+        <div className={`${iconSizeClass} ${iconVariantClass}`}>
+          {rightIcon}
+        </div>
+      )}
     </button>
   );
 }

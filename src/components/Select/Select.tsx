@@ -7,7 +7,7 @@ import { HiddenSelect, HiddenSelectProps, useSelect } from "react-aria";
 import { Button } from "../Button/Button";
 import { ListBoxExtState } from "../ListBoxExtState/ListBoxExtState";
 import { PopoverExtState } from "../PopoverExtState/PopoverExtState";
-import { ReactComponent as ChevronDown } from "../../assets/icons/chevron_down.svg";
+import { ChevronDown } from "../../assets/icons/ChevronDown";
 
 type SelectFill = "fixedWidth" | "hugContent" | "fillContainer";
 

@@ -9,6 +9,12 @@ module.exports = {
   ],
   darkMode: ["class", '[data-mode="dark"]'],
   theme: {
+    screens: {
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+    },
     fontFamily: {
       sans: ["Inter", ...defaultTheme.fontFamily.sans],
     },
