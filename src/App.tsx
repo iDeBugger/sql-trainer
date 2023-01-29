@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Item } from "react-stately";
 import { Button } from "./components/Button/Button";
+import { Select } from "./components/Select/Select";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -7,6 +9,18 @@ function App() {
   return (
     <div className="App">
       <Button>Привет как дела</Button>
+      <Select name="color" label="Test select">
+        <Item>Red</Item>
+        <Item>Orange</Item>
+        <Item>Yellow</Item>
+        <Item>Green</Item>
+        <Item>Blue</Item>
+        <Item>Purple</Item>
+        <Item>Black</Item>
+        <Item>White</Item>
+        <Item>Lime</Item>
+        <Item>Fushsia</Item>
+      </Select>
       <h1 className="bg-orange-200 font-bold p-4">Vite + React + Tailwind</h1>
       <div>
         <a href="https://vitejs.dev" target="_blank">

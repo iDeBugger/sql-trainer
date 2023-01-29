@@ -12,10 +12,11 @@
     "build-storybook-tailwind": "tailwindcss -i ./src/index.css -o ./public/storybook-tailwind.css"
   },
   "dependencies": {
-    "@react-stately/select": "^3.3.4",
     "react": "18.2.0",
     "react-aria": "3.22.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-stately": "3.20.0",
+    "vite-plugin-svgr": "^2.4.0"
   },
   "devDependencies": {
     "@babel/core": "7.20.5",

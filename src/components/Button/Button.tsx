@@ -1,10 +1,20 @@
 import { AriaButtonProps, useButton } from "react-aria";
-import { useRef } from "react";
+import { ButtonHTMLAttributes, ReactNode, useRef } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "tertiary" | "text" | "link";
 type ButtonSize = "big" | "medium" | "small";
+type ButtonFill = "fixedWidth" | "hugContent" | "fillContainer";
 
-type Props = {
+type ButtonProps = {
+  children: ReactNode;
+  /**
+   * Element placed before the children.
+   */
+  leftIcon?: ReactNode;
+  /**
+   * Element placed after the children.
+   */
+  rightIcon?: ReactNode;
   /**
    * Controls which variant of the button is shown.
    * @default primary
@@ -19,7 +29,23 @@ type Props = {
    * @default false
    */
   isDisabled?: boolean;
-} & AriaButtonProps<"button">;
+  /**
+   * React ref to button element.
+   */
+  buttonRef?: React.RefObject<HTMLButtonElement>;
+  /**
+   * HTML classes that will be added to button.
+   */
+  className?: string;
+  /**
+   * How the button controls it's width.
+   * "fixedWidth" — width is set to a fixed number using `className` prop
+   * "hugContent" — width is determined by button's content
+   * "fillContainer" — width is determined by button's container, button will fill it
+   * @default "hugContent"
+   */
+  fill?: ButtonFill;
+};
 
 const variantClassMap: { [_ in ButtonVariant]: string } = {
   primary:
@@ -61,25 +87,46 @@ const sizeClassMap: { [_ in ButtonSize]: string } = {
   small: "px-4 py-1.5 text-p-md font-medium",
 };
 
+const iconSizeClassMap: { [_ in ButtonSize]: string } = {
+  big: "h-6 w-6",
+  medium: "h-5 w-5",
+  small: "h-5 w-5",
+};
+
+const fillClassMap: { [_ in ButtonFill]: string } = {
+  fixedWidth: "justify-between",
+  hugContent: "w-auto",
+  fillContainer: "w-full justify-center",
+};
+
 export function Button({
   variant = "primary",
   size = "medium",
+  fill = "hugContent",
+  className = "",
+  leftIcon,
+  rightIcon,
   ...props
-}: Props) {
-  let ref = useRef<HTMLButtonElement>(null);
-  let { buttonProps } = useButton(props, ref);
-  let { children } = props;
+}: ButtonProps) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const { buttonRef = ref, children } = props;
 
-  let variantClass = variantClassMap[variant];
-  let sizeClass = sizeClassMap[size];
+  const { buttonProps } = useButton(props, buttonRef);
+
+  const variantClass = variantClassMap[variant];
+  const sizeClass = sizeClassMap[size];
+  const iconSizeClass = iconSizeClassMap[size];
+  const fillClass = fillClassMap[fill];
 
   return (
     <button
       {...buttonProps}
-      ref={ref}
-      className={`${variantClass} ${sizeClass} rounded-lg`}
+      ref={buttonRef}
+      className={`rounded-lg gap-2 flex flex-row ${variantClass} ${sizeClass} ${fillClass} ${className}`}
     >
+      {leftIcon && <div className={iconSizeClass}>{leftIcon}</div>}
       {children}
+      {rightIcon && <div className={iconSizeClass}>{rightIcon}</div>}
     </button>
   );
 }

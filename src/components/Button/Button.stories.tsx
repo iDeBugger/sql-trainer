@@ -1,5 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Button } from "./Button";
+import { ReactComponent as ChevronDown } from "../../assets/icons/chevron_down.svg";
 
 export default {
   title: "Basic/Button",
@@ -11,36 +12,74 @@ export default {
   },
 } as ComponentMeta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = (args) => (
+const TemplateSimpleText: ComponentStory<typeof Button> = (args) => (
   <Button {...args}>Button</Button>
 );
 
-export const Primary = Template.bind({});
+const TemplateTextWithRightIcon: ComponentStory<typeof Button> = (args) => (
+  <Button {...args} rightIcon={<ChevronDown />}>
+    Button
+  </Button>
+);
+
+export const Primary = TemplateSimpleText.bind({});
 Primary.args = {
   variant: "primary",
 };
 
-export const PrimaryDisabled = Template.bind({});
-PrimaryDisabled.args = {
-  isDisabled: true,
-};
-
-export const Secondary = Template.bind({});
+export const Secondary = TemplateSimpleText.bind({});
 Secondary.args = {
   variant: "secondary",
 };
 
-export const Tertiary = Template.bind({});
+export const Tertiary = TemplateSimpleText.bind({});
 Tertiary.args = {
   variant: "tertiary",
 };
 
-export const Text = Template.bind({});
+export const Text = TemplateSimpleText.bind({});
 Text.args = {
   variant: "text",
 };
 
-export const Link = Template.bind({});
+export const Link = TemplateSimpleText.bind({});
 Link.args = {
   variant: "link",
+};
+
+export const PrimaryDisabled = TemplateSimpleText.bind({});
+PrimaryDisabled.args = {
+  isDisabled: true,
+};
+
+export const FixedWidthWithOneElement = TemplateSimpleText.bind({});
+FixedWidthWithOneElement.args = {
+  fill: "fixedWidth",
+  className: "w-[250px]",
+};
+
+export const FixedWidthWithIcon = TemplateTextWithRightIcon.bind({});
+FixedWidthWithIcon.args = {
+  fill: "fixedWidth",
+  className: "w-[250px]",
+};
+
+export const HugContentWithOneElement = TemplateSimpleText.bind({});
+HugContentWithOneElement.args = {
+  fill: "hugContent",
+};
+
+export const HugContentWithIcon = TemplateTextWithRightIcon.bind({});
+HugContentWithIcon.args = {
+  fill: "hugContent",
+};
+
+export const FillContainerWithOneElement = TemplateSimpleText.bind({});
+FillContainerWithOneElement.args = {
+  fill: "fillContainer",
+};
+
+export const FillContainerWithIcon = TemplateTextWithRightIcon.bind({});
+FillContainerWithIcon.args = {
+  fill: "fillContainer",
 };
