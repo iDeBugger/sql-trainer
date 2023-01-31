@@ -97,7 +97,7 @@ const sizeClassMap: (size: ButtonSize, variant: ButtonVariant) => string = (
     case "big":
       switch (variant) {
         case "secondary":
-          return "px-[calc(theme(spacing(6))-1px)] py-[calc(theme(spacing(3))-1px)] text-p-lg font-medium";
+          return "px-[calc(theme(spacing[6])-1px)] py-[calc(theme(spacing[3])-1px)] text-p-lg font-medium";
         default:
           return "px-6 py-3 text-p-lg font-medium";
       }
@@ -111,7 +111,7 @@ const sizeClassMap: (size: ButtonSize, variant: ButtonVariant) => string = (
     case "small":
       switch (variant) {
         case "secondary":
-          return "px-[calc(theme(spacing(4))-1px)] py-[calc(theme(spacing[1.5])-1px)] text-p-md font-medium";
+          return "px-[calc(theme(spacing[4])-1px)] py-[calc(theme(spacing[1.5])-1px)] text-p-md font-medium";
         default:
           return "px-4 py-1.5 text-p-md font-medium";
       }

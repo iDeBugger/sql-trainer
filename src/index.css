@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    @apply bg-gray-0 dark:bg-gray-900;
+  }
+
   @font-face {
     font-family: "Inter";
     font-style: normal;
