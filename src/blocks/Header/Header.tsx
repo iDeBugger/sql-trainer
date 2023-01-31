@@ -63,6 +63,7 @@ export function Header(props: HeaderProps) {
           leftIcon={<SunIcon />}
           variant="secondary"
           size="medium"
+          aria-label={t("toggle_color_scheme") || undefined}
           onPress={onThemeButtonClick}
         />
         <Button
