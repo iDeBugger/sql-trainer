@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 
 public/storybook-tailwind.css
+storybook-static/
