@@ -7,8 +7,8 @@ import {
 import { listenerMiddleware } from "./middlewares/listenerMiddleware";
 import { settingsReducer } from "./reducers/settingsReducer";
 import { applyTheme } from "./listeners/themeListener";
-import "./listeners/languageListener";
 import { initI18n } from "../i18n/i18n";
+import "./listeners/languageListener";
 
 const LOCAL_STORAGE_STATES = ["settings"];
 const LOCAL_STORAGE_NAMESPACE = "sql_trainer";

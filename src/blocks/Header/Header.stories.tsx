@@ -5,13 +5,20 @@ export default {
   title: "Blocks/Header",
   component: Header,
   argTypes: {
-    isDisabled: {},
-    variant: {},
-    size: {},
+    onLanguageSelect: {},
+    onThemeButtonClick: {},
+    onSupportMeClick: {},
   },
 } as ComponentMeta<typeof Header>;
 
-const Template: ComponentStory<typeof Header> = (args) => <Header />;
+const Template: ComponentStory<typeof Header> = (args, context) => (
+  <Header
+    selectedLanguage={context.globals.lang}
+    onLanguageSelect={args.onLanguageSelect}
+    onThemeButtonClick={args.onThemeButtonClick}
+    onSupportMeClick={args.onSupportMeClick}
+  />
+);
 
 export const Default = Template.bind({});
 Default.args = {};

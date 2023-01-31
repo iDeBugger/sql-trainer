@@ -7,12 +7,7 @@ import { LogoText } from "../../assets/icons/LogoText";
 import { SunIcon } from "../../assets/icons/SunIcon";
 import { Button } from "../../components/Button/Button";
 import { Select } from "../../components/Select/Select";
-import {
-  LanguageType,
-  setLanguage,
-  toggleTheme,
-} from "../../store/reducers/settingsReducer";
-import { useAppDispatch, useAppSelector } from "../../store/store";
+import { LanguageType } from "../../store/reducers/settingsReducer";
 
 const LANGUAGES: { title: string; value: LanguageType }[] = [
   {
@@ -25,19 +20,22 @@ const LANGUAGES: { title: string; value: LanguageType }[] = [
   },
 ];
 
-export function Header() {
+export interface HeaderProps {
+  selectedLanguage: LanguageType;
+  onLanguageSelect: (new_lang: LanguageType) => void;
+  onThemeButtonClick: () => void;
+  onSupportMeClick: () => void;
+}
+
+export function Header(props: HeaderProps) {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
 
-  const languageSetting = useAppSelector((state) => state.settings.language);
-
-  const onThemeToggleClick = () => {
-    dispatch(toggleTheme());
-  };
-
-  const onLanguageSelectionChanged = (new_lang: Key) => {
-    dispatch(setLanguage(new_lang as LanguageType));
-  };
+  const {
+    selectedLanguage,
+    onLanguageSelect,
+    onThemeButtonClick,
+    onSupportMeClick,
+  } = props;
 
   const languageItems = LANGUAGES.map(({ title, value }) => (
     <Item key={value}>{t(title)}</Item>
@@ -54,8 +52,10 @@ export function Header() {
           name="language"
           label=""
           aria-label="Language select"
-          selectedKey={languageSetting}
-          onSelectionChange={onLanguageSelectionChanged}
+          selectedKey={selectedLanguage}
+          onSelectionChange={(selectedKey: Key) =>
+            onLanguageSelect(selectedKey as LanguageType)
+          }
         >
           {languageItems}
         </Select>
@@ -63,9 +63,14 @@ export function Header() {
           leftIcon={<SunIcon />}
           variant="secondary"
           size="medium"
-          onPress={onThemeToggleClick}
+          onPress={onThemeButtonClick}
         />
-        <Button leftIcon={<HeartOutlineIcon />} variant="primary" size="medium">
+        <Button
+          leftIcon={<HeartOutlineIcon />}
+          variant="primary"
+          size="medium"
+          onPress={onSupportMeClick}
+        >
           {t("support_me")}
         </Button>
       </div>

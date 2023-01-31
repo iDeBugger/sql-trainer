@@ -1,6 +1,5 @@
 import { StorybookViteConfig } from "@storybook/builder-vite";
 import { mergeConfig } from "vite";
-import svgr from "vite-plugin-svgr";
 
 const config: StorybookViteConfig = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -8,6 +7,7 @@ const config: StorybookViteConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "@storybook/addon-a11y",
   ],
   framework: "@storybook/react",
   core: {
@@ -18,18 +18,7 @@ const config: StorybookViteConfig = {
   },
   async viteFinal(config, _options) {
     return mergeConfig(config, {
-      plugins: [
-        svgr({
-          svgrOptions: {
-            icon: true,
-            dimensions: false,
-            svgProps: {
-              width: "100%",
-              height: "100%",
-            },
-          },
-        }),
-      ],
+      plugins: [],
     });
   },
 };

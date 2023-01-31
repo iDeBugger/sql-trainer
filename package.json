@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "storybook": "concurrently \"start-storybook --ci -p 6006\" \"tailwindcss -i ./src/index.css -o ./public/storybook-tailwind.css --watch\"",
+    "storybook": "concurrently -n \"SB,TW\" -c \"magenta,blue\" \"start-storybook --ci -p 6006\" \"tailwindcss -i ./src/index.css -o ./public/storybook-tailwind.css --watch\"",
+    "test-storybook": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"build-storybook && http-server storybook-static --port 6006 --silent\" \"wait-on tcp:6006 && test-storybook\"",
     "build-storybook": "npm run build-storybook-tailwind && build-storybook",
     "build-storybook-tailwind": "tailwindcss -i ./src/index.css -o ./public/storybook-tailwind.css"
   },
@@ -24,23 +25,28 @@
   },
   "devDependencies": {
     "@babel/core": "7.20.5",
+    "@storybook/addon-a11y": "6.5.16",
     "@storybook/addon-actions": "6.5.16",
     "@storybook/addon-essentials": "6.5.16",
     "@storybook/addon-interactions": "6.5.16",
     "@storybook/addon-links": "6.5.16",
     "@storybook/builder-vite": "0.3.0",
     "@storybook/react": "6.5.16",
+    "@storybook/test-runner": "0.9.3",
     "@storybook/testing-library": "0.0.13",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
     "@vitejs/plugin-react": "2.2.0",
     "autoprefixer": "10.4.13",
+    "axe-playwright": "1.1.12",
     "babel-loader": "8.3.0",
     "concurrently": "7.6.0",
+    "http-server": "14.1.1",
     "postcss": "8.4.19",
     "tailwindcss": "3.2.4",
     "typescript": "4.6.4",
-    "vite": "3.2.3"
+    "vite": "3.2.3",
+    "wait-on": "7.0.1"
   },
   "volta": {
     "node": "16.18.1"
