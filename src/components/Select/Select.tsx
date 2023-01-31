@@ -3,7 +3,12 @@ import {
   useSelectState,
   SelectProps as StatelySelectProps,
 } from "react-stately";
-import { HiddenSelect, HiddenSelectProps, useSelect } from "react-aria";
+import {
+  AriaSelectOptions,
+  HiddenSelect,
+  HiddenSelectProps,
+  useSelect,
+} from "react-aria";
 import { Button } from "../Button/Button";
 import { ListBoxExtState } from "../ListBoxExtState/ListBoxExtState";
 import { PopoverExtState } from "../PopoverExtState/PopoverExtState";
@@ -36,7 +41,8 @@ export type SelectProps = {
    * @default "hugContent"
    */
   fill?: SelectFill;
-} & StatelySelectProps<object>;
+} & StatelySelectProps<object> &
+  AriaSelectOptions<object>;
 
 const rootContainerFillMap: { [_ in SelectFill]: string } = {
   fixedWidth: "justify-between",

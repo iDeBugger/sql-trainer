@@ -7,6 +7,8 @@ import {
 import { listenerMiddleware } from "./middlewares/listenerMiddleware";
 import { settingsReducer } from "./reducers/settingsReducer";
 import { applyTheme } from "./listeners/themeListener";
+import "./listeners/languageListener";
+import { initI18n } from "../i18n/i18n";
 
 const LOCAL_STORAGE_STATES = ["settings"];
 const LOCAL_STORAGE_NAMESPACE = "sql_trainer";
@@ -17,6 +19,7 @@ const getPreloadedState = () => {
     namespace: LOCAL_STORAGE_NAMESPACE,
   });
 
+  initI18n((storeFromLocalStorage as RootState)?.settings?.language || "en");
   applyTheme((storeFromLocalStorage as RootState)?.settings?.theme || "system");
 
   return storeFromLocalStorage;

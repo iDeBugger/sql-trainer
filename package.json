@@ -12,10 +12,12 @@
     "build-storybook-tailwind": "tailwindcss -i ./src/index.css -o ./public/storybook-tailwind.css"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.2",
+    "@reduxjs/toolkit": "1.9.2",
+    "i18next": "22.4.9",
     "react": "18.2.0",
     "react-aria": "3.22.0",
     "react-dom": "18.2.0",
+    "react-i18next": "12.1.4",
     "react-redux": "8.0.5",
     "react-stately": "3.20.0",
     "redux-localstorage-simple": "2.5.1"
