@@ -5,7 +5,7 @@ import { LogoText } from "../../assets/icons/LogoText";
 import { SunIcon } from "../../assets/icons/SunIcon";
 import { Button } from "../../components/Button/Button";
 import { Select } from "../../components/Select/Select";
-import { toggleTheme } from "../../store/reducers/themeReducer";
+import { toggleTheme } from "../../store/reducers/settingsReducer";
 import { useAppDispatch } from "../../store/store";
 
 export function Header() {

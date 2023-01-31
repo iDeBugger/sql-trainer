@@ -1,5 +1,5 @@
 import { startAppListening } from "../middlewares/listenerMiddleware";
-import { ThemeType } from "../reducers/themeReducer";
+import { ThemeType } from "../reducers/settingsReducer";
 
 export const applyTheme = (theme: ThemeType) => {
   switch (theme) {
@@ -24,10 +24,10 @@ export const applyTheme = (theme: ThemeType) => {
 
 startAppListening({
   predicate: (action, currentState, originalState) => {
-    return currentState.theme.theme !== originalState.theme.theme;
+    return currentState.settings.theme !== originalState.settings.theme;
   },
   effect: (action, api) => {
     const state = api.getState();
-    applyTheme(state.theme.theme);
+    applyTheme(state.settings.theme);
   },
 });

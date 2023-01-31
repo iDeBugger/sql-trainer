@@ -2,19 +2,19 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 
 export type ThemeType = "light" | "dark" | "system";
 
-interface ThemeState {
+interface SettingsState {
   theme: ThemeType;
 }
 
-export const setLightTheme = createAction("theme/setLight");
-export const setDarkTheme = createAction("theme/setDark");
-export const toggleTheme = createAction("theme/toggle");
+export const setLightTheme = createAction("settings/setLightTheme");
+export const setDarkTheme = createAction("settings/setDarkTheme");
+export const toggleTheme = createAction("settings/toggleTheme");
 
-const INITIAL_STATE: ThemeState = {
+const INITIAL_STATE: SettingsState = {
   theme: "system",
 };
 
-export const themeReducer = createReducer(INITIAL_STATE, (builder) => {
+export const settingsReducer = createReducer(INITIAL_STATE, (builder) => {
   builder
     .addCase(setLightTheme, (state, action) => {
       state.theme = "light";

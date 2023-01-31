@@ -5,11 +5,10 @@ import {
   load as loadFromLocalStorage,
 } from "redux-localstorage-simple";
 import { listenerMiddleware } from "./middlewares/listenerMiddleware";
-import { themeReducer } from "./reducers/themeReducer";
-import "./listeners/themeListener";
+import { settingsReducer } from "./reducers/settingsReducer";
 import { applyTheme } from "./listeners/themeListener";
 
-const LOCAL_STORAGE_STATES = ["theme"];
+const LOCAL_STORAGE_STATES = ["settings"];
 const LOCAL_STORAGE_NAMESPACE = "sql_trainer";
 
 const getPreloadedState = () => {
@@ -18,13 +17,13 @@ const getPreloadedState = () => {
     namespace: LOCAL_STORAGE_NAMESPACE,
   });
 
-  applyTheme((storeFromLocalStorage as RootState)?.theme?.theme || "system");
+  applyTheme((storeFromLocalStorage as RootState)?.settings?.theme || "system");
 
   return storeFromLocalStorage;
 };
 
 const reducer = {
-  theme: themeReducer,
+  settings: settingsReducer,
 };
 
 export const store = configureStore({
