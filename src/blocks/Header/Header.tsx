@@ -16,7 +16,7 @@ export function Header() {
   };
 
   return (
-    <div className="container px-20 h-10 flex flex-row justify-between">
+    <div className="container px-20 py-4 h-[72px] flex flex-row justify-between">
       <div className="flex flex-row gap-2 justify-start items-center">
         <LogoIcon className="flex-shrink-0" />
         <LogoText className="flex-shrink-0 h-7 text-gray-900 dark:text-gray-50" />
