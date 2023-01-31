@@ -5,8 +5,16 @@ import { LogoText } from "../../assets/icons/LogoText";
 import { SunIcon } from "../../assets/icons/SunIcon";
 import { Button } from "../../components/Button/Button";
 import { Select } from "../../components/Select/Select";
+import { toggleTheme } from "../../store/reducers/themeReducer";
+import { useAppDispatch } from "../../store/store";
 
 export function Header() {
+  const dispatch = useAppDispatch();
+
+  const onThemeToggleClick = () => {
+    dispatch(toggleTheme());
+  };
+
   return (
     <div className="container px-20 h-10 flex flex-row justify-between">
       <div className="flex flex-row gap-2 justify-start items-center">
@@ -18,7 +26,12 @@ export function Header() {
           <Item>Русский</Item>
           <Item>Английский</Item>
         </Select>
-        <Button leftIcon={<SunIcon />} variant="secondary" size="medium" />
+        <Button
+          leftIcon={<SunIcon />}
+          variant="secondary"
+          size="medium"
+          onPress={onThemeToggleClick}
+        />
         <Button leftIcon={<HeartOutlineIcon />} variant="primary" size="medium">
           Поддержать нас
         </Button>

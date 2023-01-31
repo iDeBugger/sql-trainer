@@ -45,7 +45,7 @@ type ButtonProps = {
    * @default "hugContent"
    */
   fill?: ButtonFill;
-};
+} & AriaButtonProps;
 
 const variantClassMap: { [_ in ButtonVariant]: string } = {
   primary:

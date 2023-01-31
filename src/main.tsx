@@ -1,11 +1,15 @@
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import App from "./App";
+import { store } from "./store/store";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  // Tomporarily dosable StrictMode due to issue in react-spectrum
+  // Temporarily disable StrictMode due to issue in react-spectrum
   // https://github.com/adobe/react-spectrum/issues/779
   // <React.StrictMode>
-  <App />
+  <Provider store={store}>
+    <App />
+  </Provider>
   // </React.StrictMode>
 );

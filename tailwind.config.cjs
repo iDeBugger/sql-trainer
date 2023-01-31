@@ -7,7 +7,7 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
     "./.storybook/withTailwindTheme.decorator.tsx",
   ],
-  darkMode: ["class", '[data-mode="dark"]'],
+  darkMode: ["class", '[data-color-theme="dark"]'],
   theme: {
     screens: {
       sm: "640px",

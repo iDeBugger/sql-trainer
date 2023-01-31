@@ -9,7 +9,7 @@ export const withTailwindTheme = (Story, context) => {
   useEffect(() => {
     const htmlTag = document.documentElement;
 
-    htmlTag.setAttribute("data-mode", theme || DEFAULT_THEME);
+    htmlTag.setAttribute("data-color-theme", theme || DEFAULT_THEME);
   }, [theme]);
 
   return (
