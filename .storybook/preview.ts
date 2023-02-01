@@ -20,7 +20,7 @@ export const parameters = {
         name: "Mobile (small, 320px)",
         styles: {
           width: "320px",
-          "min-height": "780px",
+          minHeight: "780px",
           height: "100%",
         },
       },
@@ -28,7 +28,7 @@ export const parameters = {
         name: "Mobile (big, 639px)",
         styles: {
           width: "639px",
-          "min-height": "780px",
+          minHeight: "780px",
           height: "100%",
         },
       },
@@ -36,7 +36,7 @@ export const parameters = {
         name: "Tablet vertical (small, 640px)",
         styles: {
           width: "640px",
-          "min-height": "780px",
+          minHeight: "780px",
           height: "100%",
         },
       },
@@ -44,7 +44,7 @@ export const parameters = {
         name: "Tablet vertical (big, 1023px)",
         styles: {
           width: "1023px",
-          "min-height": "780px",
+          minHeight: "780px",
           height: "100%",
         },
       },
@@ -52,7 +52,7 @@ export const parameters = {
         name: "Tablet horizontal (small, 1024px)",
         styles: {
           width: "1024px",
-          "min-height": "780px",
+          minHeight: "780px",
           height: "100%",
         },
       },
@@ -60,7 +60,7 @@ export const parameters = {
         name: "Tablet horizontal (big, 1279px)",
         styles: {
           width: "1279px",
-          "min-height": "780px",
+          minHeight: "780px",
           height: "100%",
         },
       },
@@ -68,7 +68,7 @@ export const parameters = {
         name: "Desktop (1280px)",
         styles: {
           width: "1280px",
-          "min-height": "780px",
+          minHeight: "780px",
           height: "100%",
         },
       },
@@ -76,7 +76,7 @@ export const parameters = {
         name: "Desktop (1511px)",
         styles: {
           width: "1511px",
-          "min-height": "780px",
+          minHeight: "780px",
           height: "100%",
         },
       },
@@ -84,7 +84,7 @@ export const parameters = {
         name: "Desktop (1920px)",
         styles: {
           width: "1920px",
-          "min-height": "780px",
+          minHeight: "780px",
           height: "100%",
         },
       },

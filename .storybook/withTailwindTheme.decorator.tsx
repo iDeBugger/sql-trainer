@@ -7,14 +7,12 @@ export const withTailwindTheme = (Story, context) => {
   const { theme } = context.globals;
 
   useEffect(() => {
-    const htmlTag = document.documentElement;
-
-    htmlTag.setAttribute("data-color-theme", theme || DEFAULT_THEME);
+    document.documentElement.setAttribute(
+      "data-color-theme",
+      theme || DEFAULT_THEME
+    );
+    document.body.classList.add("bg-gray-0", "dark:bg-gray-900");
   }, [theme]);
 
-  return (
-    <div className="bg-gray-0 dark:bg-gray-900 absolute inset-0 p-4">
-      <Story />
-    </div>
-  );
+  return <Story />;
 };

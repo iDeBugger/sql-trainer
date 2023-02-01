@@ -9,6 +9,9 @@ export default {
     onThemeButtonClick: {},
     onSupportMeClick: {},
   },
+  parameters: {
+    layout: "fullscreen",
+  },
 } as ComponentMeta<typeof Header>;
 
 const Template: ComponentStory<typeof Header> = (args, context) => (
