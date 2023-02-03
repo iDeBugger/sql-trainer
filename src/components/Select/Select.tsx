@@ -3,32 +3,15 @@ import {
   useSelectState,
   SelectProps as StatelySelectProps,
 } from "react-stately";
-import {
-  AriaSelectOptions,
-  HiddenSelect,
-  HiddenSelectProps,
-  useSelect,
-} from "react-aria";
+import { AriaSelectOptions, HiddenSelect, useSelect } from "react-aria";
 import { Button } from "../Button/Button";
-import { ListBoxExtState } from "../ListBoxExtState/ListBoxExtState";
-import { PopoverExtState } from "../PopoverExtState/PopoverExtState";
+import { ListBox } from "../ListBox/ListBox";
 import { ChevronDown } from "../../assets/icons/ChevronDown";
+import { Popover } from "../Popover/Popover";
 
 type SelectFill = "fixedWidth" | "hugContent" | "fillContainer";
 
-export type SelectProps = {
-  /**
-   * HTML form input name.
-   */
-  name: HiddenSelectProps<unknown>["name"];
-  /**
-   * The content to display as the label.
-   */
-  label: StatelySelectProps<unknown>["label"];
-  /**
-   * Whether the label have to be showed (screen readers will see it even if false)
-   */
-  showLabel?: boolean;
+export interface SelectProps<T extends object> extends AriaSelectOptions<T> {
   /**
    * HTML classes that will be added to select button.
    */
@@ -41,8 +24,7 @@ export type SelectProps = {
    * @default "hugContent"
    */
   fill?: SelectFill;
-} & StatelySelectProps<object> &
-  AriaSelectOptions<object>;
+}
 
 const rootContainerFillMap: { [_ in SelectFill]: string } = {
   fixedWidth: "justify-between",
@@ -50,11 +32,11 @@ const rootContainerFillMap: { [_ in SelectFill]: string } = {
   fillContainer: "w-full justify-center",
 };
 
-export function Select({
+export function Select<T extends object>({
   buttonClassName = "",
   fill = "hugContent",
   ...props
-}: SelectProps) {
+}: SelectProps<T>) {
   let state = useSelectState(props);
 
   let buttonRef = React.useRef<HTMLButtonElement>(null);
@@ -65,7 +47,7 @@ export function Select({
   );
 
   const rootFillClasName = rootContainerFillMap[fill];
-  const labelClassName = props.showLabel ? "" : "hidden";
+  const labelClassName = props.label ? "" : "hidden";
 
   return (
     <div className={`inline-block ${rootFillClasName}`}>
@@ -85,22 +67,16 @@ export function Select({
         variant="text"
         size="medium"
         fill={fill}
+        rightIcon={<ChevronDown />}
       >
         <span {...valueProps}>
           {state.selectedItem ? state.selectedItem.rendered : "Выбрать"}
         </span>
-        <span aria-hidden="true">
-          <ChevronDown width={20} height={20} />
-        </span>
       </Button>
       {state.isOpen && (
-        <PopoverExtState
-          state={state}
-          triggerRef={buttonRef}
-          placement="bottom start"
-        >
-          <ListBoxExtState {...menuProps} state={state} />
-        </PopoverExtState>
+        <Popover state={state} triggerRef={buttonRef} placement="bottom start">
+          <ListBox {...menuProps} state={state} />
+        </Popover>
       )}
     </div>
   );

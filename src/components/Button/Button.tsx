@@ -1,11 +1,11 @@
 import { AriaButtonProps, useButton } from "react-aria";
-import { ButtonHTMLAttributes, ReactNode, useRef } from "react";
+import { ReactNode, RefObject, useRef } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "tertiary" | "text" | "link";
 type ButtonSize = "big" | "medium" | "small";
 type ButtonFill = "fixedWidth" | "hugContent" | "fillContainer";
 
-type ButtonProps = {
+export interface ButtonProps extends AriaButtonProps {
   children?: ReactNode;
   /**
    * Element placed before the children.
@@ -32,7 +32,7 @@ type ButtonProps = {
   /**
    * React ref to button element.
    */
-  buttonRef?: React.RefObject<HTMLButtonElement>;
+  buttonRef?: RefObject<HTMLButtonElement>;
   /**
    * HTML classes that will be added to button.
    */
@@ -45,7 +45,7 @@ type ButtonProps = {
    * @default "hugContent"
    */
   fill?: ButtonFill;
-} & AriaButtonProps;
+}
 
 const variantClassMap: { [_ in ButtonVariant]: string } = {
   primary:

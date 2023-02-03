@@ -1,15 +1,20 @@
-import { ListProps, ListState, useListState } from "react-stately";
-import React from "react";
+import { ListState } from "react-stately";
+import React, { RefObject, useRef } from "react";
 import { AriaListBoxOptions, useListBox, useOption } from "react-aria";
 import { Node } from "@react-types/shared";
 
-type ListBoxProps = {
-  listBoxRef?: React.RefObject<HTMLUListElement>;
-  state: ListState<object>;
-} & AriaListBoxOptions<unknown>;
+interface ListBoxProps extends AriaListBoxOptions<unknown> {
+  listBoxRef?: RefObject<HTMLUListElement>;
+  state: ListState<unknown>;
+}
 
-export function ListBoxExtState(props: ListBoxProps) {
-  const ref = React.useRef<HTMLUListElement>(null);
+interface OptionProps {
+  item: Node<unknown>;
+  state: ListState<unknown>;
+}
+
+export function ListBox(props: ListBoxProps) {
+  const ref = useRef<HTMLUListElement>(null);
 
   let { listBoxRef = ref, state } = props;
   let { listBoxProps } = useListBox(props, state, listBoxRef);
@@ -26,8 +31,6 @@ export function ListBoxExtState(props: ListBoxProps) {
     </ul>
   );
 }
-
-type OptionProps = { item: Node<unknown>; state: ListState<unknown> };
 
 function Option({ item, state }: OptionProps) {
   let ref = React.useRef<HTMLLIElement>(null);
