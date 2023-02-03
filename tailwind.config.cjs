@@ -108,6 +108,12 @@ module.exports = {
         800: "rgba(19, 104, 58, 1)",
         900: "rgba(18, 85, 51, 1)",
       },
+      whitealpha: {
+        64: "rgba(255, 255, 255, 0.64)",
+      },
+      darkalpha: {
+        48: "rgba(0, 0, 0, 0.48)",
+      },
     },
   },
   plugins: [],

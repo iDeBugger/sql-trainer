@@ -4,6 +4,7 @@ import {
   Overlay,
   usePopover,
   AriaPopoverProps,
+  useFocusRing,
 } from "react-aria";
 import { OverlayTriggerState } from "react-stately";
 
@@ -15,6 +16,10 @@ interface PopoverProps extends Omit<AriaPopoverProps, "popoverRef"> {
 
 export function Popover(props: PopoverProps) {
   let ref = useRef<HTMLDivElement>(null);
+
+  const { isFocusVisible, focusProps } = useFocusRing();
+  const focusOutlineClass = !isFocusVisible ? "outline-none" : "";
+
   let { popoverRef = ref, state, children, isNonModal } = props;
   let { popoverProps, underlayProps } = usePopover(
     {
@@ -29,11 +34,11 @@ export function Popover(props: PopoverProps) {
       {isNonModal && <div {...underlayProps} className="fixed inset-0" />}
       <div
         {...popoverProps}
-        className="rounded-lg p-1 border \
-                 bg-gray-0 border-gray-100 text-gray-900 \
-                 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50"
+        {...focusProps}
+        className={`rounded-lg p-1 border \
+        bg-gray-0 border-gray-100 text-gray-900 \
+        dark:bg-gray-700 dark:border-gray-600 dark:text-gray-50 ${focusOutlineClass}`}
         ref={popoverRef as RefObject<HTMLDivElement>}
-        style={popoverProps.style}
       >
         {!isNonModal && <DismissButton onDismiss={state.close} />}
         {children}

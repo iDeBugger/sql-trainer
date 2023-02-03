@@ -1,6 +1,11 @@
 import { ListState } from "react-stately";
 import React, { RefObject, useRef } from "react";
-import { AriaListBoxOptions, useListBox, useOption } from "react-aria";
+import {
+  AriaListBoxOptions,
+  useFocusRing,
+  useListBox,
+  useOption,
+} from "react-aria";
 import { Node } from "@react-types/shared";
 
 interface ListBoxProps extends AriaListBoxOptions<unknown> {
@@ -16,14 +21,18 @@ interface OptionProps {
 export function ListBox(props: ListBoxProps) {
   const ref = useRef<HTMLUListElement>(null);
 
+  const { isFocusVisible, focusProps } = useFocusRing();
+  const focusOutlineClass = !isFocusVisible ? "outline-none" : "";
+
   let { listBoxRef = ref, state } = props;
   let { listBoxProps } = useListBox(props, state, listBoxRef);
 
   return (
     <ul
       {...listBoxProps}
+      {...focusProps}
       ref={listBoxRef}
-      className="max-h-28 overflow-auto min-w-[125px]"
+      className={`max-h-28 overflow-auto min-w-[125px] ${focusOutlineClass}`}
     >
       {[...state.collection].map((item) => (
         <Option key={item.key} item={item} state={state} />

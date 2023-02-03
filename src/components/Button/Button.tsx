@@ -1,4 +1,4 @@
-import { AriaButtonProps, useButton } from "react-aria";
+import { AriaButtonProps, useButton, useFocusRing } from "react-aria";
 import { ReactNode, RefObject, useRef } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "tertiary" | "text" | "link";
@@ -144,6 +144,9 @@ export function Button({
   const ref = useRef<HTMLButtonElement>(null);
   const { buttonRef = ref, children } = props;
 
+  const { isFocusVisible, focusProps } = useFocusRing();
+  const focusOutlineClass = !isFocusVisible ? "outline-none" : "";
+
   const { buttonProps } = useButton(props, buttonRef);
 
   const variantClass = variantClassMap[variant];
@@ -155,8 +158,9 @@ export function Button({
   return (
     <button
       {...buttonProps}
+      {...focusProps}
       ref={buttonRef}
-      className={`rounded-lg gap-2 flex flex-row ${variantClass} ${sizeClass} ${fillClass} ${className}`}
+      className={`rounded-lg gap-2 flex flex-row ${variantClass} ${sizeClass} ${fillClass} ${className} ${focusOutlineClass}`}
     >
       {leftIcon && (
         <div className={`${iconSizeClass} ${iconVariantClass}`}>{leftIcon}</div>
