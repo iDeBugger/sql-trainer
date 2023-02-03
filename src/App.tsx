@@ -1,4 +1,5 @@
 import { Header } from "./blocks/Header/Header";
+import { Subheader } from "./blocks/Subheader/Subheader";
 import {
   LanguageType,
   setLanguage,
@@ -8,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "./store/store";
 
 function App() {
   const dispatch = useAppDispatch();
-  const selectedLanguage = useAppSelector((state) => state.settings.language);
+  const settings = useAppSelector((state) => state.settings);
 
   const onLanguageSelect = (new_lang: LanguageType) => {
     dispatch(setLanguage(new_lang));
@@ -19,14 +20,16 @@ function App() {
   };
 
   return (
-    <>
+    <div className="flex flex-col w-full lg:container">
       <Header
-        selectedLanguage={selectedLanguage}
+        selectedLanguage={settings.language}
         onLanguageSelect={onLanguageSelect}
+        selectedTheme={settings.theme}
         onThemeButtonClick={onThemeButtonClick}
         onSupportMeClick={() => {}}
       />
-    </>
+      <Subheader />
+    </div>
   );
 }
 

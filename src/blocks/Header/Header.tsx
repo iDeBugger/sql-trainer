@@ -5,13 +5,14 @@ import { CloseIcon } from "../../assets/icons/CloseIcon";
 import { HeartOutlineIcon } from "../../assets/icons/HeartOutlineIcon";
 import { LogoIcon } from "../../assets/icons/LogoIcon";
 import { LogoText } from "../../assets/icons/LogoText";
+import { MoonIcon } from "../../assets/icons/MoonIcon";
 import { MoreHorizontalIcon } from "../../assets/icons/MoreHorizontalIcon";
 import { SunIcon } from "../../assets/icons/SunIcon";
 import { Button } from "../../components/Button/Button";
 import { Dialog } from "../../components/Dialog/Dialog";
 import { ModalButton } from "../../components/ModalButton/ModalButton";
 import { Select } from "../../components/Select/Select";
-import { LanguageType } from "../../store/reducers/settingsReducer";
+import { LanguageType, ThemeType } from "../../store/reducers/settingsReducer";
 
 interface LayoutProps {
   children: ReactNode;
@@ -33,6 +34,7 @@ interface LanguageSelectProps {
 }
 
 interface ThemeButtonProps {
+  selectedTheme: ThemeType;
   onClick: () => void;
 }
 
@@ -44,6 +46,7 @@ interface SupportUsButtonProps {
 export interface HeaderProps {
   selectedLanguage: LanguageType;
   onLanguageSelect: (new_lang: LanguageType) => void;
+  selectedTheme: ThemeType;
   onThemeButtonClick: () => void;
   onSupportMeClick: () => void;
 }
@@ -60,18 +63,12 @@ const LANGUAGES: { title: string; value: LanguageType }[] = [
 ];
 
 function Layout({ children }: LayoutProps) {
-  return (
-    <div className="w-full lg:container px-6 py-2 flex flex-col">
-      {children}
-    </div>
-  );
+  return <div className="w-full px-6 py-2 flex flex-col">{children}</div>;
 }
 
 function Row({ children, className }: RowProps) {
   return (
-    <div
-      className={`w-full lg:container py-2 flex flex-row justify-between ${className}`}
-    >
+    <div className={`w-full py-2 flex flex-row justify-between ${className}`}>
       {children}
     </div>
   );
@@ -114,12 +111,17 @@ function LanguageSelect({
   );
 }
 
-function ThemeToggler({ onClick }: ThemeButtonProps) {
+function ThemeToggler({ selectedTheme, onClick }: ThemeButtonProps) {
   const { t } = useTranslation();
+
+  const isDarkTheme =
+    selectedTheme === "dark" ||
+    (selectedTheme === "system" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   return (
     <Button
-      leftIcon={<SunIcon />}
+      leftIcon={isDarkTheme ? <MoonIcon /> : <SunIcon />}
       variant="secondary"
       size="medium"
       aria-label={t("toggle_color_scheme") || undefined}
@@ -150,6 +152,7 @@ export function Header(props: HeaderProps) {
   const {
     selectedLanguage,
     onLanguageSelect,
+    selectedTheme,
     onThemeButtonClick,
     onSupportMeClick,
   } = props;
@@ -182,7 +185,10 @@ export function Header(props: HeaderProps) {
                     selectedLanguage={selectedLanguage}
                     onSelect={onLanguageSelect}
                   />
-                  <ThemeToggler onClick={onThemeButtonClick} />
+                  <ThemeToggler
+                    selectedTheme={selectedTheme}
+                    onClick={onThemeButtonClick}
+                  />
                 </Row>
                 <Row>
                   <SupportMeButton
@@ -226,7 +232,10 @@ export function Header(props: HeaderProps) {
                       selectedLanguage={selectedLanguage}
                       onSelect={onLanguageSelect}
                     />
-                    <ThemeToggler onClick={onThemeButtonClick} />
+                    <ThemeToggler
+                      selectedTheme={selectedTheme}
+                      onClick={onThemeButtonClick}
+                    />
                   </Row>
                 </Layout>
               </Dialog>
@@ -240,7 +249,10 @@ export function Header(props: HeaderProps) {
             selectedLanguage={selectedLanguage}
             onSelect={onLanguageSelect}
           />
-          <ThemeToggler onClick={onThemeButtonClick} />
+          <ThemeToggler
+            selectedTheme={selectedTheme}
+            onClick={onThemeButtonClick}
+          />
           <SupportMeButton onClick={onSupportMeClick} />
         </div>
       </LogoRow>
