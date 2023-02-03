@@ -1,5 +1,6 @@
 import "tailwindcss/tailwind.css";
 import { DEFAULT_LANG, i18nDecorator } from "./i18n.decorator.js";
+import { withCenteredFullscreenLayout } from "./withCenteredFullscreenLayout.decorator.js";
 import {
   DEFAULT_THEME,
   withTailwindTheme,
@@ -132,4 +133,8 @@ export const globalTypes = {
   },
 };
 
-export const decorators = [withTailwindTheme, i18nDecorator];
+export const decorators = [
+  withCenteredFullscreenLayout,
+  withTailwindTheme,
+  i18nDecorator,
+];
