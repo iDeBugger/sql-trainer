@@ -28,7 +28,7 @@ function App() {
         onThemeButtonClick={onThemeButtonClick}
         onSupportMeClick={() => {}}
       />
-      <Subheader />
+      <Subheader currentTask={150} onTOCClick={() => {}} />
     </div>
   );
 }

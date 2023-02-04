@@ -2,7 +2,9 @@
   "translation": {
     "english": "English",
     "russian": "Русский",
-    "support_me": "Поддержать меня",
-    "toggle_color_scheme": "Переключить цветовую тему"
+    "support_me": "Поддержать",
+    "toggle_color_scheme": "Переключить цветовую тему",
+    "tasks_list": "Задачи",
+    "task_number": "Задача {{task}}"
   }
 }
