@@ -5,6 +5,7 @@
     "support_me": "Поддержать",
     "toggle_color_scheme": "Переключить цветовую тему",
     "tasks_list": "Задачи",
-    "task_number": "Задача {{task}}"
+    "task_number": "Задача {{task}}",
+    "open_tasks_list": "Открыть список задач"
   }
 }

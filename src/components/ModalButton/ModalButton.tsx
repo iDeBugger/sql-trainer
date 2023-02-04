@@ -18,7 +18,7 @@ export function ModalButton({
   const triggerRef = useRef(null);
   const state = useOverlayTriggerState(props);
   const { triggerProps, overlayProps } = useOverlayTrigger(
-    { type: "dialog" },
+    { type: "menu" },
     state,
     triggerRef
   );

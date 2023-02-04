@@ -18,7 +18,7 @@ export function Dialog({ children, ...props }: DialogProps) {
       {...dialogProps}
       {...focusProps}
       ref={ref}
-      className={`flex justify-center ${focusOutlineClass}`}
+      className={`max-h-full flex justify-center ${focusOutlineClass}`}
     >
       {children}
     </div>

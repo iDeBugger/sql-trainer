@@ -5,6 +5,7 @@
     "support_me": "Support",
     "toggle_color_scheme": "Toggle color scheme",
     "tasks_list": "Tasks list",
-    "task_number": "Task {{task}}"
+    "task_number": "Task {{task}}",
+    "open_tasks_list": "Open tasks list"
   }
 }
