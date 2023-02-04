@@ -66,7 +66,7 @@ function Layout({ children }: LayoutProps) {
   return <div className="w-full px-6 py-2 flex flex-col">{children}</div>;
 }
 
-function Row({ children, className }: RowProps) {
+function Row({ children, className = "" }: RowProps) {
   return (
     <div className={`w-full py-2 flex flex-row justify-between ${className}`}>
       {children}
@@ -74,7 +74,7 @@ function Row({ children, className }: RowProps) {
   );
 }
 
-function LogoRow({ children, className }: LogoRowProps) {
+function LogoRow({ children, className = "" }: LogoRowProps) {
   return (
     <Row className={className}>
       <div className="flex flex-row gap-2 justify-start items-center">
