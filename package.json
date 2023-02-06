@@ -21,7 +21,9 @@
     "react-i18next": "12.1.4",
     "react-redux": "8.0.5",
     "react-stately": "3.20.0",
-    "redux-localstorage-simple": "2.5.1"
+    "redux-localstorage-simple": "2.5.1",
+    "sql.js": "^1.8.0",
+    "threads": "^1.7.0"
   },
   "devDependencies": {
     "@babel/core": "7.20.5",
@@ -36,6 +38,7 @@
     "@storybook/testing-library": "0.0.13",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
+    "@types/sql.js": "^1.4.4",
     "@vitejs/plugin-react": "2.2.0",
     "autoprefixer": "10.4.13",
     "axe-playwright": "1.1.12",

@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import {
   save as saveToLocalStorage,
@@ -6,9 +6,23 @@ import {
 } from "redux-localstorage-simple";
 import { listenerMiddleware } from "./middlewares/listenerMiddleware";
 import { settingsReducer } from "./reducers/settingsReducer";
+import { taskReducer } from "./reducers/taskReducer";
 import { applyTheme } from "./listeners/themeListener";
 import { initI18n } from "../i18n/i18n";
 import "./listeners/languageListener";
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export const createAppAsyncThunk =
+  createAsyncThunk.withTypes<{
+    state: RootState;
+    dispatch: AppDispatch;
+    rejectValue: string;
+  }>();
 
 const LOCAL_STORAGE_STATES = ["settings"];
 const LOCAL_STORAGE_NAMESPACE = "sql_trainer";
@@ -27,6 +41,7 @@ const getPreloadedState = () => {
 
 const reducer = {
   settings: settingsReducer,
+  task: taskReducer,
 };
 
 export const store = configureStore({
@@ -43,9 +58,3 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   preloadedState: getPreloadedState(),
 });
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

@@ -7,4 +7,7 @@ export default defineConfig({
   build: {
     sourcemap: "inline",
   },
+  worker: {
+    format: "es",
+  },
 });

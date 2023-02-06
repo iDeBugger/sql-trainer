@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { Task, tasksList } from "./assets/tasks/tasks";
 import { Header } from "./blocks/Header/Header";
 import { Subheader } from "./blocks/Subheader/Subheader";
 import {
@@ -6,10 +8,19 @@ import {
   toggleTheme,
 } from "./store/reducers/settingsReducer";
 import { useAppDispatch, useAppSelector } from "./store/store";
+import { selectTask } from "./store/thunks/selectTaskThunk";
 
 function App() {
   const dispatch = useAppDispatch();
   const settings = useAppSelector((state) => state.settings);
+  const selectedTask = useAppSelector((state) => state.task.selected);
+
+  useEffect(() => {
+    if (!selectedTask) {
+      console.log("Task is not selected. The first task was selected");
+      dispatch(selectTask(tasksList[0].id));
+    }
+  }, [selectedTask]);
 
   const onLanguageSelect = (new_lang: LanguageType) => {
     dispatch(setLanguage(new_lang));
@@ -17,6 +28,10 @@ function App() {
 
   const onThemeButtonClick = () => {
     dispatch(toggleTheme());
+  };
+
+  const onSelectTask = (newTask: Task["id"]) => {
+    dispatch(selectTask(newTask));
   };
 
   return (
@@ -28,7 +43,9 @@ function App() {
         onThemeButtonClick={onThemeButtonClick}
         onSupportMeClick={() => {}}
       />
-      <Subheader currentTask={150} onTOCClick={() => {}} />
+      {selectedTask && (
+        <Subheader selectedTask={selectedTask} onSelectTask={onSelectTask} />
+      )}
     </div>
   );
 }
