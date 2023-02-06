@@ -51,19 +51,22 @@ const variantClassMap: { [_ in ButtonVariant]: string } = {
   primary:
     "text-gray-0 \
     bg-bluealpha-100 hover:bg-bluealpha-200 active:bg-blue-900 \
-    disabled:bg-bluealpha-32 \
+    disabled:text-whitealpha-64 disabled:bg-bluealpha-32 disabled:hover:bg-bluealpha-32 disabled:active:bg-bluealpha-32 \
     \
     dark:text-gray-0 \
     dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 \
-    dark:disabled:bg-bluealpha-16",
+    dark:disabled:text-whitealpha-64 dark:disabled:bg-bluealpha-16 dark:disabled:hover:bg-bluealpha-16 dark:disabled:active:bg-bluealpha-16",
   secondary:
     "text-gray-900 \
     bg-gray-0 hover:bg-gray-50 active:bg-gray-100 \
     border border-gray-200 \
+    disabled:text-gray-300 disabled:bg-gray-0 disabled:hover:bg-gray-0 disabled:active:bg-gray-0 \
     \
     dark:text-gray-50 \
     dark:bg-gray-700 dark:hover:bg-gray-800 dark:active:bg-gray-900 \
-    dark:border dark:border-gray-600",
+    dark:border dark:border-gray-600\
+    dark:disabled:text-gray-400 dark:disabled:bg-gray-800 dark:disabled:hover:bg-gray-800 dark:disabled:active:bg-gray-800 \
+    dark:disabled:border-gray-700",
   tertiary:
     "text-bluealpha-200 \
     bg-bluealpha-8 hover:bg-bluealpha-24 active:bg-bluealpha-32 \
@@ -82,8 +85,12 @@ const variantClassMap: { [_ in ButtonVariant]: string } = {
 };
 
 const iconVariantClassMap: { [_ in ButtonVariant]: string } = {
-  primary: "text-gray-0 dark:text-gray-0",
-  secondary: "text-gray-400 dark:text-gray-200",
+  primary:
+    "text-gray-0 dark:text-gray-0 \
+  group-disabled/button:text-whitealpha-64 dark:group-disabled/button:text-whitealpha-64",
+  secondary:
+    "text-gray-400 dark:text-gray-200 \
+    group-disabled/button:text-gray-200 dark:group-disabled/button:text-gray-400",
   tertiary: "text-bluealpha-100 dark:text-blue-500",
   text: "text-gray-400 dark:text-gray-200",
   link: "text-bluealpha-100 active:text-bluealpha-900 dark:text-blue-500 dark:active:text-blue-600",
@@ -160,7 +167,7 @@ export function Button({
       {...buttonProps}
       {...focusProps}
       ref={buttonRef}
-      className={`rounded-lg gap-2 flex flex-row ${variantClass} ${sizeClass} ${fillClass} ${className} ${focusOutlineClass}`}
+      className={`rounded-lg gap-2 flex flex-row group/button ${variantClass} ${sizeClass} ${fillClass} ${className} ${focusOutlineClass}`}
     >
       {leftIcon && (
         <div className={`${iconSizeClass} ${iconVariantClass}`}>{leftIcon}</div>

@@ -31,12 +31,16 @@ export const selectTask = createAppAsyncThunk(
     dispatch(setSelectedTask(selectedTask.id));
 
     const database = databases[selectedTask.database];
+    console.time("Database (re)initialization");
     const dbWorkerInstance = await dbWorker;
     await dbWorkerInstance.initDb(database);
+    console.timeEnd("Database (re)initialization");
 
+    console.time("Tables data extraction");
     const tables = await dbWorkerInstance.getTablesDescription(
       selectedTask.tables
     );
+    console.timeEnd("Tables data extraction");
 
     dispatch(setTables(tables));
 

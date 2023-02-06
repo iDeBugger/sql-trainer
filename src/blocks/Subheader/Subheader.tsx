@@ -79,15 +79,22 @@ function TOCButton({ onSelectTask, selectedTask, children }: TOCButtonProps) {
     }
     lastBlock.push({ task, index: taskIndex });
   });
-  const topicBlocks = tasksRawBlocks.map((tasksBlock, blockIndex) => (
-    <TopicBlock
-      key={blockIndex}
-      selectedTask={selectedTask}
-      title={t(`topics.${tasksBlock[0].task.topic}`)}
-      tasks={tasksBlock}
-      onSelectTask={onSelectTask}
-    />
-  ));
+  const topicBlocks = (onCloseClick: () => void) => {
+    const onSelectTaskInTopic = (task: string) => {
+      onSelectTask(task);
+      onCloseClick();
+    };
+
+    return tasksRawBlocks.map((tasksBlock, blockIndex) => (
+      <TopicBlock
+        key={blockIndex}
+        selectedTask={selectedTask}
+        title={t(`topics.${tasksBlock[0].task.topic}`)}
+        tasks={tasksBlock}
+        onSelectTask={onSelectTaskInTopic}
+      />
+    ));
+  };
 
   return (
     <ModalButton
@@ -112,7 +119,7 @@ function TOCButton({ onSelectTask, selectedTask, children }: TOCButtonProps) {
                 variant="text"
                 leftIcon={<CloseIcon />}
                 onPress={onCloseClick}
-                className="w-[48px] h-[48px] !p-0 !justify-center !items-center"
+                className="!w-[48px] !h-[48px] !p-0 !justify-center !items-center"
               />
             </div>
             <div>
@@ -120,7 +127,7 @@ function TOCButton({ onSelectTask, selectedTask, children }: TOCButtonProps) {
             </div>
             <div className="h-full overflow-y-auto">
               <div className="pr-6 sm:pr-10 pl-6 my-4 sm:pl-20">
-                {topicBlocks}
+                {topicBlocks(onCloseClick)}
               </div>
             </div>
           </div>
@@ -133,17 +140,31 @@ function TOCButton({ onSelectTask, selectedTask, children }: TOCButtonProps) {
 export function Subheader({ selectedTask, onSelectTask }: SubheaderProps) {
   const { t } = useTranslation();
 
-  const selectedTaskIndex =
+  const selectedTaskNum =
     tasksList.findIndex(({ id }) => id === selectedTask) + 1;
+
+  const onSelectNextTask = () => {
+    // selectedTaskNum is selectedTask + 1, so we can use it to advance
+    onSelectTask(tasksList[selectedTaskNum].id);
+  };
+
+  const onSelectPrevTask = () => {
+    onSelectTask(tasksList[selectedTaskNum - 2].id);
+  };
 
   return (
     <div>
       <div className="sm:hidden px-6 flex flex-row justify-between items-center">
         <TOCButton selectedTask={selectedTask} onSelectTask={onSelectTask} />
-        <span className="text-gray-900 dark:text-gray-100">
-          {t("task_number", { task: selectedTaskIndex })}
+        <span className="text-gray-900 dark:text-gray-100 min-w-[82px] text-center">
+          {t("task_number", { task: selectedTaskNum })}
         </span>
-        <Button variant="secondary" leftIcon={<RightArrowIcon />} />
+        <Button
+          isDisabled={selectedTaskNum >= tasksList.length}
+          variant="secondary"
+          leftIcon={<RightArrowIcon />}
+          onPress={onSelectNextTask}
+        />
       </div>
       <div className="hidden sm:flex px-6 flex-row justify-between items-center gap-3">
         <div className="w-[157px]">
@@ -152,11 +173,21 @@ export function Subheader({ selectedTask, onSelectTask }: SubheaderProps) {
           </TOCButton>
         </div>
         <div className="flex flex-row items-center justify-center gap-4 flex-1">
-          <Button variant="secondary" leftIcon={<LeftArrowIcon />} />
-          <span className="text-gray-900 dark:text-gray-100">
-            {t("task_number", { task: selectedTaskIndex })}
+          <Button
+            isDisabled={selectedTaskNum <= 1}
+            variant="secondary"
+            leftIcon={<LeftArrowIcon />}
+            onPress={onSelectPrevTask}
+          />
+          <span className="text-gray-900 dark:text-gray-100 min-w-[82px] text-center">
+            {t("task_number", { task: selectedTaskNum })}
           </span>
-          <Button variant="secondary" leftIcon={<RightArrowIcon />} />
+          <Button
+            isDisabled={selectedTaskNum >= tasksList.length}
+            variant="secondary"
+            leftIcon={<RightArrowIcon />}
+            onPress={onSelectNextTask}
+          />
         </div>
         <div className="w-[157px]"></div>
       </div>
