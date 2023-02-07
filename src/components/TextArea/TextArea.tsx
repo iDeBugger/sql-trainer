@@ -104,7 +104,7 @@ export function TextArea(props: TextAreaProps) {
         <textarea
           {...inputProps}
           ref={ref}
-          className={`w-full h-full rounded-xl p-4 resize-none ${statusClass} \
+          className={`w-full h-full rounded-xl p-4 resize-none font-mono ${statusClass} \
                     ${descriptionClass}`}
         />
         {status !== "DEFAULT" && statusDescription && (

@@ -16,6 +16,7 @@ module.exports = {
     },
     fontFamily: {
       sans: ["Inter", ...defaultTheme.fontFamily.sans],
+      mono: ["Source Code Pro", ...defaultTheme.fontFamily.mono],
     },
     fontSize: {
       sub: ["0.75rem", "1rem"],
