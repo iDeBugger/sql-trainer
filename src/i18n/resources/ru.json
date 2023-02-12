@@ -7,9 +7,18 @@
     "tasks_list": "Задачи",
     "task_number": "Задача {{task}}",
     "open_tasks_list": "Открыть список задач",
+    "show_tables_structure": "Показать таблицы данных",
+    "amount_of_tables": "Количество таблиц",
+    "sql_textarea_label": "Поле ввода для вашего SQL-запроса",
+    "sql_textarea_placeholder": "Введите SQL-запрос...",
+    "show_expected_result": "Показать ожидаемый результат",
+    "check_answer": "Ответить",
     "topics": {
       "select": "Основы SELECT",
       "orderBy": "Упорядоченный SELECT"
+    },
+    "tasks": {
+      "select_all_invoices": "Получите список всех накладных (таблица invoices) со всеми аттрибутами"
     }
   }
 }

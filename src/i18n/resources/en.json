@@ -7,9 +7,18 @@
     "tasks_list": "Tasks list",
     "task_number": "Task {{task}}",
     "open_tasks_list": "Open tasks list",
+    "show_tables_structure": "Show tables description",
+    "amount_of_tables": "Amount of tables",
+    "sql_textarea_label": "Text field for your SQL query",
+    "sql_textarea_placeholder": "Enter SQL query...",
+    "show_expected_result": "Show expected result",
+    "check_answer": "Check answer",
     "topics": {
       "select": "Basic SELECT",
       "orderBy": "Ordered SELECT"
+    },
+    "tasks": {
+      "select_all_invoices": "Select all invoices (from table invoices) with all attributes"
     }
   }
 }

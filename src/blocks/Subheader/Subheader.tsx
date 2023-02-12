@@ -153,7 +153,7 @@ export function Subheader({ selectedTask, onSelectTask }: SubheaderProps) {
   };
 
   return (
-    <div>
+    <div className="pb-4">
       <div className="sm:hidden px-6 flex flex-row justify-between items-center">
         <TOCButton selectedTask={selectedTask} onSelectTask={onSelectTask} />
         <span className="text-gray-900 dark:text-gray-100 min-w-[82px] text-center">

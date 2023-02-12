@@ -10,6 +10,7 @@ export type TextAreaStatus = "DEFAULT" | "SUCCESS" | "FAIL";
 interface TextAreaProps extends AriaTextFieldOptions<"textarea"> {
   status?: TextAreaStatus;
   statusDescription?: string;
+  className?: string;
 }
 
 const INITIAL_HEIGHT = 237;
@@ -64,7 +65,12 @@ const textAreaResizeHandler = (
 );
 
 export function TextArea(props: TextAreaProps) {
-  const { label, status = "DEFAULT", statusDescription = null } = props;
+  const {
+    label,
+    status = "DEFAULT",
+    statusDescription = null,
+    className = "",
+  } = props;
 
   const ref = useRef(null);
   const { inputProps } = useTextField(
@@ -92,7 +98,7 @@ export function TextArea(props: TextAreaProps) {
 
   return (
     <Resizable
-      className={`relative w-full`}
+      className={`relative w-full ${className}`}
       axis="y"
       height={textareaHeight}
       width={0}
