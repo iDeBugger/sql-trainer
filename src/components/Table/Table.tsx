@@ -6,6 +6,7 @@ interface TableProps {
   data: ReactNode[][];
   header?: ReactNode[];
   style?: TableStyle;
+  className?: string;
 }
 
 const styleToOuterDivClass: { [_ in TableStyle]: string } = {
@@ -33,14 +34,19 @@ const styleToBodyCellClass: { [_ in TableStyle]: string } = {
     "px-4 py-3 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 bg-gray-0 dark:bg-gray-900 group-even/row:bg-gray-50 dark:group-even/row:bg-gray-800",
 };
 
-export function Table({ data, header, style = "default" }: TableProps) {
+export function Table({
+  data,
+  header,
+  style = "default",
+  className = "",
+}: TableProps) {
   const outerDivClass = styleToOuterDivClass[style];
   const innerDivClass = styleToInnerDivClass[style];
   const headerCellClass = styleToHeaderCellClass[style];
   const bodyCellClass = styleToBodyCellClass[style];
 
   return (
-    <div className={`rounded-xl overflow-clip ${outerDivClass}`}>
+    <div className={`rounded-xl overflow-clip ${outerDivClass} ${className}`}>
       <div className={`w-full h-full overflow-clip ${innerDivClass}`}>
         <table className="w-full h-full border-hidden border-collapse rounded-xl">
           {header && (

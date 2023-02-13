@@ -141,9 +141,10 @@ export function SolutionEditor({
                         onPress={onClose}
                       />
                     </div>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-3 items-center">
                       {taskTables?.map(({ name, columns }) => (
                         <Table
+                          className="w-full max-w-[390px]"
                           key={name}
                           header={[name]}
                           data={
