@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Task, tasksList } from "./assets/tasks/tasks";
 import { Header } from "./blocks/Header/Header";
+import { SolutionEditor } from "./blocks/SolutionEditor/SolutionEditor";
 import { Subheader } from "./blocks/Subheader/Subheader";
 import {
   LanguageType,
@@ -13,7 +14,9 @@ import { selectTask } from "./store/thunks/selectTaskThunk";
 function App() {
   const dispatch = useAppDispatch();
   const settings = useAppSelector((state) => state.settings);
-  const selectedTask = useAppSelector((state) => state.task.selected);
+  const { selected: selectedTask, tables: taskTables } = useAppSelector(
+    (state) => state.task
+  );
 
   useEffect(() => {
     if (!selectedTask) {
@@ -44,7 +47,10 @@ function App() {
         onSupportMeClick={() => {}}
       />
       {selectedTask && (
-        <Subheader selectedTask={selectedTask} onSelectTask={onSelectTask} />
+        <>
+          <Subheader selectedTask={selectedTask} onSelectTask={onSelectTask} />
+          <SolutionEditor selectedTask={selectedTask} taskTables={taskTables} />
+        </>
       )}
     </div>
   );

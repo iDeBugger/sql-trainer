@@ -2,11 +2,16 @@ import { ReactNode, useRef } from "react";
 import { AriaModalOverlayProps, Overlay, useModalOverlay } from "react-aria";
 import { OverlayTriggerState } from "react-stately";
 
-export type ModalPosition = "centered" | "topFullWidth" | "leftFullHeight";
+export type ModalPosition =
+  | "centered"
+  | "topFullWidth"
+  | "leftFullHeight"
+  | "bottomFullWidth";
 
 export interface ModalProps extends AriaModalOverlayProps {
   children?: ReactNode;
   position?: ModalPosition;
+  className?: string;
   state: OverlayTriggerState;
 }
 
@@ -14,12 +19,14 @@ const MODAL_POSITIONS_MAP: { [_ in ModalPosition]: string } = {
   centered: "",
   topFullWidth: "row-[1_/_2] col-[1_/_4] h-fit",
   leftFullHeight: "row-[1_/_4] col-[1_/_2] h-auto w-fit",
+  bottomFullWidth: "row-[3_/_4] col-[1_/_4] h-fit max-h-[85vh]",
 };
 
 export function Modal({
   state,
   children,
   position = "centered",
+  className = "",
   ...props
 }: ModalProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -35,7 +42,7 @@ export function Modal({
       >
         <div
           {...modalProps}
-          className={`bg-gray-0 dark:bg-gray-900 c-shadow-modal flex flex-row ${modalPositionClass}`}
+          className={`bg-gray-0 dark:bg-gray-900 c-shadow-modal flex flex-row ${modalPositionClass} ${className}`}
           ref={ref}
         >
           {position === "leftFullHeight" && (

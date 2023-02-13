@@ -13,12 +13,18 @@
     "sql_textarea_placeholder": "Введите SQL-запрос...",
     "show_expected_result": "Показать ожидаемый результат",
     "check_answer": "Ответить",
+    "tables_description": "Таблицы данных",
+    "column_property": "Свойство колонки",
+    "primary_key": "Первичный ключ",
+    "foreign_key_to": "Внешний ключ к",
+    "foreign_key_to_table": "Таблице",
+    "foreign_key_to_column": "Колонке",
     "topics": {
       "select": "Основы SELECT",
       "orderBy": "Упорядоченный SELECT"
     },
     "tasks": {
-      "select_all_invoices": "Получите список всех накладных (таблица invoices) со всеми аттрибутами"
+      "select_all_invoices": "Получите список всех накладных (таблица invoices) со всеми атрибутами"
     }
   }
 }

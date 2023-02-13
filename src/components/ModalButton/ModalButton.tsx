@@ -7,6 +7,7 @@ import { Modal, ModalProps } from "../Modal/Modal";
 interface ModalButtonProps extends AriaModalOverlayProps, OverlayTriggerProps {
   buttonProps?: ButtonProps;
   position?: ModalProps["position"];
+  className?: string;
   children: (_: () => void) => Parameters<typeof React.cloneElement>[0];
 }
 

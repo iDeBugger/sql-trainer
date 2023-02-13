@@ -1,6 +1,6 @@
 import { DatabaseId } from "../databases/databases";
 
-export type TaskTopic = "select" | "orderBy";
+export type TaskTopic = "select" | "orderBy" | "join";
 
 export interface Task {
   id: string;
@@ -31,5 +31,12 @@ export const tasksList: Task[] = [
     database: "accounting",
     referenceSql: "SELECT * FROM employees ORDER BY hire_date DESC;",
     tables: ["employees"],
+  },
+  {
+    id: "join_customers_and_employees",
+    topic: "join",
+    database: "accounting",
+    referenceSql: "SELECT * FROM employees ORDER BY hire_date DESC;",
+    tables: ["customers", "employees"],
   },
 ];

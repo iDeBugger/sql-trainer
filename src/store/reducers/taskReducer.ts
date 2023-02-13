@@ -28,6 +28,14 @@ const INITIAL_STATE: TaskState = {
 };
 
 export const taskReducer = createReducer(INITIAL_STATE, (builder) => {
+  builder.addCase(setDbStatus, (state, action) => {
+    state.dbStatus = action.payload;
+  });
+
+  builder.addCase(setTables, (state, action) => {
+    state.tables = action.payload;
+  });
+
   builder.addCase(setSelectedTask, (state, action) => {
     const hasSelectedTask = tasksList.some(({ id }) => id === action.payload);
 

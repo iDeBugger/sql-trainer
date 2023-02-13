@@ -46,8 +46,11 @@ export function Table({ data, header, style = "default" }: TableProps) {
           {header && (
             <thead>
               <tr>
-                {header.map((node) => (
-                  <th className={`border text-left ${headerCellClass}`}>
+                {header.map((node, index) => (
+                  <th
+                    key={index}
+                    className={`border text-left ${headerCellClass}`}
+                  >
                     {node}
                   </th>
                 ))}
@@ -55,10 +58,13 @@ export function Table({ data, header, style = "default" }: TableProps) {
             </thead>
           )}
           <tbody>
-            {data.map((row) => (
-              <tr className="group/row">
-                {row.map((node) => (
-                  <td className={`border border-gray-200 ${bodyCellClass}`}>
+            {data.map((row, rowIndex) => (
+              <tr key={rowIndex} className="group/row">
+                {row.map((node, nodeIndex) => (
+                  <td
+                    key={nodeIndex}
+                    className={`border border-gray-200 ${bodyCellClass}`}
+                  >
                     {node}
                   </td>
                 ))}

@@ -13,6 +13,12 @@
     "sql_textarea_placeholder": "Enter SQL query...",
     "show_expected_result": "Show expected result",
     "check_answer": "Check answer",
+    "tables_description": "Tables description",
+    "column_property": "Column property",
+    "primary_key": "Primary key",
+    "foreign_key_to": "Foreign key to",
+    "foreign_key_to_table": "Table",
+    "foreign_key_to_column": "Column",
     "topics": {
       "select": "Basic SELECT",
       "orderBy": "Ordered SELECT"
