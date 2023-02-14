@@ -1,8 +1,6 @@
-import { useRef, RefObject, useState, SyntheticEvent } from "react";
+import { useRef } from "react";
 import { AriaTextFieldOptions, useTextField } from "react-aria";
-import { Resizable, ResizeHandle, ResizeCallbackData } from "react-resizable";
 import { CheckCircleIcon } from "../../assets/icons/CheckCircleIcon";
-import { TextAreaResizeIcon } from "../../assets/icons/TextAreaResizeIcon";
 import { XCircleIcon } from "../../assets/icons/XCircleIcon";
 
 export type TextAreaStatus = "DEFAULT" | "SUCCESS" | "FAIL";
@@ -12,10 +10,6 @@ interface TextAreaProps extends AriaTextFieldOptions<"textarea"> {
   statusDescription?: string;
   className?: string;
 }
-
-const INITIAL_HEIGHT = 576;
-const MIN_HEIGHT = 237;
-const MAX_HEIGHT = 576;
 
 const statusToClassMap: { [_ in TextAreaStatus]: string } = {
   DEFAULT:
@@ -46,23 +40,6 @@ const statusToDescriptionTextClassMap: { [_ in TextAreaStatus]: string } = {
   SUCCESS: "text-green-700 dark:text-green-200",
   FAIL: "text-red-700 dark:text-red-100",
 };
-const statusToTextAreaResizerClassMap: { [_ in TextAreaStatus]: string } = {
-  DEFAULT: "text-gray-600 dark:text-gray-400",
-  SUCCESS: "text-green-700 dark:text-green-400",
-  FAIL: "text-red-700 dark:text-red-400",
-};
-
-const textAreaResizeHandler = (
-  handleAxis: ResizeHandle,
-  ref: RefObject<HTMLDivElement>,
-  status: TextAreaStatus
-) => (
-  <div className={`absolute cursor-ns-resize bottom-2 right-2`} ref={ref}>
-    <TextAreaResizeIcon
-      className={`w-5 h-5 ${statusToTextAreaResizerClassMap[status]}`}
-    />
-  </div>
-);
 
 export function TextArea(props: TextAreaProps) {
   const {
@@ -81,14 +58,6 @@ export function TextArea(props: TextAreaProps) {
     },
     ref
   );
-  const [textareaHeight, setTextareaHeight] = useState(INITIAL_HEIGHT);
-
-  const onResize = (
-    e: SyntheticEvent<Element, Event>,
-    { size }: ResizeCallbackData
-  ) => {
-    setTextareaHeight(Math.min(MAX_HEIGHT, Math.max(MIN_HEIGHT, size.height)));
-  };
 
   const statusClass = statusToClassMap[status];
   const descriptionClass = statusDescription ? "border-b-[36px]" : "";
@@ -97,40 +66,28 @@ export function TextArea(props: TextAreaProps) {
     : "";
 
   return (
-    <Resizable
-      className={`relative w-full ${className}`}
-      axis="y"
-      height={textareaHeight}
-      width={0}
-      handle={(...args) => textAreaResizeHandler(...args, status)}
-      onResize={onResize}
-      handleSize={[20, 20]}
-    >
-      <div style={{ height: `${textareaHeight}px` }}>
-        <textarea
-          {...inputProps}
-          ref={ref}
-          className={`w-full h-full rounded-xl p-4 resize-none font-mono ${statusClass} \
+    <div className={`relative w-full ${className}`}>
+      <textarea
+        {...inputProps}
+        ref={ref}
+        className={`w-full h-full rounded-xl p-4 resize-none font-mono ${statusClass} \
                     ${descriptionClass}`}
-        />
-        {status !== "DEFAULT" && statusDescription && (
-          <div
-            className={`absolute bottom-0 left-0 right-0 h-9 px-4 flex flex-row gap-2.5 justify-start items-center`}
-          >
-            {status === "SUCCESS" && (
-              <CheckCircleIcon
-                className={`w-5 h-5 text-green-600 dark:text-green-300`}
-              />
-            )}
-            {status === "FAIL" && (
-              <XCircleIcon
-                className={`w-5 h-5 text-red-500 dark:text-red-300`}
-              />
-            )}
-            <span className={descriptionTextClass}>{statusDescription}</span>
-          </div>
-        )}
-      </div>
-    </Resizable>
+      />
+      {status !== "DEFAULT" && statusDescription && (
+        <div
+          className={`absolute bottom-0 left-0 right-0 h-9 px-4 flex flex-row gap-2.5 justify-start items-center`}
+        >
+          {status === "SUCCESS" && (
+            <CheckCircleIcon
+              className={`w-5 h-5 text-green-600 dark:text-green-300`}
+            />
+          )}
+          {status === "FAIL" && (
+            <XCircleIcon className={`w-5 h-5 text-red-500 dark:text-red-300`} />
+          )}
+          <span className={descriptionTextClass}>{statusDescription}</span>
+        </div>
+      )}
+    </div>
   );
 }

@@ -177,7 +177,7 @@ function TaskTextarea() {
     <TextArea
       label={t("sql_textarea_label")}
       placeholder={t("sql_textarea_placeholder") || undefined}
-      className="mb-4"
+      className="mb-4 h-full max-h-[580px]"
     />
   );
 }
