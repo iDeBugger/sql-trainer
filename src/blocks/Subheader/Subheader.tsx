@@ -122,7 +122,7 @@ function TOCButton({ onSelectTask, selectedTask, children }: TOCButtonProps) {
                 className="!w-[48px] !h-[48px] !p-0 !justify-center !items-center"
               />
             </div>
-            <div>
+            <div className="relative">
               <div className="w-[100vw] absolute h-0 border-b border-gray-200 dark:border-gray-700 right-0"></div>
             </div>
             <div className="h-full overflow-y-auto">
