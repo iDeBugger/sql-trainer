@@ -220,7 +220,7 @@ export function SolutionEditor({
               <TaskTextarea />
               <SolutionButtons />
             </div>
-            <div className="w-full bg-bluealpha-8 pt-2 h-[calc(100vh-128px)]">
+            <div className="w-full bg-bluealpha-8 pt-2 h-[calc(100vh-128px)] border-l border-l-gray-100 dark:border-l-gray-800">
               <StructureTables taskTables={taskTables} />
             </div>
             <div className="w-[calc((100vw-theme(screens.lg))/2)] bg-bluealpha-8"></div>
