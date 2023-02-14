@@ -40,20 +40,18 @@ export default {
   },
 } as ComponentMeta<typeof Select>;
 
-const Template: Story<SelectProps & { elements: { label: string }[] }> = ({
-  elements,
-  ...args
-}) => {
-  return (
-    <Select {...args} label={args.label}>
-      {elements.map(({ label }: { label: string }) => (
-        <Item key={label} aria-label={label}>
-          {label}
-        </Item>
-      ))}
-    </Select>
-  );
-};
+const Template: Story<SelectProps<object> & { elements: { label: string }[] }> =
+  ({ elements, ...args }) => {
+    return (
+      <Select {...args} label={args.label}>
+        {elements.map(({ label }: { label: string }) => (
+          <Item key={label} aria-label={label}>
+            {label}
+          </Item>
+        ))}
+      </Select>
+    );
+  };
 
 export const Default = Template.bind({});
 Default.args = {

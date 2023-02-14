@@ -6,12 +6,14 @@ import {
   DbColumnAttribute,
 } from "../assets/databases/databases";
 
-const sqlJS = await initSqlJs({
+const sqlJSinit = initSqlJs({
   locateFile: (file) => `https://sql.js.org/dist/${file}`,
 });
 let db: SqlJsDatabase | null = null;
 
-const initDb = (dbDescription: Database) => {
+const initDb = async (dbDescription: Database) => {
+  const sqlJS = await sqlJSinit;
+
   db = new sqlJS.Database();
 
   if (dbDescription.initSql) {
