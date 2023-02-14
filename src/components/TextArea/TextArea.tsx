@@ -13,7 +13,7 @@ interface TextAreaProps extends AriaTextFieldOptions<"textarea"> {
   className?: string;
 }
 
-const INITIAL_HEIGHT = 237;
+const INITIAL_HEIGHT = 576;
 const MIN_HEIGHT = 237;
 const MAX_HEIGHT = 576;
 

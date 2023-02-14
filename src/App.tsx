@@ -38,18 +38,30 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col w-full lg:container">
-      <Header
-        selectedLanguage={settings.language}
-        onLanguageSelect={onLanguageSelect}
-        selectedTheme={settings.theme}
-        onThemeButtonClick={onThemeButtonClick}
-        onSupportMeClick={() => {}}
-      />
+    <div className="flex flex-col w-full h-[100vh] items-center">
+      <div className="w-full lg:container">
+        <Header
+          selectedLanguage={settings.language}
+          onLanguageSelect={onLanguageSelect}
+          selectedTheme={settings.theme}
+          onThemeButtonClick={onThemeButtonClick}
+          onSupportMeClick={() => {}}
+        />
+      </div>
       {selectedTask && (
         <>
-          <Subheader selectedTask={selectedTask} onSelectTask={onSelectTask} />
-          <SolutionEditor selectedTask={selectedTask} taskTables={taskTables} />
+          <div className="w-full lg:container">
+            <Subheader
+              selectedTask={selectedTask}
+              onSelectTask={onSelectTask}
+            />
+          </div>
+          <div className="w-full h-[calc(100vh-128px)]">
+            <SolutionEditor
+              selectedTask={selectedTask}
+              taskTables={taskTables}
+            />
+          </div>
         </>
       )}
     </div>
