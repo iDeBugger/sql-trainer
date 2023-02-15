@@ -1,38 +1,43 @@
-import {
-  setSolution,
-  setSolutionResult,
-  setSolutionStatus,
-} from "../reducers/taskReducer";
-import { createAppAsyncThunk } from "../store";
+import { upsertSolution } from "../reducers/solutionsReducer";
+import { setLastAnswerResult } from "../reducers/taskReducer";
+import { createAppAsyncThunk, selectSolutionById } from "../store";
 import { dbWorker } from "./selectTaskThunk";
 
 export const checkAnswer = createAppAsyncThunk(
   "tasks/checkAnswer",
   async (_: void, { dispatch, getState }) => {
-    dispatch(setSolutionStatus("PROCESSING"));
-
     const {
-      task: { expectedResult, solution },
+      task: { expectedResult, selected },
     } = getState();
-    dispatch(setSolution(solution));
+    const solution = selected
+      ? selectSolutionById(getState(), selected)
+      : undefined;
+
+    if (!selected || !solution) {
+      console.warn("Can't check answer when task is not selected!");
+      return;
+    }
+
+    dispatch(upsertSolution({ ...solution, status: "PROCESSING" }));
 
     try {
       const dbWorkerInstance = await dbWorker;
-      const solutionResult = await dbWorkerInstance.executeQuery(solution);
+      const solutionResult = await dbWorkerInstance.executeQuery(
+        solution.query
+      );
 
-      dispatch(setSolutionResult(solutionResult));
+      dispatch(setLastAnswerResult(solutionResult));
 
       const isCorrectAnswer =
         JSON.stringify(expectedResult) === JSON.stringify(solutionResult);
 
       if (isCorrectAnswer) {
-        dispatch(setSolutionStatus("CORRECT"));
+        dispatch(upsertSolution({ ...solution, status: "CORRECT" }));
       } else {
-        dispatch(setSolutionStatus("INCORRECT"));
+        dispatch(upsertSolution({ ...solution, status: "INCORRECT" }));
       }
     } catch (e) {
-      dispatch(setSolutionResult(null));
-      dispatch(setSolutionStatus("INCORRECT"));
+      dispatch(upsertSolution({ ...solution, status: "INCORRECT" }));
     }
   }
 );

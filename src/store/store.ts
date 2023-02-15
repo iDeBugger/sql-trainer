@@ -10,6 +10,10 @@ import { taskReducer } from "./reducers/taskReducer";
 import { applyTheme } from "./listeners/themeListener";
 import { initI18n } from "../i18n/i18n";
 import "./listeners/languageListener";
+import {
+  solutionsAdapter,
+  solutionsReducer,
+} from "./reducers/solutionsReducer";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -24,7 +28,7 @@ export const createAppAsyncThunk =
     rejectValue: string;
   }>();
 
-const LOCAL_STORAGE_STATES = ["settings"];
+const LOCAL_STORAGE_STATES = ["settings", "solutions"];
 const LOCAL_STORAGE_NAMESPACE = "sql_trainer";
 
 const getPreloadedState = () => {
@@ -42,6 +46,7 @@ const getPreloadedState = () => {
 const reducer = {
   settings: settingsReducer,
   task: taskReducer,
+  solutions: solutionsReducer,
 };
 
 export const store = configureStore({
@@ -58,3 +63,7 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   preloadedState: getPreloadedState(),
 });
+
+export const selectSolutionById = solutionsAdapter.getSelectors<RootState>(
+  (store) => store.solutions
+).selectById;

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { QueryExecResult } from "sql.js";
 import {
@@ -16,7 +15,7 @@ import { Dialog } from "../../components/Dialog/Dialog";
 import { ModalButton } from "../../components/ModalButton/ModalButton";
 import { Table } from "../../components/Table/Table";
 import { TextArea, TextAreaStatus } from "../../components/TextArea/TextArea";
-import { SolutionStatus } from "../../store/reducers/taskReducer";
+import { SolutionStatus } from "../../store/reducers/solutionsReducer";
 
 interface SolutionEditorProps {
   selectedTask: Task["id"];
@@ -204,7 +203,7 @@ function TaskTextarea({ status, value, onChangeValue }: TaskTextareaProps) {
   let textAreaStatus: TextAreaStatus;
   let textAreaDescription: string | undefined = undefined;
   switch (status) {
-    case "NO_STATUS":
+    case "UNKNOWN":
     case "PROCESSING": {
       textAreaStatus = "DEFAULT";
       break;

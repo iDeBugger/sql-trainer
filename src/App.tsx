@@ -8,8 +8,12 @@ import {
   setLanguage,
   toggleTheme,
 } from "./store/reducers/settingsReducer";
-import { setSolution } from "./store/reducers/taskReducer";
-import { useAppDispatch, useAppSelector } from "./store/store";
+import { upsertSolution } from "./store/reducers/solutionsReducer";
+import {
+  selectSolutionById,
+  useAppDispatch,
+  useAppSelector,
+} from "./store/store";
 import { checkAnswer } from "./store/thunks/checkAnswerThunk";
 import { selectTask } from "./store/thunks/selectTaskThunk";
 
@@ -17,13 +21,15 @@ function App() {
   const dispatch = useAppDispatch();
   const settings = useAppSelector((state) => state.settings);
   const {
+    dbStatus,
     selected: selectedTask,
     tables: taskTables,
     expectedResult,
-    solutionResult,
-    solutionStatus,
-    solution,
+    lastAnswerResult,
   } = useAppSelector((state) => state.task);
+  const solution = useAppSelector((state) =>
+    selectSolutionById(state, selectedTask as string)
+  );
 
   useEffect(() => {
     if (!selectedTask) {
@@ -49,7 +55,15 @@ function App() {
   };
 
   const onChangeTextArea = (value: string) => {
-    dispatch(setSolution(value));
+    if (selectedTask) {
+      dispatch(
+        upsertSolution({
+          taskId: selectedTask,
+          query: value,
+          status: "UNKNOWN",
+        })
+      );
+    }
   };
 
   return (
@@ -76,9 +90,9 @@ function App() {
               selectedTask={selectedTask}
               taskTables={taskTables}
               expectedTable={expectedResult}
-              userResultTable={solutionResult}
-              status={solutionStatus}
-              textAreaValue={solution}
+              userResultTable={lastAnswerResult}
+              status={solution?.status || "UNKNOWN"}
+              textAreaValue={solution?.query || ""}
               onChangeTextArea={onChangeTextArea}
               onAnswerCheck={onAnswerCheck}
             />
