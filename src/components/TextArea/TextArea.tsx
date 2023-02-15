@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { AriaTextFieldOptions, useTextField } from "react-aria";
+import { AriaTextFieldOptions, useFocusRing, useTextField } from "react-aria";
 import { CheckCircleIcon } from "../../assets/icons/CheckCircleIcon";
 import { XCircleIcon } from "../../assets/icons/XCircleIcon";
 
@@ -49,6 +49,9 @@ export function TextArea(props: TextAreaProps) {
     className = "",
   } = props;
 
+  const { isFocusVisible, focusProps } = useFocusRing();
+  const focusOutlineClass = !isFocusVisible ? "outline-none" : "";
+
   const ref = useRef(null);
   const { inputProps } = useTextField(
     {
@@ -69,9 +72,10 @@ export function TextArea(props: TextAreaProps) {
     <div className={`relative w-full ${className}`}>
       <textarea
         {...inputProps}
+        {...focusProps}
         ref={ref}
         className={`w-full h-full rounded-xl p-4 resize-none font-mono ${statusClass} \
-                    ${descriptionClass}`}
+                    ${descriptionClass} ${focusOutlineClass}`}
       />
       {status !== "DEFAULT" && statusDescription && (
         <div
