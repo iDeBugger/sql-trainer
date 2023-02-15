@@ -214,7 +214,7 @@ function ExpectedResultFrame({
           leftIcon={<CloseIcon />}
           onPress={onClose}
         />
-        <div className="absolute left-[-100vw] bottom-0 w-[200vw] border-b border-solid border-gray-200"></div>
+        <div className="absolute left-[-100vw] bottom-0 w-[200vw] border-b border-solid border-gray-200 dark:border-gray-700"></div>
       </div>
       <div className="flex flex-row pt-6 pb-10 px-6 gap-6 h-[calc(100%-64px)]">
         <div className="flex flex-col w-[calc(50%-0.75rem)]">
@@ -223,7 +223,7 @@ function ExpectedResultFrame({
           </span>
 
           {userResultTable && (
-            <div className="overflow-auto flex flex-col border-gray-200 border rounded-lg h-full">
+            <div className="overflow-auto flex flex-col border-gray-200 dark:border-gray-700 border rounded-lg h-full">
               <Table
                 style="zebra"
                 header={userResultTable[0].columns}
@@ -232,9 +232,9 @@ function ExpectedResultFrame({
             </div>
           )}
           {!userResultTable && (
-            <div className="overflow-auto flex flex-col justify-center items-center border-gray-200 border rounded-lg h-full">
+            <div className="overflow-auto flex flex-col justify-center items-center border-gray-200 dark:border-gray-700 border rounded-lg h-full">
               <BigTableIcon className="w-[56px] h-[56px] mb-4" />
-              <span className="max-w-[222px] text-center">
+              <span className="max-w-[222px] text-center text-gray-700 dark:text-gray-200">
                 {t("here_will_be_your_output")}
               </span>
             </div>
@@ -246,7 +246,7 @@ function ExpectedResultFrame({
           </span>
 
           {expectedTable && (
-            <div className="overflow-auto flex flex-col border-gray-200 border rounded-lg h-full">
+            <div className="overflow-auto flex flex-col border-gray-200 dark:border-gray-700 border rounded-lg h-full">
               <Table
                 style="zebra"
                 header={expectedTable[0].columns}
@@ -255,9 +255,9 @@ function ExpectedResultFrame({
             </div>
           )}
           {!expectedTable && (
-            <div className="overflow-auto flex flex-col justify-center items-center border-gray-200 border rounded-lg h-full">
+            <div className="overflow-auto flex flex-col justify-center items-center border-gray-200 dark:border-gray-700 border rounded-lg h-full">
               <BigTableIcon className="w-[56px] h-[56px] mb-4" />
-              <span className="max-w-[222px] text-center">
+              <span className="max-w-[222px] text-center text-gray-700 dark:text-gray-200">
                 {t("no_expected_output_for_task")}
               </span>
             </div>
