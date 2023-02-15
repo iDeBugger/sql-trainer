@@ -207,7 +207,9 @@ function ExpectedResultFrame({
   return (
     <div className="flex flex-col w-full h-[85vh]">
       <div className="relative flex flex-row w-full justify-between items-center py-2 px-6">
-        <span className="text-gray-900 text-h5 font-bold">{t("outputs")}</span>
+        <span className="text-gray-900 dark:text-gray-200 text-h5 font-bold">
+          {t("outputs")}
+        </span>
         <Button
           size="big"
           variant="text"
@@ -218,7 +220,7 @@ function ExpectedResultFrame({
       </div>
       <div className="flex flex-row pt-6 pb-10 px-6 gap-6 h-[calc(100%-64px)]">
         <div className="flex flex-col w-[calc(50%-0.75rem)]">
-          <span className="text-gray-900 text-p-lg font-bold mb-4">
+          <span className="text-gray-900 dark:text-gray-200 text-p-lg font-bold mb-4">
             {t("your_outputs")}
           </span>
 
@@ -241,7 +243,7 @@ function ExpectedResultFrame({
           )}
         </div>
         <div className="flex flex-col w-[calc(50%-0.75rem)]">
-          <span className="text-gray-900 text-p-lg font-bold mb-4">
+          <span className="text-gray-900 dark:text-gray-200 text-p-lg font-bold mb-4">
             {t("expected_output")}
           </span>
 
