@@ -29,7 +29,7 @@ export const setLastAnswerResult = createAction<QueryExecResult[] | null>(
   "tasks/setLastAnswerResult"
 );
 
-const INITIAL_STATE: TaskState = {
+export const INITIAL_STATE: TaskState = {
   dbStatus: "NOT_INITIALIZED",
   selected: null,
   tables: [],

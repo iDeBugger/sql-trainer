@@ -38,6 +38,15 @@ function App() {
     }
   }, [selectedTask]);
 
+  useEffect(() => {
+    if (selectedTask && dbStatus === "NOT_INITIALIZED") {
+      console.log(
+        "Task is selected, but database is not initialized. Reinitializing database."
+      );
+      dispatch(selectTask(selectedTask));
+    }
+  }, [dbStatus, selectedTask]);
+
   const onLanguageSelect = (new_lang: LanguageType) => {
     dispatch(setLanguage(new_lang));
   };

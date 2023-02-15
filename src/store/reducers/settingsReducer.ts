@@ -13,7 +13,7 @@ export const setDarkTheme = createAction("settings/setDarkTheme");
 export const toggleTheme = createAction("settings/toggleTheme");
 export const setLanguage = createAction<LanguageType>("settings/setLanguage");
 
-const INITIAL_STATE: SettingsState = {
+export const INITIAL_STATE: SettingsState = {
   theme: "system",
   language: "en",
 };

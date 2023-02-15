@@ -5,8 +5,14 @@ import {
   load as loadFromLocalStorage,
 } from "redux-localstorage-simple";
 import { listenerMiddleware } from "./middlewares/listenerMiddleware";
-import { settingsReducer } from "./reducers/settingsReducer";
-import { taskReducer } from "./reducers/taskReducer";
+import {
+  INITIAL_STATE as settingsInitialState,
+  settingsReducer,
+} from "./reducers/settingsReducer";
+import {
+  INITIAL_STATE as taskInitialState,
+  taskReducer,
+} from "./reducers/taskReducer";
 import { applyTheme } from "./listeners/themeListener";
 import { initI18n } from "../i18n/i18n";
 import "./listeners/languageListener";
@@ -28,13 +34,17 @@ export const createAppAsyncThunk =
     rejectValue: string;
   }>();
 
-const LOCAL_STORAGE_STATES = ["settings", "solutions"];
+const LOCAL_STORAGE_STATES = ["settings", "solutions", "task.selected"];
 const LOCAL_STORAGE_NAMESPACE = "sql_trainer";
 
 const getPreloadedState = () => {
   const storeFromLocalStorage = loadFromLocalStorage({
     states: LOCAL_STORAGE_STATES,
     namespace: LOCAL_STORAGE_NAMESPACE,
+    preloadedState: {
+      settings: { ...settingsInitialState },
+      task: { ...taskInitialState },
+    },
   });
 
   initI18n((storeFromLocalStorage as RootState)?.settings?.language || "en");
