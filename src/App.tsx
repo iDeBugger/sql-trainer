@@ -14,9 +14,11 @@ import { selectTask } from "./store/thunks/selectTaskThunk";
 function App() {
   const dispatch = useAppDispatch();
   const settings = useAppSelector((state) => state.settings);
-  const { selected: selectedTask, tables: taskTables } = useAppSelector(
-    (state) => state.task
-  );
+  const {
+    selected: selectedTask,
+    tables: taskTables,
+    expectedResult,
+  } = useAppSelector((state) => state.task);
 
   useEffect(() => {
     if (!selectedTask) {
@@ -60,6 +62,8 @@ function App() {
             <SolutionEditor
               selectedTask={selectedTask}
               taskTables={taskTables}
+              expectedTable={expectedResult}
+              userResultTable={null}
             />
           </div>
         </>

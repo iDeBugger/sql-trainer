@@ -11,7 +11,7 @@
     "amount_of_tables": "Amount of tables",
     "sql_textarea_label": "Text field for your SQL query",
     "sql_textarea_placeholder": "Enter SQL query...",
-    "show_expected_result": "Show expected result",
+    "show_expected_result": "Show expected output",
     "check_answer": "Check answer",
     "tables_description": "Tables description",
     "column_property": "Column property",
@@ -19,6 +19,11 @@
     "foreign_key_to": "Foreign key to",
     "foreign_key_to_table": "Table",
     "foreign_key_to_column": "Column",
+    "outputs": "Outputs",
+    "your_outputs": "Your output",
+    "here_will_be_your_output": "Here will be your output",
+    "expected_output": "Expected output",
+    "no_expected_output_for_task": "There is nt expected output for the task",
     "topics": {
       "select": "Basic SELECT",
       "orderBy": "Ordered SELECT"

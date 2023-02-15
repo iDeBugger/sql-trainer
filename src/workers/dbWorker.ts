@@ -1,5 +1,5 @@
 import { expose } from "threads/worker";
-import initSqlJs, { Database as SqlJsDatabase } from "sql.js";
+import initSqlJs, { Database as SqlJsDatabase, QueryExecResult } from "sql.js";
 import {
   Database,
   DbTable,
@@ -26,6 +26,11 @@ const getTablesDescription = (tableNames: string[]): DbTable[] => {
     if (!db) {
       throw new Error("Attempt to use uninitialized database!");
     }
+
+    console.log(
+      `SELECT * FROM ${tableName};`,
+      db.exec(`SELECT * FROM ${tableName};`)
+    );
 
     const tableDescription = db.exec(`PRAGMA table_info(${tableName});`);
     const tableFKs = db
@@ -67,13 +72,22 @@ const getTablesDescription = (tableNames: string[]): DbTable[] => {
       ),
     };
   });
+};
 
-  return [];
+const executeQuery = (query: string): QueryExecResult[] | null => {
+  const result = db?.exec(query) || null;
+
+  if (result && !result.length) {
+    return null;
+  }
+
+  return result;
 };
 
 const dbWorker = {
   initDb,
   getTablesDescription,
+  executeQuery,
 };
 export type DbWorker = typeof dbWorker;
 

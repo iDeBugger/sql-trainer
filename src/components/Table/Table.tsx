@@ -10,14 +10,15 @@ interface TableProps {
 }
 
 const styleToOuterDivClass: { [_ in TableStyle]: string } = {
-  default: "border-l-4 border-l-bluealpha-100 dark:border-l-blue-500",
+  default:
+    "overflow-clip border-l-4 border-l-bluealpha-100 dark:border-l-blue-500",
   zebra: "",
 };
 
 const styleToInnerDivClass: { [_ in TableStyle]: string } = {
   default:
-    "border-r border-y border-gray-200 dark:border-gray-700 rounded-tr-xl rounded-br-xl",
-  zebra: "border border-gray-200 dark:border-gray-700 rounded-xl",
+    "overflow-clip border-r border-y border-gray-200 dark:border-gray-700 rounded-tr-xl rounded-br-xl",
+  zebra: "",
 };
 
 const styleToHeaderCellClass: { [_ in TableStyle]: string } = {
@@ -46,8 +47,8 @@ export function Table({
   const bodyCellClass = styleToBodyCellClass[style];
 
   return (
-    <div className={`rounded-xl overflow-clip ${outerDivClass} ${className}`}>
-      <div className={`w-full h-full overflow-clip ${innerDivClass}`}>
+    <div className={`rounded-xl ${outerDivClass} ${className}`}>
+      <div className={`w-full h-full ${innerDivClass}`}>
         <table className="w-full h-full border-hidden border-collapse rounded-xl">
           {header && (
             <thead>

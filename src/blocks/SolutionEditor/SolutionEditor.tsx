@@ -1,9 +1,11 @@
 import { useTranslation } from "react-i18next";
+import { QueryExecResult } from "sql.js";
 import {
   DbColumnAttribute,
   DbTable,
   DbColumnAttributeRef,
 } from "../../assets/databases/databases";
+import { BigTableIcon } from "../../assets/icons/BigTableIcon";
 import { CloseIcon } from "../../assets/icons/CloseIcon";
 import { Task, tasksList } from "../../assets/tasks/tasks";
 import { Button } from "../../components/Button/Button";
@@ -17,6 +19,8 @@ import { TextArea } from "../../components/TextArea/TextArea";
 interface SolutionEditorProps {
   selectedTask: Task["id"];
   taskTables: DbTable[];
+  expectedTable: QueryExecResult[] | null;
+  userResultTable: QueryExecResult[] | null;
 }
 
 interface ChipAttributeProps {
@@ -35,6 +39,17 @@ interface StructureTablesProps {
   taskTables: DbTable[];
   onClose?: () => void;
   className?: string;
+}
+
+interface SolutionButtonsProps {
+  expectedTable: QueryExecResult[] | null;
+  userResultTable: QueryExecResult[] | null;
+}
+
+interface ExpectedResultFrameProps {
+  onClose: () => void;
+  expectedTable: QueryExecResult[] | null;
+  userResultTable: QueryExecResult[] | null;
 }
 
 function PKTooltip() {
@@ -182,19 +197,106 @@ function TaskTextarea() {
   );
 }
 
-function SolutionButtons() {
+function ExpectedResultFrame({
+  onClose,
+  expectedTable,
+  userResultTable,
+}: ExpectedResultFrameProps) {
+  const { t } = useTranslation();
+
+  return (
+    <div className="flex flex-col w-full h-[85vh]">
+      <div className="relative flex flex-row w-full justify-between items-center py-2 px-6">
+        <span className="text-gray-900 text-h5 font-bold">{t("outputs")}</span>
+        <Button
+          size="big"
+          variant="text"
+          leftIcon={<CloseIcon />}
+          onPress={onClose}
+        />
+        <div className="absolute left-[-100vw] bottom-0 w-[200vw] border-b border-solid border-gray-200"></div>
+      </div>
+      <div className="flex flex-row pt-6 pb-10 px-6 gap-6 h-[calc(100%-64px)]">
+        <div className="flex flex-col w-[calc(50%-0.75rem)]">
+          <span className="text-gray-900 text-p-lg font-bold mb-4">
+            {t("your_outputs")}
+          </span>
+
+          {userResultTable && (
+            <div className="overflow-auto flex flex-col border-gray-200 border rounded-lg h-full">
+              <Table
+                style="zebra"
+                header={userResultTable[0].columns}
+                data={userResultTable[0].values}
+              />
+            </div>
+          )}
+          {!userResultTable && (
+            <div className="overflow-auto flex flex-col justify-center items-center border-gray-200 border rounded-lg h-full">
+              <BigTableIcon className="w-[56px] h-[56px] mb-4" />
+              <span className="max-w-[222px] text-center">
+                {t("here_will_be_your_output")}
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col w-[calc(50%-0.75rem)]">
+          <span className="text-gray-900 text-p-lg font-bold mb-4">
+            {t("expected_output")}
+          </span>
+
+          {expectedTable && (
+            <div className="overflow-auto flex flex-col border-gray-200 border rounded-lg h-full">
+              <Table
+                style="zebra"
+                header={expectedTable[0].columns}
+                data={expectedTable[0].values}
+              />
+            </div>
+          )}
+          {!expectedTable && (
+            <div className="overflow-auto flex flex-col justify-center items-center border-gray-200 border rounded-lg h-full">
+              <BigTableIcon className="w-[56px] h-[56px] mb-4" />
+              <span className="max-w-[222px] text-center">
+                {t("no_expected_output_for_task")}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SolutionButtons({
+  expectedTable,
+  userResultTable,
+}: SolutionButtonsProps) {
   const { t } = useTranslation();
 
   return (
     <div className="flex flex-col sm:flex-row gap-3">
-      <Button
-        variant="tertiary"
-        size="big"
-        fill="fillContainer"
-        className="px-3"
+      <ModalButton
+        buttonProps={{
+          variant: "tertiary",
+          size: "big",
+          fill: "fillContainer",
+          className: "px-3",
+          children: t("show_expected_result"),
+        }}
+        isDismissable={true}
+        position="bottomFullWidth"
       >
-        {t("show_expected_result")}
-      </Button>
+        {(onClose) => (
+          <Dialog>
+            <ExpectedResultFrame
+              onClose={onClose}
+              expectedTable={expectedTable}
+              userResultTable={userResultTable}
+            />
+          </Dialog>
+        )}
+      </ModalButton>
       <Button variant="primary" size="big" fill="fillContainer">
         {t("check_answer")}
       </Button>
@@ -205,6 +307,8 @@ function SolutionButtons() {
 export function SolutionEditor({
   selectedTask,
   taskTables = [],
+  expectedTable,
+  userResultTable,
 }: SolutionEditorProps) {
   const { t } = useTranslation();
   const task = tasksList.find(({ id }) => id === selectedTask);
@@ -218,7 +322,10 @@ export function SolutionEditor({
             <div className="w-full h-[calc(100vh-128px)] flex flex-col px-6 py-8">
               <TaskDescription task={task} />
               <TaskTextarea />
-              <SolutionButtons />
+              <SolutionButtons
+                expectedTable={expectedTable}
+                userResultTable={userResultTable}
+              />
             </div>
             <div className="w-full bg-bluealpha-8 pt-2 h-[calc(100vh-128px)] border-l border-l-gray-100 dark:border-l-gray-800">
               <StructureTables taskTables={taskTables} />
@@ -255,7 +362,10 @@ export function SolutionEditor({
               )}
             </ModalButton>
             <TaskTextarea />
-            <SolutionButtons />
+            <SolutionButtons
+              expectedTable={expectedTable}
+              userResultTable={userResultTable}
+            />
           </div>
         </>
       )}

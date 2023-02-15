@@ -1,25 +1,15 @@
-import { spawn, Worker } from "threads";
-import { Task, tasksList } from "../../assets/tasks/tasks";
+import { tasksList } from "../../assets/tasks/tasks";
 import { createAppAsyncThunk } from "../store";
-import dbWorkerPath from "../../workers/dbWorker?worker&url";
-import type { DbWorker } from "../../workers/dbWorker";
 import {
   setDbStatus,
-  setExpectedResult,
   setSelectedTask,
   setTables,
 } from "../reducers/taskReducer";
 import { databases } from "../../assets/databases/databases";
 
-export const dbWorker = spawn<DbWorker>(
-  new Worker(dbWorkerPath, {
-    type: "module",
-  })
-);
-
 export const selectTask = createAppAsyncThunk(
-  "tasks/selectTask",
-  async (newTaskId: Task["id"], { dispatch }) => {
+  "tasks/checkAnswer",
+  async (solutionQuery: string, { dispatch }) => {
     dispatch(setDbStatus("INITIALIZING"));
     let selectedTask = tasksList.find(({ id }) => id === newTaskId);
 
@@ -44,11 +34,6 @@ export const selectTask = createAppAsyncThunk(
     console.timeEnd("Tables data extraction");
 
     dispatch(setTables(tables));
-
-    const expectedResult = await dbWorkerInstance.executeQuery(
-      selectedTask.referenceSql
-    );
-    dispatch(setExpectedResult(expectedResult));
 
     dispatch(setDbStatus("READY"));
   }

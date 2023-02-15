@@ -1,7 +1,7 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
-import { spawn, Worker } from "threads";
 import { Task, tasksList } from "../../assets/tasks/tasks";
-import { databases, DbTable } from "../../assets/databases/databases";
+import { DbTable } from "../../assets/databases/databases";
+import { QueryExecResult } from "sql.js";
 
 export type DatabaseStatus =
   | "NOT_INITIALIZED"
@@ -13,6 +13,9 @@ interface TaskState {
   dbStatus: DatabaseStatus;
   selected: Task["id"] | null;
   tables: DbTable[];
+  expectedResult: QueryExecResult[] | null;
+  solution: string;
+  solutionResult: QueryExecResult[] | null;
 }
 
 export const setDbStatus = createAction<DatabaseStatus>("tasks/setDbStatus");
@@ -20,11 +23,17 @@ export const setTables = createAction<DbTable[]>("tasks/setTables");
 export const setSelectedTask = createAction<Task["id"]>(
   "tasks/setSelectedTask"
 );
+export const setExpectedResult = createAction<QueryExecResult[] | null>(
+  "tasks/setExpectedResult"
+);
 
 const INITIAL_STATE: TaskState = {
   dbStatus: "NOT_INITIALIZED",
   selected: null,
   tables: [],
+  expectedResult: null,
+  solution: "",
+  solutionResult: null,
 };
 
 export const taskReducer = createReducer(INITIAL_STATE, (builder) => {
@@ -47,5 +56,9 @@ export const taskReducer = createReducer(INITIAL_STATE, (builder) => {
         "Selected task hadn't been found in tasks list. First task was selected instead."
       );
     }
+  });
+
+  builder.addCase(setExpectedResult, (state, action) => {
+    state.expectedResult = action.payload;
   });
 });
