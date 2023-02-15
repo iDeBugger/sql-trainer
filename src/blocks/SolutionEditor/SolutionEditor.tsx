@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { QueryExecResult } from "sql.js";
 import {
@@ -145,6 +146,12 @@ function StructureTables({
 }: StructureTablesProps) {
   const { t } = useTranslation();
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollRef?.current?.scroll({ top: 0 });
+  }, [taskTables]);
+
   return (
     <div
       className={`flex flex-col px-6 pb-6 md:pb-0 w-full md:h-full ${className}`}
@@ -169,7 +176,10 @@ function StructureTables({
             />
           )}
         </div>
-        <div className="items-center md:pb-6 h-full overflow-y-auto">
+        <div
+          ref={scrollRef}
+          className="items-center md:pb-6 h-full overflow-y-auto"
+        >
           <div className="w-full flex flex-col gap-3 pr-3 items-center">
             {taskTables?.map(({ name, columns }) => (
               <Table
