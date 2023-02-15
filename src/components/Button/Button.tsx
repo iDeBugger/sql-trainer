@@ -91,7 +91,7 @@ const iconVariantClassMap: { [_ in ButtonVariant]: string } = {
   secondary:
     "text-gray-400 dark:text-gray-200 \
     group-disabled/button:text-gray-200 dark:group-disabled/button:text-gray-400",
-  tertiary: "text-bluealpha-100 dark:text-blue-500",
+  tertiary: "text-bluealpha-100 dark:text-blue-400",
   text: "text-gray-400 dark:text-gray-200",
   link: "text-bluealpha-100 active:text-bluealpha-900 dark:text-blue-500 dark:active:text-blue-600",
 };
