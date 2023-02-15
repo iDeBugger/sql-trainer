@@ -24,6 +24,8 @@
     "here_will_be_your_output": "Here will be your output",
     "expected_output": "Expected output",
     "no_expected_output_for_task": "There is nt expected output for the task",
+    "correct_answer": "Correct answer",
+    "incorrect_answer": "Incorrect answer",
     "topics": {
       "select": "Basic SELECT",
       "orderBy": "Ordered SELECT"

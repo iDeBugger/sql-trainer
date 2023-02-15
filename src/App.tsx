@@ -8,7 +8,9 @@ import {
   setLanguage,
   toggleTheme,
 } from "./store/reducers/settingsReducer";
+import { setSolution } from "./store/reducers/taskReducer";
 import { useAppDispatch, useAppSelector } from "./store/store";
+import { checkAnswer } from "./store/thunks/checkAnswerThunk";
 import { selectTask } from "./store/thunks/selectTaskThunk";
 
 function App() {
@@ -18,6 +20,9 @@ function App() {
     selected: selectedTask,
     tables: taskTables,
     expectedResult,
+    solutionResult,
+    solutionStatus,
+    solution,
   } = useAppSelector((state) => state.task);
 
   useEffect(() => {
@@ -37,6 +42,14 @@ function App() {
 
   const onSelectTask = (newTask: Task["id"]) => {
     dispatch(selectTask(newTask));
+  };
+
+  const onAnswerCheck = () => {
+    dispatch(checkAnswer());
+  };
+
+  const onChangeTextArea = (value: string) => {
+    dispatch(setSolution(value));
   };
 
   return (
@@ -63,7 +76,11 @@ function App() {
               selectedTask={selectedTask}
               taskTables={taskTables}
               expectedTable={expectedResult}
-              userResultTable={null}
+              userResultTable={solutionResult}
+              status={solutionStatus}
+              textAreaValue={solution}
+              onChangeTextArea={onChangeTextArea}
+              onAnswerCheck={onAnswerCheck}
             />
           </div>
         </>

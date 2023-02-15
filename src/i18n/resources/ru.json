@@ -24,6 +24,8 @@
     "here_will_be_your_output": "Тут появится результат вашего запроса",
     "expected_output": "Ожидаемый результат",
     "no_expected_output_for_task": "Для этого задания нет ожидаемого результата",
+    "correct_answer": "Правильный запрос",
+    "incorrect_answer": "Неверный запрос",
     "topics": {
       "select": "Основы SELECT",
       "orderBy": "Упорядоченный SELECT"

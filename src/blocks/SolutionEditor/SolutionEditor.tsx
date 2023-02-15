@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { QueryExecResult } from "sql.js";
 import {
@@ -14,13 +15,18 @@ import { ChipTooltip } from "../../components/ChipTooltip/ChipTooltip";
 import { Dialog } from "../../components/Dialog/Dialog";
 import { ModalButton } from "../../components/ModalButton/ModalButton";
 import { Table } from "../../components/Table/Table";
-import { TextArea } from "../../components/TextArea/TextArea";
+import { TextArea, TextAreaStatus } from "../../components/TextArea/TextArea";
+import { SolutionStatus } from "../../store/reducers/taskReducer";
 
 interface SolutionEditorProps {
   selectedTask: Task["id"];
   taskTables: DbTable[];
   expectedTable: QueryExecResult[] | null;
   userResultTable: QueryExecResult[] | null;
+  status: SolutionStatus;
+  onAnswerCheck: () => void;
+  textAreaValue: string;
+  onChangeTextArea: (value: string) => void;
 }
 
 interface ChipAttributeProps {
@@ -41,9 +47,16 @@ interface StructureTablesProps {
   className?: string;
 }
 
+interface TaskTextareaProps {
+  status: SolutionStatus;
+  value: string;
+  onChangeValue: (text: string) => void;
+}
+
 interface SolutionButtonsProps {
   expectedTable: QueryExecResult[] | null;
   userResultTable: QueryExecResult[] | null;
+  onAnswerCheck: () => void;
 }
 
 interface ExpectedResultFrameProps {
@@ -185,14 +198,38 @@ function StructureTables({
   );
 }
 
-function TaskTextarea() {
+function TaskTextarea({ status, value, onChangeValue }: TaskTextareaProps) {
   const { t } = useTranslation();
+
+  let textAreaStatus: TextAreaStatus;
+  let textAreaDescription: string | undefined = undefined;
+  switch (status) {
+    case "NO_STATUS":
+    case "PROCESSING": {
+      textAreaStatus = "DEFAULT";
+      break;
+    }
+    case "CORRECT": {
+      textAreaStatus = "SUCCESS";
+      textAreaDescription = t("correct_answer") || undefined;
+      break;
+    }
+    case "INCORRECT": {
+      textAreaStatus = "FAIL";
+      textAreaDescription = t("incorrect_answer") || undefined;
+      break;
+    }
+  }
 
   return (
     <TextArea
       label={t("sql_textarea_label")}
       placeholder={t("sql_textarea_placeholder") || undefined}
       className="mb-4 h-full max-h-[580px]"
+      status={textAreaStatus}
+      statusDescription={textAreaDescription}
+      value={value}
+      onChange={onChangeValue}
     />
   );
 }
@@ -273,6 +310,7 @@ function ExpectedResultFrame({
 function SolutionButtons({
   expectedTable,
   userResultTable,
+  onAnswerCheck,
 }: SolutionButtonsProps) {
   const { t } = useTranslation();
 
@@ -299,7 +337,12 @@ function SolutionButtons({
           </Dialog>
         )}
       </ModalButton>
-      <Button variant="primary" size="big" fill="fillContainer">
+      <Button
+        variant="primary"
+        size="big"
+        fill="fillContainer"
+        onPress={onAnswerCheck}
+      >
         {t("check_answer")}
       </Button>
     </div>
@@ -311,6 +354,10 @@ export function SolutionEditor({
   taskTables = [],
   expectedTable,
   userResultTable,
+  status,
+  onAnswerCheck,
+  textAreaValue,
+  onChangeTextArea,
 }: SolutionEditorProps) {
   const { t } = useTranslation();
   const task = tasksList.find(({ id }) => id === selectedTask);
@@ -323,10 +370,15 @@ export function SolutionEditor({
             <div className="w-[calc((100vw-theme(screens.lg))/2)]"></div>
             <div className="w-full h-[calc(100vh-128px)] flex flex-col px-6 py-8">
               <TaskDescription task={task} />
-              <TaskTextarea />
+              <TaskTextarea
+                status={status}
+                value={textAreaValue}
+                onChangeValue={onChangeTextArea}
+              />
               <SolutionButtons
                 expectedTable={expectedTable}
                 userResultTable={userResultTable}
+                onAnswerCheck={onAnswerCheck}
               />
             </div>
             <div className="w-full bg-bluealpha-8 pt-2 h-[calc(100vh-128px)] border-l border-l-gray-100 dark:border-l-gray-800">
@@ -363,10 +415,15 @@ export function SolutionEditor({
                 </Dialog>
               )}
             </ModalButton>
-            <TaskTextarea />
+            <TaskTextarea
+              status={status}
+              value={textAreaValue}
+              onChangeValue={onChangeTextArea}
+            />
             <SolutionButtons
               expectedTable={expectedTable}
               userResultTable={userResultTable}
+              onAnswerCheck={onAnswerCheck}
             />
           </div>
         </>
