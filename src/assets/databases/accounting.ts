@@ -115,5 +115,4 @@ const initInvoices = `
 export const accounting: Database = {
   name: "accounting",
   initSql: `${initEmployees}${initCustomers}${initInvoices}`,
-  tables: {},
 };

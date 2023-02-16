@@ -25,7 +25,6 @@ export interface DbTable {
 export interface Database {
   name: string;
   initSql?: string;
-  tables: { [_ in DbTable["name"]]: DbTable };
 }
 
 export type DatabaseId = "accounting";
