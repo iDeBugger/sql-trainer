@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { Item } from "react-stately";
 import { QueryExecResult } from "sql.js";
 import {
   DbColumnAttribute,
@@ -15,8 +16,11 @@ import { ChipTooltip } from "../../components/ChipTooltip/ChipTooltip";
 import { Dialog } from "../../components/Dialog/Dialog";
 import { ModalButton } from "../../components/ModalButton/ModalButton";
 import { Table } from "../../components/Table/Table";
+import { Tabs } from "../../components/TabSelector/Tabs";
 import { TextArea, TextAreaStatus } from "../../components/TextArea/TextArea";
 import { SolutionStatus } from "../../store/reducers/solutionsReducer";
+import { ExpectedQueryResults } from "../ExpectedQueryResults/ExpectedQueryResults";
+import { UserQueryResults } from "../UserQueryResults/UserQueryResults";
 
 interface SolutionEditorProps {
   selectedTask: Task["id"];
@@ -264,52 +268,28 @@ function ExpectedResultFrame({
         />
         <div className="absolute left-[-100vw] bottom-0 w-[200vw] border-b border-solid border-gray-200 dark:border-gray-700"></div>
       </div>
-      <div className="flex flex-row pt-6 pb-10 px-6 gap-6 h-[calc(100%-64px)]">
+      <div className="md:hidden flex flex-col px-6 py-4 h-[calc(100%-64px)]">
+        <Tabs className="h-full">
+          <Item key="userQuery" title={t("your_outputs")}>
+            <UserQueryResults table={userResultTable} />
+          </Item>
+          <Item key="expectedQuery" title={t("expected_output")}>
+            <ExpectedQueryResults table={expectedTable} />
+          </Item>
+        </Tabs>
+      </div>
+      <div className="hidden md:flex flex-row pt-6 pb-10 px-6 gap-6 h-[calc(100%-64px)]">
         <div className="flex flex-col w-[calc(50%-0.75rem)]">
           <span className="text-gray-900 dark:text-gray-200 text-p-lg font-bold mb-4">
             {t("your_outputs")}
           </span>
-
-          {userResultTable && (
-            <div className="overflow-auto flex flex-col border-gray-200 dark:border-gray-700 border rounded-lg h-full">
-              <Table
-                style="zebra"
-                header={userResultTable[0].columns}
-                data={userResultTable[0].values}
-              />
-            </div>
-          )}
-          {!userResultTable && (
-            <div className="overflow-auto flex flex-col justify-center items-center border-gray-200 dark:border-gray-700 border rounded-lg h-full">
-              <BigTableIcon className="w-[56px] h-[56px] mb-4" />
-              <span className="max-w-[222px] text-center text-gray-700 dark:text-gray-200">
-                {t("here_will_be_your_output")}
-              </span>
-            </div>
-          )}
+          <UserQueryResults table={userResultTable} />
         </div>
         <div className="flex flex-col w-[calc(50%-0.75rem)]">
           <span className="text-gray-900 dark:text-gray-200 text-p-lg font-bold mb-4">
             {t("expected_output")}
           </span>
-
-          {expectedTable && (
-            <div className="overflow-auto flex flex-col border-gray-200 dark:border-gray-700 border rounded-lg h-full">
-              <Table
-                style="zebra"
-                header={expectedTable[0].columns}
-                data={expectedTable[0].values}
-              />
-            </div>
-          )}
-          {!expectedTable && (
-            <div className="overflow-auto flex flex-col justify-center items-center border-gray-200 dark:border-gray-700 border rounded-lg h-full">
-              <BigTableIcon className="w-[56px] h-[56px] mb-4" />
-              <span className="max-w-[222px] text-center text-gray-700 dark:text-gray-200">
-                {t("no_expected_output_for_task")}
-              </span>
-            </div>
-          )}
+          <ExpectedQueryResults table={expectedTable} />
         </div>
       </div>
     </div>

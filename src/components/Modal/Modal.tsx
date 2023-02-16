@@ -38,17 +38,19 @@ export function Modal({
     <Overlay>
       <div
         {...underlayProps}
-        className="fixed z-[100] inset-0 bg-darkalpha-48 grid grid-cols-[auto_auto_auto] grid-rows-[1fr_1fr_1fr]"
+        className="fixed z-[100] inset-0 bg-darkalpha-48 grid grid-cols-[auto_auto_auto] grid-rows-[1fr_1fr_1fr] max-w-[100vw]"
       >
         <div
           {...modalProps}
-          className={`bg-gray-0 dark:bg-gray-900 c-shadow-modal flex flex-row ${modalPositionClass} ${className}`}
+          className={`bg-gray-0 dark:bg-gray-900 c-shadow-modal flex flex-row max-w-[100vw] ${modalPositionClass} ${className}`}
           ref={ref}
         >
           {position === "leftFullHeight" && (
             <div className="w-[calc((100vw-theme(screens.lg))/2)] h-0 flex-shrink-0"></div>
           )}
-          <div className="flex-grow mx-auto lg:container">{children}</div>
+          <div className="flex-grow mx-auto lg:container max-w-[100vw]">
+            {children}
+          </div>
         </div>
       </div>
     </Overlay>

@@ -11,18 +11,20 @@ import {
 import { TabListState, useTabListState } from "react-stately";
 import { Node } from "@react-types/shared";
 
-interface TabSelectorProps extends AriaTabListProps<object> {}
+interface TabSelectorProps extends AriaTabListProps<object> {
+  className?: string;
+}
 
 const SELECTED_CLASS =
   "bg-gray-0 dark:bg-gray-600 shadow-[0_2px_4px_rgba(0,0,0,0.12)] text-gray-900 dark:text-gray-100 rounded-md";
 const NON_SELECTED_CLASS = "bg-transparent text-gray-800 dark:text-gray-200";
 
-export function Tabs(props: TabSelectorProps) {
+export function Tabs({ className = "", ...props }: TabSelectorProps) {
   let state = useTabListState(props);
   let ref = useRef(null);
   let { tabListProps } = useTabList(props, state, ref);
   return (
-    <div className={`tabs ${props.orientation || ""}`}>
+    <div className={`flex flex-col ${className} ${props.orientation || ""}`}>
       <div
         className="bg-gray-100 dark:bg-gray-900 rounded-lg p-1 flex flex-row gap-0.5 w-full h-fit"
         {...tabListProps}
@@ -37,7 +39,11 @@ export function Tabs(props: TabSelectorProps) {
           />
         ))}
       </div>
-      <TabPanel key={state.selectedItem?.key} state={state} />
+      <TabPanel
+        className="flex-shrink pt-4 overflow-auto h-full"
+        key={state.selectedItem?.key}
+        state={state}
+      />
     </div>
   );
 }
@@ -73,13 +79,14 @@ function Tab({ item, state, orientation }: TabProps) {
 
 interface TabPanelProps extends AriaTabPanelProps {
   state: TabListState<unknown>;
+  className?: string;
 }
 
-function TabPanel({ state, ...props }: TabPanelProps) {
+function TabPanel({ className = "", state, ...props }: TabPanelProps) {
   let ref = useRef(null);
   let { tabPanelProps } = useTabPanel(props, state, ref);
   return (
-    <div {...tabPanelProps} ref={ref}>
+    <div className={className} {...tabPanelProps} ref={ref}>
       {state.selectedItem?.props.children}
     </div>
   );
