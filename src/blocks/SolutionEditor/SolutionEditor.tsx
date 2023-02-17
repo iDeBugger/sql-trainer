@@ -23,7 +23,8 @@ import { ExpectedQueryResults } from "../ExpectedQueryResults/ExpectedQueryResul
 import { UserQueryResults } from "../UserQueryResults/UserQueryResults";
 
 interface SolutionEditorProps {
-  selectedTask: Task["id"];
+  showSkeleton?: boolean;
+  selectedTask: Task["id"] | null;
   taskTables: DbTable[];
   expectedTable: QueryExecResult[] | null;
   userResultTable: QueryExecResult[] | null;
@@ -42,10 +43,11 @@ interface FKTooltipProps {
 }
 
 interface TaskDescriptionProps {
-  task: Task;
+  task: Task | null;
 }
 
 interface StructureTablesProps {
+  showSkeleton: boolean;
   taskTables: DbTable[];
   onClose?: () => void;
   className?: string;
@@ -58,6 +60,7 @@ interface TaskTextareaProps {
 }
 
 interface SolutionButtonsProps {
+  showSkeleton?: boolean;
   expectedTable: QueryExecResult[] | null;
   userResultTable: QueryExecResult[] | null;
   onAnswerCheck: () => void;
@@ -133,17 +136,52 @@ function TaskDescription({ task }: TaskDescriptionProps) {
 
   return (
     <>
-      <span className="mb-2 font-semibold text-p-lg text-gray-1000 dark:text-gray-200">
-        {t(`topics.${task.topic}`)}
-      </span>
-      <span className="mb-6 text-p-lg text-gray-900 dark:text-gray-100">
-        {t(`tasks.${task.id}`)}
-      </span>
+      {task && (
+        <>
+          <span className="mb-2 font-semibold text-p-lg text-gray-1000 dark:text-gray-200">
+            {t(`topics.${task.topic}`)}
+          </span>
+          <span className="mb-6 text-p-lg text-gray-900 dark:text-gray-100">
+            {t(`tasks.${task.id}`)}
+          </span>
+        </>
+      )}
+      {!task && (
+        <>
+          <div className="w-[50%] h-[20px] mb-3 bg-gray-200 rounded-[100px]" />
+          <div className="w-full h-[14px] mb-2 bg-gray-200 rounded-[100px]" />
+          <div className="w-full h-[14px] mb-2 bg-gray-200 rounded-[100px]" />
+          <div className="w-[70%] h-[14px] mb-6 bg-gray-200 rounded-[100px]" />
+        </>
+      )}
     </>
   );
 }
 
+function SkeletonTable() {
+  return (
+    <Table
+      className="w-full max-w-[390px]"
+      header={[<div className="w-[210px] h-4 bg-gray-200 rounded-[100px]" />]}
+      data={[
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+        [<div className="w-[340px] h-3 bg-gray-200 rounded-[100px]" />],
+      ]}
+    />
+  );
+}
+
 function StructureTables({
+  showSkeleton = false,
   taskTables,
   onClose,
   className = "",
@@ -163,12 +201,19 @@ function StructureTables({
       <div className="h-full flex flex-col">
         <div className="flex flex-row py-6 items-center justify-between">
           <div className="flex flex-row gap-2">
-            <span className="text-p-lg font-bold text-gray-900 dark:text-gray-200">
-              {t("tables_description")}
-            </span>
-            <Chip style="white" aria-label={t("amount_of_tables")}>
-              {taskTables.length}
-            </Chip>
+            {!showSkeleton && (
+              <>
+                <span className="text-p-lg font-bold text-gray-900 dark:text-gray-200">
+                  {t("tables_description")}
+                </span>
+                <Chip style="white" aria-label={t("amount_of_tables")}>
+                  {taskTables.length}
+                </Chip>
+              </>
+            )}
+            {showSkeleton && (
+              <div className="w-[190px] h-5 bg-bluealpha-16 rounded-[100px]" />
+            )}
           </div>
           {onClose && (
             <Button
@@ -184,27 +229,35 @@ function StructureTables({
           ref={scrollRef}
           className="items-center md:pb-6 h-full overflow-y-auto"
         >
-          <div className="w-full flex flex-col gap-3 pr-3 items-center">
-            {taskTables?.map(({ name, columns }) => (
-              <Table
-                className="w-full max-w-[390px]"
-                key={name}
-                header={[name]}
-                data={
-                  columns?.map(({ name, attributes }) => [
-                    <div key={name} className="flex flex-row justify-between">
-                      <span>{name}</span>
-                      <div className="flex flex-row gap-2">
-                        {attributes.map((attr) => (
-                          <ChipAttribute key={attr.type} attr={attr} />
-                        ))}
-                      </div>
-                    </div>,
-                  ]) || []
-                }
-              />
-            ))}
-          </div>
+          {!showSkeleton && (
+            <div className="w-full flex flex-col gap-3 pr-3 items-center">
+              {taskTables?.map(({ name, columns }) => (
+                <Table
+                  className="w-full max-w-[390px]"
+                  key={name}
+                  header={[name]}
+                  data={
+                    columns?.map(({ name, attributes }) => [
+                      <div key={name} className="flex flex-row justify-between">
+                        <span>{name}</span>
+                        <div className="flex flex-row gap-2">
+                          {attributes.map((attr) => (
+                            <ChipAttribute key={attr.type} attr={attr} />
+                          ))}
+                        </div>
+                      </div>,
+                    ]) || []
+                  }
+                />
+              ))}
+            </div>
+          )}
+          {showSkeleton && (
+            <div className="w-full flex flex-col gap-3 pr-3 items-center">
+              <SkeletonTable />
+              <SkeletonTable />
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -297,6 +350,7 @@ function ExpectedResultFrame({
 }
 
 function SolutionButtons({
+  showSkeleton = false,
   expectedTable,
   userResultTable,
   onAnswerCheck,
@@ -305,40 +359,51 @@ function SolutionButtons({
 
   return (
     <div className="flex flex-col sm:flex-row gap-3">
-      <ModalButton
-        buttonProps={{
-          variant: "tertiary",
-          size: "big",
-          fill: "fillContainer",
-          className: "px-3",
-          children: t("show_expected_result"),
-        }}
-        isDismissable={true}
-        position="bottomFullWidth"
-      >
-        {(onClose) => (
-          <Dialog>
-            <ExpectedResultFrame
-              onClose={onClose}
-              expectedTable={expectedTable}
-              userResultTable={userResultTable}
-            />
-          </Dialog>
-        )}
-      </ModalButton>
-      <Button
-        variant="primary"
-        size="big"
-        fill="fillContainer"
-        onPress={onAnswerCheck}
-      >
-        {t("check_answer")}
-      </Button>
+      {!showSkeleton && (
+        <>
+          <ModalButton
+            buttonProps={{
+              variant: "tertiary",
+              size: "big",
+              fill: "fillContainer",
+              className: "px-3",
+              children: t("show_expected_result"),
+            }}
+            isDismissable={true}
+            position="bottomFullWidth"
+          >
+            {(onClose) => (
+              <Dialog>
+                <ExpectedResultFrame
+                  onClose={onClose}
+                  expectedTable={expectedTable}
+                  userResultTable={userResultTable}
+                />
+              </Dialog>
+            )}
+          </ModalButton>
+          <Button
+            variant="primary"
+            size="big"
+            fill="fillContainer"
+            onPress={onAnswerCheck}
+          >
+            {t("check_answer")}
+          </Button>
+        </>
+      )}
+      {showSkeleton && (
+        <>
+          <div className="w-full h-12 bg-gray-200 rounded-lg" />
+          <div className="w-full h-12 bg-gray-200 rounded-lg" />
+        </>
+      )}
     </div>
   );
 }
 
 export function SolutionEditor({
+  showSkeleton = false,
   selectedTask,
   taskTables = [],
   expectedTable,
@@ -349,74 +414,81 @@ export function SolutionEditor({
   onChangeTextArea,
 }: SolutionEditorProps) {
   const { t } = useTranslation();
-  const task = tasksList.find(({ id }) => id === selectedTask);
+  const task = tasksList.find(({ id }) => id === selectedTask) || null;
 
   return (
     <>
-      {task && (
-        <>
-          <div className="hidden md:grid grid-cols-[auto_7fr_4fr_auto] w-full h-[calc(100vh-128px)]">
-            <div className="w-[calc((100vw-theme(screens.lg))/2)]"></div>
-            <div className="w-full h-[calc(100vh-128px)] flex flex-col px-6 py-8">
-              <TaskDescription task={task} />
-              <TaskTextarea
-                status={status}
-                value={textAreaValue}
-                onChangeValue={onChangeTextArea}
-              />
-              <SolutionButtons
-                expectedTable={expectedTable}
-                userResultTable={userResultTable}
-                onAnswerCheck={onAnswerCheck}
-              />
-            </div>
-            <div className="w-full bg-bluealpha-8 pt-2 h-[calc(100vh-128px)] border-l border-l-gray-100 dark:border-l-gray-800">
-              <StructureTables taskTables={taskTables} />
-            </div>
-            <div className="w-[calc((100vw-theme(screens.lg))/2)] bg-bluealpha-8"></div>
-          </div>
-          <div className="flex md:hidden flex-col my-8 px-6 lg:container w-full h-[calc(100vh-128px)]">
-            <TaskDescription task={task} />
-            <ModalButton
-              buttonProps={{
-                variant: "secondary",
-                size: "medium",
-                fill: "fillContainer",
-                className: "mb-6",
-                rightIcon: (
-                  <Chip aria-label={t("amount_of_tables")}>
-                    {taskTables.length}
-                  </Chip>
-                ),
-                children: t("show_tables_structure"),
-              }}
-              isDismissable={true}
-              position="bottomFullWidth"
-              className="bg-blue-100"
-            >
-              {(onClose) => (
-                <Dialog>
-                  <StructureTables
-                    taskTables={taskTables}
-                    onClose={onClose}
-                    className="max-h-[85vh]"
-                  />
-                </Dialog>
-              )}
-            </ModalButton>
-            <TaskTextarea
-              status={status}
-              value={textAreaValue}
-              onChangeValue={onChangeTextArea}
-            />
-            <SolutionButtons
-              expectedTable={expectedTable}
-              userResultTable={userResultTable}
-              onAnswerCheck={onAnswerCheck}
-            />
-          </div>
-        </>
-      )}
+      <div className="hidden md:grid grid-cols-[auto_7fr_4fr_auto] w-full h-[calc(100vh-128px)]">
+        <div className="w-[calc((100vw-theme(screens.lg))/2)]"></div>
+        <div className="w-full h-[calc(100vh-128px)] flex flex-col px-6 py-8">
+          <TaskDescription task={task} />
+          <TaskTextarea
+            status={status}
+            value={textAreaValue}
+            onChangeValue={onChangeTextArea}
+          />
+          <SolutionButtons
+            showSkeleton={showSkeleton}
+            expectedTable={expectedTable}
+            userResultTable={userResultTable}
+            onAnswerCheck={onAnswerCheck}
+          />
+        </div>
+        <div className="w-full bg-bluealpha-8 pt-2 h-[calc(100vh-128px)] border-l border-l-gray-100 dark:border-l-gray-800">
+          <StructureTables
+            showSkeleton={showSkeleton}
+            taskTables={taskTables}
+          />
+        </div>
+        <div className="w-[calc((100vw-theme(screens.lg))/2)] bg-bluealpha-8"></div>
+      </div>
+      <div className="flex md:hidden flex-col my-8 px-6 lg:container w-full h-[calc(100vh-128px)]">
+        <TaskDescription task={task} />
+        {showSkeleton && (
+          <div className="w-full h-10 mb-6 flex-shrink-0 bg-gray-200 rounded-lg" />
+        )}
+        {!showSkeleton && (
+          <ModalButton
+            buttonProps={{
+              variant: "secondary",
+              size: "medium",
+              fill: "fillContainer",
+              className: "mb-6",
+              rightIcon: (
+                <Chip aria-label={t("amount_of_tables")}>
+                  {taskTables.length}
+                </Chip>
+              ),
+              children: t("show_tables_structure"),
+            }}
+            isDismissable={true}
+            position="bottomFullWidth"
+            className="bg-blue-100"
+          >
+            {(onClose) => (
+              <Dialog>
+                <StructureTables
+                  showSkeleton={!task}
+                  taskTables={taskTables}
+                  onClose={onClose}
+                  className="max-h-[85vh]"
+                />
+              </Dialog>
+            )}
+          </ModalButton>
+        )}
+        <TaskTextarea
+          status={status}
+          value={textAreaValue}
+          onChangeValue={onChangeTextArea}
+        />
+        <SolutionButtons
+          showSkeleton={showSkeleton}
+          expectedTable={expectedTable}
+          userResultTable={userResultTable}
+          onAnswerCheck={onAnswerCheck}
+        />
+      </div>
     </>
   );
 }

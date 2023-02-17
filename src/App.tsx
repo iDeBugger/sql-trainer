@@ -28,7 +28,7 @@ function App() {
     lastAnswerResult,
   } = useAppSelector((state) => state.task);
   const solution = useAppSelector((state) =>
-    selectSolutionById(state, selectedTask as string)
+    selectSolutionById(state, selectedTask as unknown as string)
   );
 
   useEffect(() => {
@@ -75,6 +75,8 @@ function App() {
     }
   };
 
+  const showSkeleton = !selectedTask || dbStatus !== "READY";
+
   return (
     <div className="flex flex-col w-full h-[100vh] items-center">
       <div className="w-full lg:container">
@@ -86,28 +88,22 @@ function App() {
           onSupportMeClick={() => {}}
         />
       </div>
-      {selectedTask && (
-        <>
-          <div className="w-full lg:container">
-            <Subheader
-              selectedTask={selectedTask}
-              onSelectTask={onSelectTask}
-            />
-          </div>
-          <div className="w-full h-[calc(100vh-128px)]">
-            <SolutionEditor
-              selectedTask={selectedTask}
-              taskTables={taskTables}
-              expectedTable={expectedResult}
-              userResultTable={lastAnswerResult}
-              status={solution?.status || "UNKNOWN"}
-              textAreaValue={solution?.query || ""}
-              onChangeTextArea={onChangeTextArea}
-              onAnswerCheck={onAnswerCheck}
-            />
-          </div>
-        </>
-      )}
+      <div className="w-full lg:container">
+        <Subheader selectedTask={selectedTask} onSelectTask={onSelectTask} />
+      </div>
+      <div className="w-full h-[calc(100vh-128px)]">
+        <SolutionEditor
+          showSkeleton={showSkeleton}
+          selectedTask={selectedTask}
+          taskTables={taskTables}
+          expectedTable={expectedResult}
+          userResultTable={lastAnswerResult}
+          status={solution?.status || "UNKNOWN"}
+          textAreaValue={solution?.query || ""}
+          onChangeTextArea={onChangeTextArea}
+          onAnswerCheck={onAnswerCheck}
+        />
+      </div>
     </div>
   );
 }
