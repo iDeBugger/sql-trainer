@@ -17,7 +17,13 @@ const initDb = async (dbDescription: Database) => {
   db = new sqlJS.Database();
 
   if (dbDescription.initSql) {
-    db.run(dbDescription.initSql);
+    try {
+      console.log("???");
+      db.run(dbDescription.initSql);
+      console.log("!!!");
+    } catch (e) {
+      console.warn("Failed to run database initialization query:", e);
+    }
   }
 };
 
@@ -27,26 +33,37 @@ const getTablesDescription = (tableNames: string[]): DbTable[] => {
       throw new Error("Attempt to use uninitialized database!");
     }
 
-    console.log(
-      `SELECT * FROM ${tableName};`,
-      db.exec(`SELECT * FROM ${tableName};`)
-    );
+    let tableDescription: QueryExecResult[] | null = [];
+    let tableFKs: { [_ in string]: DbColumnAttribute } = {};
 
-    const tableDescription = db.exec(`PRAGMA table_info(${tableName});`);
-    const tableFKs = db
-      .exec(`PRAGMA foreign_key_list(${tableName});`)[0]
-      .values.reduce((fks, [_1, _2, targetTable, fromColumn, targetColumn]) => {
-        if (fromColumn && typeof fromColumn === "string") {
-          fks[fromColumn] = {
-            type: "FK",
-            reference: {
-              table: targetTable?.toString() || "<unknown>",
-              column: targetColumn?.toString() || "<unknown>",
-            },
-          };
-        }
-        return fks;
-      }, {} as { [_ in string]: DbColumnAttribute });
+    try {
+      tableDescription = db.exec(`PRAGMA table_info(${tableName});`);
+
+      const rawTableFKs = db.exec(`PRAGMA foreign_key_list(${tableName});`)[0];
+      tableFKs =
+        rawTableFKs?.values.reduce(
+          (fks, [_1, _2, targetTable, fromColumn, targetColumn]) => {
+            if (fromColumn && typeof fromColumn === "string") {
+              fks[fromColumn] = {
+                type: "FK",
+                reference: {
+                  table: targetTable?.toString() || "<unknown>",
+                  column: targetColumn?.toString() || "<unknown>",
+                },
+              };
+            }
+            return fks;
+          },
+          tableFKs
+        ) || {};
+    } catch (e) {
+      console.warn(
+        "Failed to obtain table descriptions and foreign keys info: ",
+        e
+      );
+    }
+
+    console.log("tableFKs", tableFKs);
 
     return {
       name: tableName,

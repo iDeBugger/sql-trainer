@@ -1,4 +1,5 @@
 import { accounting } from "./accounting";
+import { music } from "./music";
 
 export type DbColumnAttributeType = "PK" | "FK";
 
@@ -27,5 +28,5 @@ export interface Database {
   initSql?: string;
 }
 
-export type DatabaseId = "accounting";
-export const databases: { [_ in DatabaseId]: Database } = { accounting };
+export type DatabaseId = "accounting" | "music";
+export const databases: { [_ in DatabaseId]: Database } = { accounting, music };

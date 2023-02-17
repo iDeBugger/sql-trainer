@@ -27,11 +27,38 @@
     "correct_answer": "Правильный запрос",
     "incorrect_answer": "Неверный запрос",
     "topics": {
-      "select": "Основы SELECT",
-      "orderBy": "Упорядоченный SELECT"
+      "select": "SELECT",
+      "groupBy": "GROUP BY",
+      "join": "JOIN"
     },
     "tasks": {
-      "select_all_invoices": "Получите список всех накладных (таблица invoices) со всеми атрибутами"
+      "select_all_invoices": "Получите список всех накладных (таблица invoices) со всеми атрибутами.",
+      "select_all_artists": "Получите список всех исполнителей (таблица artists) со всеми атрибутами.",
+      "select_all_artists_names": "Получите список имён всех исполнителей (таблица artists).",
+      "select_first_and_last_name_of_employees": "Получите имена и фамилии всех сотрудников (таблица employees).",
+      "select_employees_sorted_by_hire_date_desc": "Получите список всех сотрудников (таблица employees) со всеми атрибутами. Отсортируйте список по дате найма (колонка hire_date) в порядке убывания.",
+      "select_first_and_last_name_of_employees_sorted_by_hire_date_asc": "Получите имена и фамилии всех сотрудников (таблица employees). Отсортируйте список по дате найма (колонка hire_date) в порядке возрастания.",
+      "select_names_and_length_of_tracks_sorted_by_names_and_milliseconds": "Получите названия (колонка name) и длительности (колонка milliseconds) музыкальных композиций. Отсортируйте список по названию композиции в алфавитном порядке. Если две композиции имеют одинаковое название — отсортируйте их по длительности в порядке убывания.",
+      "select_employees_title_support_agent": "Получите имена и фамилии всех сотрудников (таблица employees), которые состоят на должности Sales Support Agent (колонка title).",
+      "select_tracks_bigger_than_100000000_bytes": "Получите названия музыкальных композиций (колонка name), чей размер (колонка bytes) превышает 100000000 байт.",
+      "select_tracks_smaller_than_500000_bytes": "Получите названия музыкальных композиций (колонка name), чей размер (колонка bytes) составляет менее 500000 байт.",
+      "select_tracks_between_500000_and_5000000_bytes": "Получите названия музыкальных композиций (колонка name), чей размер (колонка bytes) находится между 500000 и 5000000 байт включительно.",
+      "select_employees_before_15_feb_2011": "Получите даты найма, имена и фамилии всех сотрудников (таблица employees), которые были наняты до 15 февраля 2011 года.",
+      "select_employees_last_names_starting_with_A": "Получите список всех сотрудников (таблица employees) со всеми атрибутами, чьи фамилии начинаются с латинской заглавной буквы A.",
+      "select_employees_first_names_ending_with_a": "Получите список всех сотрудников (таблица employees) со всеми атрибутами, чьи имена заканчиваются на латинскую строчную букву a.",
+      "select_employees_with_address_contains_Ave": "Получите список всех сотрудников (таблица employees) со всеми атрибутами, чьи адреса содержат текст Ave.",
+      "select_invoices_from_canada_ab": "Получите список всех накладных (таблица invoices) со всеми атрибутами, где страной оплаты (колонка billing_country) является Canada и штатом оплаты (колонка billing_state) является AB.",
+      "select_invoices_from_nv_reno_with_total_more_than_5": "Получите список всех накладных (таблица invoices) со всеми атрибутами, где штатом оплаты (колонка billing_state) является NV, городом оплаты (колонка billing_city) является Reno и сумма оплаты (колонка total) превышает $5.",
+      "select_invoices_from_states_nv_or_ab": "Получите список всех накладных (таблица invoices) со всеми атрибутами, где штатом оплаты (колонка billing_state) является NV или AB.",
+      "select_tracks_without_composer": "Получите список всех музыкальных композиций (таблица tracks) со всеми атрибутами, для которых не указан композитор.",
+      "select_customers_with_company": "Получите список всех покупателей (таблица customers) со всеми атрибутами, для которых указана компания.",
+      "select_invoices_germany_ordered_total_desc_limit_10": "Получите топ-10 накладных (таблица invoices) по сумме заказа (колонка total). В топ-10 должны попасть только те накладные, чьей страной оплаты является Germany. Получите все атрибуты каждой накладной.",
+      "select_billing_address_invoices_ca_cupertino_ordered_total_desc_limit_3": "Получите топ-3 накладных (таблица invoices) по сумме заказа (колонка total). В топ-3 должны попасть только те накладные, чьим штатом оплаты (колонка billing_state) является CA и городом оплаты (таблица billing_city) является Cupertino. Для каждой накладной из топ-3 выведите только платежный адрес (колонка billing_address).",
+      "select_id_invoices_ca_cupertino_or_mountain_view": "Получите ID накладной (таблица invoices) с самой маленькой суммой (колонка total), чьим штатом оплаты (колонка billing_state) является CA, а городом оплаты (колонка billing_city) является Mountain View или Cupertino.",
+      "count_customers_by_country": "Получите список стран и количество покупателей в каждой из стран. Используйте только таблицу customers и колонку country.",
+      "count_tracks_by_unit_price": "Получите список цен на музыкальные композиции и количество композиций каждой стоимости. Используйте только таблицу tracks и колонку unit_price.",
+      "select_countries_by_customers_desc": "Как и в прошлой задаче, получите список цен на музыкальные композиции и количество композиций каждой стоимости. Используйте только таблицу tracks и колонку unit_price. Отсортируйте результат по стоимости, от большей к меньшей.",
+      "select_top_3_countries_by_customers_desc": "Доработайте запрос из предыдущей задачи таким образом, чтобы он выводил только топ-3 стоимостей музыкальных композиций."
     }
   }
 }

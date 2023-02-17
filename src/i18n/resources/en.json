@@ -27,8 +27,9 @@
     "correct_answer": "Correct answer",
     "incorrect_answer": "Incorrect answer",
     "topics": {
-      "select": "Basic SELECT",
-      "orderBy": "Ordered SELECT"
+      "select": "SELECT",
+      "groupBy": "GROUP BY",
+      "join": "JOIN"
     },
     "tasks": {
       "select_all_invoices": "Select all invoices (from table invoices) with all attributes"

@@ -45,10 +45,14 @@ export const selectTask = createAppAsyncThunk(
 
     dispatch(setTables(tables));
 
-    const expectedResult = await dbWorkerInstance.executeQuery(
-      selectedTask.referenceSql
-    );
-    dispatch(setExpectedResult(expectedResult));
+    try {
+      const expectedResult = await dbWorkerInstance.executeQuery(
+        selectedTask.referenceSql
+      );
+      dispatch(setExpectedResult(expectedResult));
+    } catch (e) {
+      console.error("Failed to obtain expected result: ", e);
+    }
 
     dispatch(setDbStatus("READY"));
   }
