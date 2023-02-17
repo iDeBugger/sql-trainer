@@ -29,7 +29,7 @@ const styleToHeaderCellClass: { [_ in TableStyle]: string } = {
 
 const styleToBodyCellClass: { [_ in TableStyle]: string } = {
   default:
-    "px-[18px] py-[10px] last:rounded-b-xl border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 bg-gray-0 dark:bg-gray-800",
+    "px-[18px] py-[10px] group-last/row:rounded-b-xl border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 bg-gray-0 dark:bg-gray-800",
   zebra:
     "px-4 py-3 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 bg-gray-0 dark:bg-gray-900 group-even/row:bg-gray-50 dark:group-even/row:bg-gray-800",
 };
