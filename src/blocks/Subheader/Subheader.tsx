@@ -10,12 +10,12 @@ import { Dialog } from "../../components/Dialog/Dialog";
 import { ModalButton } from "../../components/ModalButton/ModalButton";
 
 export interface SubheaderProps {
-  selectedTask: Task["id"];
+  selectedTask: Task["id"] | null;
   onSelectTask: (task: Task["id"]) => void;
 }
 
 export interface TOCButtonProps {
-  selectedTask: Task["id"];
+  selectedTask: Task["id"] | null;
   onSelectTask: (task: Task["id"]) => void;
   children?: ReactNode;
 }
@@ -23,7 +23,7 @@ export interface TOCButtonProps {
 export interface TopicBlockProps {
   title: string;
   tasks: { task: Task; index: number }[];
-  selectedTask: Task["id"];
+  selectedTask: Task["id"] | null;
   onSelectTask: (task: Task["id"]) => void;
 }
 
@@ -104,6 +104,7 @@ function TOCButton({ onSelectTask, selectedTask, children }: TOCButtonProps) {
         size: "medium",
         "aria-label": t("open_tasks_list") || undefined,
         children,
+        isDisabled: !selectedTask,
       }}
       isDismissable
       position="leftFullHeight"
@@ -144,7 +145,7 @@ export function Subheader({ selectedTask, onSelectTask }: SubheaderProps) {
     tasksList.findIndex(({ id }) => id === selectedTask) + 1;
 
   const onSelectNextTask = () => {
-    // selectedTaskNum is selectedTask + 1, so we can use it to advance
+    // selectedTaskNum equals selectedTask + 1, so we can use it to advance
     onSelectTask(tasksList[selectedTaskNum].id);
   };
 
@@ -156,11 +157,16 @@ export function Subheader({ selectedTask, onSelectTask }: SubheaderProps) {
     <div className="pb-4">
       <div className="sm:hidden px-6 flex flex-row justify-between items-center">
         <TOCButton selectedTask={selectedTask} onSelectTask={onSelectTask} />
-        <span className="text-gray-900 dark:text-gray-100 min-w-[82px] text-center">
-          {t("task_number", { task: selectedTaskNum })}
-        </span>
+        {selectedTask && (
+          <span className="text-gray-900 dark:text-gray-100 min-w-[82px] text-center">
+            {t("task_number", { task: selectedTaskNum })}
+          </span>
+        )}
+        {!selectedTask && (
+          <div className="min-w-[82px] h-[16px] bg-gray-200 rounded-[100px]" />
+        )}
         <Button
-          isDisabled={selectedTaskNum >= tasksList.length}
+          isDisabled={selectedTaskNum >= tasksList.length || !selectedTask}
           variant="secondary"
           leftIcon={<RightArrowIcon />}
           onPress={onSelectNextTask}
@@ -174,16 +180,21 @@ export function Subheader({ selectedTask, onSelectTask }: SubheaderProps) {
         </div>
         <div className="flex flex-row items-center justify-center gap-4 flex-1">
           <Button
-            isDisabled={selectedTaskNum <= 1}
+            isDisabled={selectedTaskNum <= 1 || !selectedTask}
             variant="secondary"
             leftIcon={<LeftArrowIcon />}
             onPress={onSelectPrevTask}
           />
-          <span className="text-gray-900 dark:text-gray-100 min-w-[82px] text-center">
-            {t("task_number", { task: selectedTaskNum })}
-          </span>
+          {selectedTask && (
+            <span className="text-gray-900 dark:text-gray-100 min-w-[82px] text-center">
+              {t("task_number", { task: selectedTaskNum })}
+            </span>
+          )}
+          {!selectedTask && (
+            <div className="min-w-[82px] h-[16px] bg-gray-200 rounded-[100px]" />
+          )}
           <Button
-            isDisabled={selectedTaskNum >= tasksList.length}
+            isDisabled={selectedTaskNum >= tasksList.length || !selectedTask}
             variant="secondary"
             leftIcon={<RightArrowIcon />}
             onPress={onSelectNextTask}
