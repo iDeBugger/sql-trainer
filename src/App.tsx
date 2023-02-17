@@ -75,8 +75,6 @@ function App() {
     }
   };
 
-  const showSkeleton = !selectedTask || dbStatus !== "READY";
-
   return (
     <div className="flex flex-col w-full h-[100vh] items-center">
       <div className="w-full lg:container">
@@ -93,7 +91,6 @@ function App() {
       </div>
       <div className="w-full h-[calc(100vh-128px)]">
         <SolutionEditor
-          showSkeleton={showSkeleton}
           selectedTask={selectedTask}
           taskTables={taskTables}
           expectedTable={expectedResult}
