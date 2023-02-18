@@ -13,11 +13,11 @@ interface TextAreaProps extends AriaTextFieldOptions<"textarea"> {
 
 const statusToClassMap: { [_ in TextAreaStatus]: string } = {
   DEFAULT:
-    "shadow-[0_0_0_1px_theme(colors.gray.200)] bg-gray-50 \
+    "shadow-[0_0_0_1px_theme(colors.gray.200)] focus:shadow-[0_0_0_2px_rgba(54,73,252,0.64),_inset_0_1px_6px_rgba(0,0,0,0.16)] bg-gray-50 \
     placeholder:text-gray-600 text-gray-1000 \
     border-transparent \
     \
-    dark:shadow-[0_0_0_1px_theme(colors.gray.700)] dark:bg-gray-1000 \
+    dark:shadow-[0_0_0_1px_theme(colors.gray.700)] dark:focus:shadow-[0_0_0_2px_rgba(113,126,255,0.64),_inset_0_1px_6px_rgba(0,0,0,0.16)] dark:bg-gray-1000 \
     dark:placeholder:text-gray-400 dark:text-gray-50",
   SUCCESS:
     "shadow-[0_0_0_1px_theme(colors.greenalpha.24)] bg-greenalpha-8 \
@@ -50,7 +50,7 @@ export function TextArea(props: TextAreaProps) {
   } = props;
 
   const { isFocusVisible, focusProps } = useFocusRing();
-  const focusOutlineClass = !isFocusVisible ? "outline-none" : "";
+  const focusOutlineClass = !isFocusVisible ? "outline-none" : "outline";
 
   const ref = useRef(null);
   const { inputProps } = useTextField(
