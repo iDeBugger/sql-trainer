@@ -49,8 +49,7 @@ export function TextArea(props: TextAreaProps) {
     className = "",
   } = props;
 
-  const { isFocusVisible, focusProps } = useFocusRing();
-  const focusOutlineClass = !isFocusVisible ? "outline-none" : "outline";
+  const { focusProps } = useFocusRing();
 
   const ref = useRef(null);
   const { inputProps } = useTextField(
@@ -74,8 +73,8 @@ export function TextArea(props: TextAreaProps) {
         {...inputProps}
         {...focusProps}
         ref={ref}
-        className={`w-full h-full rounded-xl p-4 resize-none font-mono ${statusClass} \
-                    ${descriptionClass} ${focusOutlineClass}`}
+        className={`w-full h-full rounded-xl p-4 resize-none font-mono outline-none ${statusClass} \
+                    ${descriptionClass}`}
       />
       {status !== "DEFAULT" && statusDescription && (
         <div
