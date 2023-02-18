@@ -91,7 +91,6 @@ function App() {
           onLanguageSelect={onLanguageSelect}
           selectedTheme={settings.theme}
           onThemeButtonClick={onThemeButtonClick}
-          onSupportMeClick={() => {}}
         />
       </div>
       <div className="w-full lg:container">
