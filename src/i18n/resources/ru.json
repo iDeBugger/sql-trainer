@@ -13,6 +13,8 @@
     "sql_textarea_placeholder": "Введите SQL-запрос...",
     "show_expected_result": "Показать ожидаемый результат",
     "check_answer": "Ответить",
+    "next_task": "Далее",
+    "error_info": "Информация об ошибке",
     "tables_description": "Таблицы данных",
     "column_property": "Свойство колонки",
     "primary_key": "Первичный ключ",

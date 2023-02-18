@@ -267,7 +267,7 @@ export const tasksList: Task[] = [
     topic: "join",
     database: "music",
     referenceSql:
-      "SELECT albums.name FROM albums JOIN artists ON artists.id = albums.artist_id WHERE artists.name = 'Aerosmith';",
+      "SELECT albums.title FROM albums JOIN artists ON artists.id = albums.artist_id WHERE artists.name = 'Aerosmith';",
     tables: ["albums", "artists"],
   },
   {
@@ -275,7 +275,7 @@ export const tasksList: Task[] = [
     topic: "join",
     database: "music",
     referenceSql:
-      "SELECT albums.name FROM albums JOIN tracks ON tracks.album_id = albums.id WHERE tracks.name = 'Midnight';",
+      "SELECT albums.title FROM albums JOIN tracks ON tracks.album_id = albums.id WHERE tracks.name = 'Midnight';",
     tables: ["albums", "tracks"],
   },
   // Double join

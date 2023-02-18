@@ -13,6 +13,8 @@
     "sql_textarea_placeholder": "Enter SQL query...",
     "show_expected_result": "Show expected output",
     "check_answer": "Check answer",
+    "next_task": "Next task",
+    "error_info": "Error details",
     "tables_description": "Tables description",
     "column_property": "Column property",
     "primary_key": "Primary key",

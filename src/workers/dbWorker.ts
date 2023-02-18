@@ -18,9 +18,7 @@ const initDb = async (dbDescription: Database) => {
 
   if (dbDescription.initSql) {
     try {
-      console.log("???");
       db.run(dbDescription.initSql);
-      console.log("!!!");
     } catch (e) {
       console.warn("Failed to run database initialization query:", e);
     }
@@ -62,8 +60,6 @@ const getTablesDescription = (tableNames: string[]): DbTable[] => {
         e
       );
     }
-
-    console.log("tableFKs", tableFKs);
 
     return {
       name: tableName,
