@@ -399,6 +399,7 @@ function SolutionButtons({
             fill="fillContainer"
             onPress={onAnswerCheck}
             className="bg-redalpha-100 hover:bg-red-800 active:bg-red-900"
+            isDisabled={true}
           >
             {t("error_info")}
           </Button>
