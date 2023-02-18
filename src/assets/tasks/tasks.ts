@@ -244,12 +244,13 @@ export const tasksList: Task[] = [
       "SELECT tracks.name, albums.title FROM albums JOIN tracks ON tracks.album_id = albums.id;",
     tables: ["tracks", "albums"],
   },
+  // Join ordered
   {
     id: "join_artists_names_and_album_titles_ordered_artists_name_desc",
     topic: "join",
     database: "music",
     referenceSql:
-      "SELECT artists.name, albums.title FROM artists JOIN albums ON albums.artist_id = artists.id ORDER BY artists.name;",
+      "SELECT artists.name, albums.title FROM artists JOIN albums ON albums.artist_id = artists.id ORDER BY artists.name DESC;",
     tables: ["artists", "albums"],
   },
   {
@@ -260,20 +261,13 @@ export const tasksList: Task[] = [
       "SELECT customers.first_name, customers.last_name, invoices.total FROM customers JOIN invoices ON customers.id = invoices.customer_id ORDER BY invoices.total DESC;",
     tables: ["customers", "invoices"],
   },
-  {
-    id: "select_customer_and_invoice_with_max_total",
-    topic: "join",
-    database: "accounting",
-    referenceSql:
-      "SELECT * FROM customers JOIN invoices ON customers.id = invoices.customer_id ORDER BY invoices.total DESC LIMIT 1;",
-    tables: ["customers", "invoices"],
-  },
+  // Join where
   {
     id: "select_all_aerosmith_albums",
     topic: "join",
     database: "music",
     referenceSql:
-      "SELECT * FROM albums JOIN artists ON artists.id = albums.artist_id WHERE artists.name = 'Aerosmith';",
+      "SELECT albums.name FROM albums JOIN artists ON artists.id = albums.artist_id WHERE artists.name = 'Aerosmith';",
     tables: ["albums", "artists"],
   },
   {
@@ -281,9 +275,10 @@ export const tasksList: Task[] = [
     topic: "join",
     database: "music",
     referenceSql:
-      "SELECT * FROM albums JOIN tracks ON tracks.album_id = albums.id WHERE tracks.name = 'Midnight';",
+      "SELECT albums.name FROM albums JOIN tracks ON tracks.album_id = albums.id WHERE tracks.name = 'Midnight';",
     tables: ["albums", "tracks"],
   },
+  // Double join
   {
     id: "select_all_artists_with_midnight_track",
     topic: "join",
@@ -292,6 +287,7 @@ export const tasksList: Task[] = [
       "SELECT * FROM artists JOIN albums ON artists.id = albums.artist_id JOIN tracks ON tracks.album_id = albums.id WHERE tracks.name = 'Midnight';",
     tables: ["artists", "albums", "tracks"],
   },
+  // Join count
   {
     id: "count_iron_maiden_albums",
     topic: "join",
@@ -300,6 +296,7 @@ export const tasksList: Task[] = [
       "SELECT COUNT(*) FROM albums JOIN artists ON artists.id = albums.artist_id WHERE artists.name = 'Iron Maiden';",
     tables: ["artists", "albums"],
   },
+  // Join group by
   {
     id: "count_each_albums_of_artists",
     topic: "join",
@@ -313,9 +310,10 @@ export const tasksList: Task[] = [
     topic: "join",
     database: "music",
     referenceSql:
-      "SELECT artists.*, COUNT(*) FROM artists JOIN albums ON artists.id = albums.artist_id GROUP BY artists.id ORDER BY COUNT(*) DESC LIMIT 1;",
+      "SELECT artists.name, COUNT(*) FROM artists JOIN albums ON artists.id = albums.artist_id GROUP BY artists.id ORDER BY COUNT(*) DESC LIMIT 1;",
     tables: ["artists", "albums"],
   },
+  // Join aggregate
   {
     id: "select_top5_clients_with_most_sum_of_invoices",
     topic: "join",
@@ -323,12 +321,5 @@ export const tasksList: Task[] = [
     referenceSql:
       "SELECT customers.first_name, customers.last_name, SUM(invoices.total) AS sum FROM customers JOIN invoices ON customers.id = invoices.customer_id GROUP BY customers.id ORDER BY sum DESC LIMIT 5;",
     tables: ["customers", "invoices"],
-  },
-  {
-    id: "join_customers_and_employees",
-    topic: "join",
-    database: "accounting",
-    referenceSql: "SELECT * FROM employees ORDER BY hire_date DESC;",
-    tables: ["customers", "employees"],
   },
 ];
