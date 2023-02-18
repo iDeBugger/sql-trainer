@@ -26,7 +26,7 @@ export function Tabs({ className = "", ...props }: TabSelectorProps) {
   return (
     <div className={`flex flex-col ${className} ${props.orientation || ""}`}>
       <div
-        className="bg-gray-100 dark:bg-gray-900 rounded-lg p-1 flex flex-row gap-0.5 w-full h-fit"
+        className="bg-gray-100 dark:bg-gray-1000 rounded-lg p-1 flex flex-row gap-0.5 w-full h-fit"
         {...tabListProps}
         ref={ref}
       >
