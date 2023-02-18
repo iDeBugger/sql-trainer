@@ -445,10 +445,10 @@ export function SolutionEditor({
             isLastIndex={taskIndex === tasksList.length - 1}
           />
         </div>
-        <div className="w-full bg-bluealpha-8 pt-2 h-[calc(100vh-128px)] border-l border-l-gray-100 dark:border-l-gray-800">
+        <div className="w-full bg-bluealpha-8 dark:bg-gray-1000 pt-2 h-[calc(100vh-128px)] border-l border-l-gray-100 dark:border-l-gray-800">
           <StructureTables taskTables={taskTables} />
         </div>
-        <div className="w-[calc((100vw-theme(screens.lg))/2)] bg-bluealpha-8"></div>
+        <div className="w-[calc((100vw-theme(screens.lg))/2)] bg-bluealpha-8 dark:bg-gray-1000"></div>
       </div>
       <div className="flex md:hidden flex-col my-8 px-6 lg:container w-full h-[calc(100vh-128px)]">
         <TaskDescription task={task} />
