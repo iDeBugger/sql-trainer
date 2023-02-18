@@ -387,7 +387,7 @@ function SolutionButtons({
             fill="fillContainer"
             onPress={onSelectNextTask}
             isDisabled={isLastIndex}
-            className="bg-green-600 hover:bg-green-700 active:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700 dark:active:bg-green-800"
+            className="!bg-green-600 !hover:bg-green-700 !active:bg-green-800"
           >
             {t("next_task")}
           </Button>
@@ -398,7 +398,7 @@ function SolutionButtons({
             size="big"
             fill="fillContainer"
             onPress={onAnswerCheck}
-            className="bg-redalpha-100 hover:bg-red-800 active:bg-red-900 dark:bg-redalpha-100 dark:hover:bg-red-800 dark:active:bg-red-900"
+            className="!bg-redalpha-100 !hover:bg-red-800 !active:bg-red-900"
             isDisabled={true}
           >
             {t("error_info")}
