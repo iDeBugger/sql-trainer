@@ -19,7 +19,6 @@ const Template: ComponentStory<typeof Header> = (args, context) => (
     selectedLanguage={context.globals.lang}
     onLanguageSelect={args.onLanguageSelect}
     onThemeButtonClick={args.onThemeButtonClick}
-    onSupportMeClick={args.onSupportMeClick}
     selectedTheme={context.globals.theme}
   />
 );

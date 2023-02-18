@@ -2,7 +2,7 @@ import { Key, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Item } from "react-stately";
 import { CloseIcon } from "../../assets/icons/CloseIcon";
-import { HeartOutlineIcon } from "../../assets/icons/HeartOutlineIcon";
+import { GithubIcon } from "../../assets/icons/GithubIcon";
 import { LogoIcon } from "../../assets/icons/LogoIcon";
 import { LogoText } from "../../assets/icons/LogoText";
 import { MoonIcon } from "../../assets/icons/MoonIcon";
@@ -38,7 +38,7 @@ interface ThemeButtonProps {
   onClick: () => void;
 }
 
-interface SupportUsButtonProps {
+interface GithubButtonProps {
   onClick: () => void;
   fill?: Parameters<typeof Button>[0]["fill"];
 }
@@ -48,7 +48,6 @@ export interface HeaderProps {
   onLanguageSelect: (new_lang: LanguageType) => void;
   selectedTheme: ThemeType;
   onThemeButtonClick: () => void;
-  onSupportMeClick: () => void;
 }
 
 const LANGUAGES: { title: string; value: LanguageType }[] = [
@@ -130,18 +129,18 @@ function ThemeToggler({ selectedTheme, onClick }: ThemeButtonProps) {
   );
 }
 
-function SupportMeButton({ onClick, fill }: SupportUsButtonProps) {
+function GithubButton({ onClick, fill }: GithubButtonProps) {
   const { t } = useTranslation();
 
   return (
     <Button
-      leftIcon={<HeartOutlineIcon />}
-      variant="primary"
+      leftIcon={<GithubIcon />}
+      variant="text"
       size="medium"
       fill={fill}
       onPress={onClick}
     >
-      {t("support_me")}
+      {t("github_code")}
     </Button>
   );
 }
@@ -154,8 +153,11 @@ export function Header(props: HeaderProps) {
     onLanguageSelect,
     selectedTheme,
     onThemeButtonClick,
-    onSupportMeClick,
   } = props;
+
+  const onGithubButtonClick = () => {
+    window.open("https://github.com/iDeBugger/sql-trainer", "_blank");
+  };
 
   return (
     <Layout>
@@ -190,10 +192,10 @@ export function Header(props: HeaderProps) {
                     onClick={onThemeButtonClick}
                   />
                 </Row>
-                <Row>
-                  <SupportMeButton
+                <Row className="border-t rounded-t-none border-gray-200 dark:border-gray-700">
+                  <GithubButton
                     fill="fillContainer"
-                    onClick={onSupportMeClick}
+                    onClick={onGithubButtonClick}
                   />
                 </Row>
               </Layout>
@@ -201,50 +203,9 @@ export function Header(props: HeaderProps) {
           )}
         </ModalButton>
       </LogoRow>
-      <LogoRow className="hidden sm:max-md:flex">
+      <LogoRow className="hidden sm:flex">
         <div className="flex flex-row gap-3">
-          <SupportMeButton onClick={onSupportMeClick} />
-          <ModalButton
-            buttonProps={{
-              leftIcon: <MoreHorizontalIcon />,
-              variant: "tertiary",
-              size: "medium",
-              "aria-label": t("open_main_menu") || undefined,
-            }}
-            isDismissable
-            position="topFullWidth"
-          >
-            {(onCloseClick) => (
-              <Dialog>
-                <Layout>
-                  <LogoRow>
-                    <div className="flex flex-row gap-3">
-                      <SupportMeButton onClick={onSupportMeClick} />
-                      <Button
-                        variant="tertiary"
-                        onPress={onCloseClick}
-                        leftIcon={<CloseIcon />}
-                      />
-                    </div>
-                  </LogoRow>
-                  <Row>
-                    <LanguageSelect
-                      selectedLanguage={selectedLanguage}
-                      onSelect={onLanguageSelect}
-                    />
-                    <ThemeToggler
-                      selectedTheme={selectedTheme}
-                      onClick={onThemeButtonClick}
-                    />
-                  </Row>
-                </Layout>
-              </Dialog>
-            )}
-          </ModalButton>
-        </div>
-      </LogoRow>
-      <LogoRow className="hidden md:flex">
-        <div className="flex flex-row gap-3">
+          <GithubButton onClick={onGithubButtonClick} />
           <LanguageSelect
             selectedLanguage={selectedLanguage}
             onSelect={onLanguageSelect}
@@ -253,7 +214,6 @@ export function Header(props: HeaderProps) {
             selectedTheme={selectedTheme}
             onClick={onThemeButtonClick}
           />
-          <SupportMeButton onClick={onSupportMeClick} />
         </div>
       </LogoRow>
     </Layout>

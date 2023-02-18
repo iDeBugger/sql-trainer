@@ -2,7 +2,7 @@
   "translation": {
     "english": "English",
     "russian": "Русский",
-    "support_me": "Support project",
+    "github_code": "Source code",
     "toggle_color_scheme": "Toggle color scheme",
     "tasks_list": "Tasks list",
     "task_number": "Task {{task}}",
