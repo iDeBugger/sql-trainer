@@ -31,6 +31,10 @@ function App() {
     selectSolutionById(state, selectedTask as unknown as string)
   );
 
+  const selectedTaskIndex = tasksList.findIndex(
+    ({ id }) => id === selectedTask
+  );
+
   useEffect(() => {
     if (!selectedTask) {
       console.log("Task is not selected. The first task was selected");
@@ -75,6 +79,10 @@ function App() {
     }
   };
 
+  const onSelectNextTask = () => {
+    onSelectTask(tasksList[selectedTaskIndex + 1].id);
+  };
+
   return (
     <div className="flex flex-col w-full h-[100vh] items-center">
       <div className="w-full lg:container">
@@ -99,6 +107,7 @@ function App() {
           textAreaValue={solution?.query || ""}
           onChangeTextArea={onChangeTextArea}
           onAnswerCheck={onAnswerCheck}
+          onSelectNextTask={onSelectNextTask}
         />
       </div>
     </div>

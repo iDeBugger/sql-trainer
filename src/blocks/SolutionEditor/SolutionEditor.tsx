@@ -30,6 +30,7 @@ interface SolutionEditorProps {
   onAnswerCheck: () => void;
   textAreaValue: string;
   onChangeTextArea: (value: string) => void;
+  onSelectNextTask: () => void;
 }
 
 interface ChipAttributeProps {
@@ -60,6 +61,9 @@ interface SolutionButtonsProps {
   expectedTable: QueryExecResult[] | null;
   userResultTable: QueryExecResult[] | null;
   onAnswerCheck: () => void;
+  status: SolutionStatus;
+  onSelectNextTask: () => void;
+  isLastIndex: boolean;
 }
 
 interface ExpectedResultFrameProps {
@@ -335,6 +339,9 @@ function SolutionButtons({
   expectedTable,
   userResultTable,
   onAnswerCheck,
+  status,
+  onSelectNextTask,
+  isLastIndex,
 }: SolutionButtonsProps) {
   const { t } = useTranslation();
 
@@ -362,14 +369,40 @@ function SolutionButtons({
             </Dialog>
           )}
         </ModalButton>
-        <Button
-          variant="primary"
-          size="big"
-          fill="fillContainer"
-          onPress={onAnswerCheck}
-        >
-          {t("check_answer")}
-        </Button>
+        {(status === "UNKNOWN" || status === "PROCESSING") && (
+          <Button
+            variant="primary"
+            size="big"
+            fill="fillContainer"
+            onPress={onAnswerCheck}
+            isDisabled={status === "PROCESSING"}
+          >
+            {t("check_answer")}
+          </Button>
+        )}
+        {status === "CORRECT" && (
+          <Button
+            variant="primary"
+            size="big"
+            fill="fillContainer"
+            onPress={onSelectNextTask}
+            isDisabled={isLastIndex}
+            className="bg-green-600 hover:bg-green-700 active:bg-green-800"
+          >
+            {t("next_task")}
+          </Button>
+        )}
+        {status === "INCORRECT" && (
+          <Button
+            variant="primary"
+            size="big"
+            fill="fillContainer"
+            onPress={onAnswerCheck}
+            className="bg-redalpha-100 hover:bg-red-800 active:bg-red-900"
+          >
+            {t("error_info")}
+          </Button>
+        )}
       </>
     </div>
   );
@@ -384,9 +417,12 @@ export function SolutionEditor({
   onAnswerCheck,
   textAreaValue,
   onChangeTextArea,
+  onSelectNextTask,
 }: SolutionEditorProps) {
   const { t } = useTranslation();
   const task = tasksList.find(({ id }) => id === selectedTask) || null;
+  const taskIndex =
+    tasksList.findIndex(({ id }) => id === selectedTask) || null;
 
   return (
     <>
@@ -403,6 +439,9 @@ export function SolutionEditor({
             expectedTable={expectedTable}
             userResultTable={userResultTable}
             onAnswerCheck={onAnswerCheck}
+            status={status}
+            onSelectNextTask={onSelectNextTask}
+            isLastIndex={taskIndex === tasksList.length - 1}
           />
         </div>
         <div className="w-full bg-bluealpha-8 pt-2 h-[calc(100vh-128px)] border-l border-l-gray-100 dark:border-l-gray-800">
@@ -448,6 +487,9 @@ export function SolutionEditor({
           expectedTable={expectedTable}
           userResultTable={userResultTable}
           onAnswerCheck={onAnswerCheck}
+          status={status}
+          onSelectNextTask={onSelectNextTask}
+          isLastIndex={taskIndex === tasksList.length - 1}
         />
       </div>
     </>
