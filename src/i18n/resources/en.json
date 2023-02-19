@@ -54,7 +54,7 @@
       "select_invoices_from_states_nv_or_ab": "Select the list of all invoives with all their attributes, where billing state is NV or AB.",
       "select_tracks_without_composer": "Select the list of all tracks with all their attributes, where composer is not set.",
       "select_customers_with_company": "Select the list of all customers with all their attributes, which have a company set.",
-      "select_invoices_germany_ordered_total_desc_limit_10": "Select top-10 invoices by total. Filter the list by country, it have to be equal to Germany. Select all attributes of all invoices.",
+      "select_invoices_germany_ordered_total_desc_limit_3": "Select top-3 invoices by total. Filter the list by country, it have to be equal to Germany. Select all attributes of all invoices.",
       "select_billing_address_invoices_ca_cupertino_ordered_total_desc_limit_3": "Select top-3 invoices by total. Filter the list by billing state to be CA and billing city to be Cupertino. For all invoices select only billing address.",
       "select_id_invoices_ca_cupertino_or_mountain_view": "Select ID of an invoice with lowest total. Its billing state have to be CA and billing city have to be Mountain View or Cupertino.",
       "count_customers_by_country": "Select the list of all countries and amount of customers in each country.",

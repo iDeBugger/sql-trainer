@@ -170,11 +170,11 @@ export const tasksList: Task[] = [
   },
   // Select ordered tops
   {
-    id: "select_invoices_germany_ordered_total_desc_limit_10",
+    id: "select_invoices_germany_ordered_total_desc_limit_3",
     topic: "select",
     database: "accounting",
     referenceSql:
-      "SELECT * FROM invoices WHERE billing_country = 'Germany' ORDER BY total DESC LIMIT 10;",
+      "SELECT * FROM invoices WHERE billing_country = 'Germany' ORDER BY total DESC LIMIT 3;",
     tables: ["invoices"],
   },
   {
