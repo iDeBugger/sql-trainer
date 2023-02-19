@@ -284,7 +284,7 @@ export const tasksList: Task[] = [
     topic: "join",
     database: "music",
     referenceSql:
-      "SELECT * FROM artists JOIN albums ON artists.id = albums.artist_id JOIN tracks ON tracks.album_id = albums.id WHERE tracks.name = 'Midnight';",
+      "SELECT artists.name FROM artists JOIN albums ON artists.id = albums.artist_id JOIN tracks ON tracks.album_id = albums.id WHERE tracks.name = 'Midnight';",
     tables: ["artists", "albums", "tracks"],
   },
   // Join count
