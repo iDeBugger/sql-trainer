@@ -211,21 +211,21 @@ export const tasksList: Task[] = [
   },
   // Select count group by ordered
   {
-    id: "select_countries_by_customers_desc",
+    id: "count_tracks_by_unit_price_ordered_asc",
     topic: "groupBy",
-    database: "accounting",
+    database: "music",
     referenceSql:
-      "SELECT country, COUNT(*) FROM customers GROUP BY country ORDER BY COUNT(*) DESC;",
-    tables: ["customers"],
+      "SELECT unit_price, COUNT(*) FROM tracks GROUP BY unit_price ORDER BY COUNT(*) ASC;",
+    tables: ["tracks"],
   },
   // Select count group by ordered limited
   {
-    id: "select_top_3_countries_by_customers_desc",
+    id: "count_tracks_by_unit_price_ordered_asc_limit_1",
     topic: "groupBy",
-    database: "accounting",
+    database: "music",
     referenceSql:
-      "SELECT country, COUNT(*) FROM customers GROUP BY country ORDER BY COUNT(*) DESC LIMIT 3;",
-    tables: ["customers"],
+      "SELECT unit_price, COUNT(*) FROM tracks GROUP BY unit_price ORDER BY COUNT(*) ASC LIMIT 1;",
+    tables: ["tracks"],
   },
   // Join
   {
