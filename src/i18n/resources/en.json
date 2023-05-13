@@ -69,7 +69,7 @@
       "select_all_albums_with_midnight_track": "Select all albums titles, which contains track with title Midnight.",
       "select_all_artists_with_midnight_track": "Select all artist names, who have track with title Midnight. Remember that you can use JOIN twice or more times.",
       "count_iron_maiden_albums": "Count the number of albums of Iron Maiden band.",
-      "count_each_albums_of_artists": "Count the number of albums of each artist.",
+      "count_each_albums_of_artists": "Count the number of albums of each artist. Sort artists by ID.",
       "artist_with_max_albums": "Select the artist with most amount of albums. Find it name and the amount of albums.",
       "select_top5_clients_with_most_sum_of_invoices": "Select top-5 customers with higher sum of totals of their invoices."
     }
