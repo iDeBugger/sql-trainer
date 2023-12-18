@@ -7,7 +7,7 @@ import {
 } from "../assets/databases/databases";
 
 const sqlJSinit = initSqlJs({
-  locateFile: (file) => `https://sql.js.org/dist/${file}`,
+  locateFile: (file) => `/${file}`,
 });
 let db: SqlJsDatabase | null = null;
 
