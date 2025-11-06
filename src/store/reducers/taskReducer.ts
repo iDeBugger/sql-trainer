@@ -1,7 +1,7 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import { Task, tasksList } from "../../assets/tasks/tasks";
 import { DbTable } from "../../assets/databases/databases";
-import { QueryExecResult } from "sql.js";
+import { QueryExecResult } from "../../workers/dbWorker";
 
 export type DatabaseStatus =
   | "NOT_INITIALIZED"

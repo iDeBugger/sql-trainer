@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { QueryExecResult } from "sql.js";
+import { QueryExecResult } from "../../workers/dbWorker";
 import { BigTableIcon } from "../../assets/icons/BigTableIcon";
 import { Table } from "../../components/Table/Table";
 
