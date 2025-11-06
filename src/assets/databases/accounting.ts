@@ -2,7 +2,7 @@ import { Database } from "./databases";
 
 const initEmployees = `
 CREATE TABLE employees(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     last_name VARCHAR(20) NOT NULL,
     first_name VARCHAR(20) NOT NULL,
     title VARCHAR(30),
@@ -32,7 +32,7 @@ INSERT INTO employees (last_name,first_name,title,reports_to,birth_date,hire_dat
 
 const initCustomers = `
 CREATE TABLE customers(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     first_name VARCHAR(40) NOT NULL,
     last_name VARCHAR(20) NOT NULL,
     company VARCHAR(80),
@@ -75,7 +75,7 @@ INSERT INTO customers (first_name,last_name,company,address,city,state,country,p
 `;
 const initInvoices = `
 CREATE TABLE invoices(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     customer_id INTEGER NOT NULL,
     invoice_date TIMESTAMP NOT NULL,
     billing_address VARCHAR(70),

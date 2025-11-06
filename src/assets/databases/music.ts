@@ -1,7 +1,7 @@
 import { Database } from "./databases";
 
 const initMediaTypes = `
-CREATE TABLE media_types(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name VARCHAR(120));
+CREATE TABLE media_types(id SERIAL PRIMARY KEY, name VARCHAR(120));
 INSERT INTO media_types (name) VALUES
     ('MPEG audio file'),
     ('Protected AAC audio file'),
@@ -10,7 +10,7 @@ INSERT INTO media_types (name) VALUES
     ('AAC audio file');
 `;
 const initGenres = `
-CREATE TABLE genres(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name VARCHAR(120));
+CREATE TABLE genres(id SERIAL PRIMARY KEY, name VARCHAR(120));
 INSERT INTO genres (name) VALUES
     ('Rock'),
     ('Jazz'),
@@ -39,7 +39,7 @@ INSERT INTO genres (name) VALUES
     ('Opera');
 `;
 const initArtists = `
-CREATE TABLE artists(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name VARCHAR(120));
+CREATE TABLE artists(id SERIAL PRIMARY KEY, name VARCHAR(120));
 INSERT INTO artists (name) VALUES
     ('AC/DC'),
     ('Accept'),
@@ -325,7 +325,7 @@ INSERT INTO artists (name) VALUES
 `;
 const initAlbums = `
 CREATE TABLE albums(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     title VARCHAR(160) NOT NULL,
     artist_id INTEGER  NOT NULL,
     FOREIGN KEY (artist_id) REFERENCES artists(id) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -687,7 +687,7 @@ INSERT INTO albums (title,artist_id) VALUES
 `;
 const initTracks = `
 CREATE TABLE tracks(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     album_id INTEGER,
     media_type_id INTEGER NOT NULL,
