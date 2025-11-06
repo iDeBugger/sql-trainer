@@ -21,9 +21,28 @@ const initDb = async (dbDescription: Database) => {
 
   if (dbDescription.initSql) {
     try {
+      console.log(`[dbWorker] Initializing database: ${dbDescription.name}`);
+      console.log(`[dbWorker] SQL length: ${dbDescription.initSql.length} characters`);
+
       await db.exec(dbDescription.initSql);
+
+      console.log(`[dbWorker] Database initialization completed successfully`);
+
+      // Verify tables were created
+      const tablesResult = await db.query(`
+        SELECT table_name
+        FROM information_schema.tables
+        WHERE table_schema = 'public'
+        ORDER BY table_name;
+      `);
+      console.log(`[dbWorker] Tables created:`, tablesResult.rows.map((r: any) => r.table_name));
     } catch (e) {
-      console.warn("Failed to run database initialization query:", e);
+      console.error("[dbWorker] Failed to run database initialization query:", e);
+      console.error("[dbWorker] Error details:", {
+        name: (e as any).name,
+        message: (e as any).message,
+        code: (e as any).code,
+      });
     }
   }
 };
