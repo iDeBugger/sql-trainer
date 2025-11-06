@@ -37,7 +37,10 @@ const getTablesDescription = async (tableNames: string[]): Promise<DbTable[]> =>
 
   for (const tableName of tableNames) {
     try {
+      console.log(`[dbWorker] Getting description for table: ${tableName}`);
+
       // Get column information from PostgreSQL information_schema
+      // Filter by public schema to avoid system tables
       const columnQuery = `
         SELECT
           column_name,
@@ -46,9 +49,16 @@ const getTablesDescription = async (tableNames: string[]): Promise<DbTable[]> =>
           column_default
         FROM information_schema.columns
         WHERE table_name = $1
+          AND table_schema = 'public'
         ORDER BY ordinal_position;
       `;
       const columnResult = await db.query(columnQuery, [tableName]);
+      console.log(`[dbWorker] Found ${columnResult.rows.length} columns for ${tableName}`);
+
+      if (columnResult.rows.length === 0) {
+        console.warn(`[dbWorker] No columns found for table ${tableName}. Table may not exist.`);
+        continue;
+      }
 
       // Get primary key information
       const pkQuery = `
@@ -58,9 +68,11 @@ const getTablesDescription = async (tableNames: string[]): Promise<DbTable[]> =>
           ON tc.constraint_name = kcu.constraint_name
           AND tc.table_schema = kcu.table_schema
         WHERE tc.constraint_type = 'PRIMARY KEY'
-          AND tc.table_name = $1;
+          AND tc.table_name = $1
+          AND tc.table_schema = 'public';
       `;
       const pkResult = await db.query(pkQuery, [tableName]);
+      console.log(`[dbWorker] Found ${pkResult.rows.length} primary keys for ${tableName}`);
       const primaryKeys = new Set(
         pkResult.rows.map((row: any) => row.column_name)
       );
@@ -79,9 +91,11 @@ const getTablesDescription = async (tableNames: string[]): Promise<DbTable[]> =>
           ON ccu.constraint_name = tc.constraint_name
           AND ccu.table_schema = tc.table_schema
         WHERE tc.constraint_type = 'FOREIGN KEY'
-          AND tc.table_name = $1;
+          AND tc.table_name = $1
+          AND tc.table_schema = 'public';
       `;
       const fkResult = await db.query(fkQuery, [tableName]);
+      console.log(`[dbWorker] Found ${fkResult.rows.length} foreign keys for ${tableName}`);
 
       // Build foreign key map
       const foreignKeys: { [columnName: string]: DbColumnAttribute } = {};
@@ -113,18 +127,20 @@ const getTablesDescription = async (tableNames: string[]): Promise<DbTable[]> =>
         };
       });
 
+      console.log(`[dbWorker] Pushing table ${tableName} with ${columns.length} columns`);
       tables.push({
         name: tableName,
         columns,
       });
     } catch (e) {
-      console.warn(
-        `Failed to obtain table description for ${tableName}: `,
+      console.error(
+        `[dbWorker] Failed to obtain table description for ${tableName}: `,
         e
       );
     }
   }
 
+  console.log(`[dbWorker] Returning ${tables.length} tables`);
   return tables;
 };
 
