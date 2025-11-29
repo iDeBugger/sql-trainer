@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Item } from "react-stately";
-import { QueryExecResult } from "sql.js";
+import { QueryExecResult } from "../../workers/dbWorker";
 import {
   DbColumnAttribute,
   DbTable,

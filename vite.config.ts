@@ -6,8 +6,22 @@ export default defineConfig({
   plugins: [react()],
   build: {
     sourcemap: "inline",
+    target: "esnext",
   },
   worker: {
     format: "es",
+    rollupOptions: {
+      output: {
+        format: "es",
+      },
+    },
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: "esnext",
+    },
+  },
+  esbuild: {
+    target: "esnext",
   },
 });
